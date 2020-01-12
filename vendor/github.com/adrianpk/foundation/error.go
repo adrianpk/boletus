@@ -1,4 +1,4 @@
-package kabestan
+package foundation
 
 type (
 	Err struct {

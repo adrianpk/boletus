@@ -25,7 +25,6 @@ func (s *step) CreateEventsTable() error {
 		ALTER TABLE events
 		ADD COLUMN locale VARCHAR(32),
 		ADD COLUMN base_tz VARCHAR(2),
-		ADD COLUMN current_tz VARCHAR(2),
 		ADD COLUMN is_active BOOLEAN,
 		ADD COLUMN is_deleted BOOLEAN,
 		ADD COLUMN created_by_id UUID,

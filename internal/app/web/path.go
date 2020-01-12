@@ -9,4 +9,14 @@ var pathFxs = template.FuncMap{
 	"userPathSlug":       UserPathSlug,
 	"userPathInitDelete": UserPathInitDelete,
 	"userPathNew":        UserPathNew,
+
+	// Event
+	"eventPath":           EventPath,
+	"eventPathEdit":       EventPathEdit,
+	"eventPathSlug":       EventPathSlug,
+	"eventPathInitDelete": EventPathInitDelete,
+	"eventPathNew":        EventPathNew,
+	// Admin
+	"eventAdminPath":     EventAdminPath,
+	"eventAdminPathSlug": EventAdminPathSlug,
 }

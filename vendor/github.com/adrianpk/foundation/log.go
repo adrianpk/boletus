@@ -1,4 +1,4 @@
-package kabestan
+package foundation
 
 import (
 	"context"
@@ -74,9 +74,9 @@ type contextKey string
 
 func NewLogger(cfg *Config) *Log {
 	ll := int(cfg.ValAsInt("log.level", 1))
-	sn := cfg.ValOrDef("app.name", "kabestan")
+	sn := cfg.ValOrDef("app.name", "foundation")
 	sr := cfg.ValOrDef("app.revision", "n/a")
-	//return NewLogger(ll, sn, sr)
+	//return fnd.NewLogger(ll, sn, sr)
 	return NewDevLogger(ll, sn, sr)
 }
 

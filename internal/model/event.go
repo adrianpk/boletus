@@ -20,7 +20,7 @@ type (
 		Name        sql.NullString `db:"name" json:"name" schema:"name"`
 		Description sql.NullString `db:"description" json:"description" schema:"description"`
 		Place       sql.NullString `db:"place" json:"place" schema:"place"`
-		ScheduledAt pq.NullTime    `db:"schedlued_at" json:"scheduled_at" schema:"scheduled-at"`
+		ScheduledAt pq.NullTime    `db:"scheduled_at" json:"scheduled_at" schema:"scheduled-at"`
 		Locale      sql.NullString `db:"locale" json:"-" schema:"-"`
 		BaseTZ      sql.NullString `db:"base_tz" json:"-" schema:"-"`
 		IsActive    sql.NullBool   `db:"is_active" json:"-" schema:"-"`
@@ -32,9 +32,10 @@ type (
 type (
 	EventForm struct {
 		Slug        string `json:"slug" schema:"slug"`
-		Name        string `json:"username" schema:"username"`
-		Description string `json:"password" schema:"password"`
+		Name        string `json:"name" schema:"name"`
+		Description string `json:"description" schema:"description"`
 		Place       string `json:"place" schema:"place"`
+		ScheduledAt string `json:"scheduledAt" schema:"scheduled-at"`
 		Year        string `json:"year" schema:"year"`
 		Month       string `json:"mont" schema:"month"`
 		Day         string `json:"day" schema:"day"`
@@ -45,39 +46,39 @@ type (
 	}
 )
 
-func ToEventFormList(users []Event) (fs []EventForm) {
-	for _, m := range users {
+func ToEventFormList(events []Event) (fs []EventForm) {
+	for _, m := range events {
 		fs = append(fs, m.ToForm())
 	}
 	return fs
 }
 
 // SetCreateValues sets de ID and slug.
-func (user *Event) SetCreateValues() error {
+func (event *Event) SetCreateValues() error {
 	// Set create values only only if they were not previously
-	if user.Identification.ID == uuid.Nil ||
-		user.Identification.Slug.String == "" {
-		pfx := user.Name.String
-		user.Identification.SetCreateValues(pfx)
-		user.Audit.SetCreateValues()
+	if event.Identification.ID == uuid.Nil ||
+		event.Identification.Slug.String == "" {
+		pfx := event.Name.String
+		event.Identification.SetCreateValues(pfx)
+		event.Audit.SetCreateValues()
 	}
 	return nil
 }
 
 // SetUpdateValues
-func (user *Event) SetUpdateValues() error {
-	user.Audit.SetUpdateValues()
+func (event *Event) SetUpdateValues() error {
+	event.Audit.SetUpdateValues()
 	return nil
 }
 
 // Match condition for
-func (user *Event) Match(tc *Event) bool {
-	r := user.Identification.Match(tc.Identification) &&
-		user.Name == tc.Name &&
-		user.Description == tc.Description &&
-		user.Place == tc.Place &&
-		user.ScheduledAt == tc.ScheduledAt &&
-		user.BaseTZ == tc.BaseTZ
+func (event *Event) Match(tc *Event) bool {
+	r := event.Identification.Match(tc.Identification) &&
+		event.Name == tc.Name &&
+		event.Description == tc.Description &&
+		event.Place == tc.Place &&
+		event.ScheduledAt == tc.ScheduledAt &&
+		event.BaseTZ == tc.BaseTZ
 	return r
 }
 
@@ -88,20 +89,21 @@ func (user *Event) Match(tc *Event) bool {
 // null conterpart types. As long as is relatively simple, ergonomic
 // and could be easily implemented with generators I prefer to avoid
 // the use of reflection.
-func (user *Event) ToForm() EventForm {
-	date := destructureDate(user.ScheduledAt.Time)
+func (event *Event) ToForm() EventForm {
+	date := destructureDate(event.ScheduledAt.Time)
 	return EventForm{
-		Slug:        user.Slug.String,
-		Name:        user.Name.String,
-		Description: user.Description.String,
-		Place:       user.Place.String,
+		Slug:        event.Slug.String,
+		Name:        event.Name.String,
+		Description: event.Description.String,
+		Place:       event.Place.String,
+		ScheduledAt: event.ScheduledAt.Time.Format(time.RFC3339),
 		Year:        date["year"],
 		Month:       date["month"],
 		Day:         date["day"],
 		Hour:        date["hour"],
 		Minute:      date["minute"],
 		Timezone:    date["timezone"],
-		IsNew:       user.IsNew(),
+		IsNew:       event.IsNew(),
 	}
 }
 
