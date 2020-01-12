@@ -1,4 +1,4 @@
-package kabestan
+package foundation
 
 import (
 	"bytes"
@@ -72,6 +72,8 @@ type (
 		Loc *Localizer
 		// Flash messages
 		Flash FlashSet
+		// Session data
+		SessionData map[string]string
 		// Cross-site request forgery protection
 		CSRF map[string]interface{}
 	}
@@ -92,6 +94,10 @@ type (
 	Identifiable interface {
 		GetSlug() string
 	}
+)
+
+const (
+	SessionCtxKey ContextKey = "session"
 )
 
 const (
@@ -141,7 +147,8 @@ var (
 )
 
 const (
-	FlashStoreKey   = "flash"
+	FlashStoreKey = "flash"
+
 	SessionKey      = "session"
 	SecureCookieKey = "sec-cookie"
 )
@@ -199,6 +206,18 @@ func (ep *WebEndpoint) TemplatesFx() template.FuncMap {
 
 func (ep *WebEndpoint) Store() *sessions.CookieStore {
 	return ep.store
+}
+
+func (wr *WrappedRes) addSessionData(r *http.Request) {
+	sd := r.Context().Value(SessionCtxKey)
+	if sd == nil {
+		return
+	}
+
+	data, ok := sd.(map[string]string)
+	if ok {
+		wr.SessionData = data
+	}
 }
 
 func (wr *WrappedRes) addCSRF(r *http.Request) {
@@ -433,7 +452,7 @@ func (ep *WebEndpoint) newSecCookieStore() {
 	if h == "" {
 		h = ep.genRandomString(32)
 		ep.Log.Debug("New secure cookie hash", "value", h)
-		csEnVar := fmt.Sprintf("%s_SECCOOKIE_HASH", "BLT")
+		csEnVar := fmt.Sprintf("%s_SECCOOKIE_HASH", "FND")
 		ep.Log.Info("Set a custom secure cookie hash using a 32 char string stored as an envar", "envvar", csEnVar)
 	}
 
@@ -442,7 +461,7 @@ func (ep *WebEndpoint) newSecCookieStore() {
 	if b == "" {
 		b = ep.genRandomString(16)
 		ep.Log.Debug("New secure cookie block", "value", b)
-		csEnVar := fmt.Sprintf("%s_SECCOOKIE_BLOCK", "BLT")
+		csEnVar := fmt.Sprintf("%s_SECCOOKIE_BLOCK", "FND")
 		ep.Log.Info("Set a custom secure cookie block using a 16 char string stored as an envar", "envvar", csEnVar)
 	}
 
@@ -456,7 +475,7 @@ func (ep *WebEndpoint) newCookieStore() {
 	if k == "" {
 		k = ep.genAES256Key()
 		ep.Log.Debug("New cookie store random key", "value", k)
-		csEnVar := fmt.Sprintf("%s_COOKIESTORE_KEY", "BLT")
+		csEnVar := fmt.Sprintf("%s_COOKIESTORE_KEY", "FND")
 		ep.Log.Info("Set a custom cookie store key using a 32 char string stored as an envar", "envvar", csEnVar)
 	}
 
@@ -498,16 +517,16 @@ func (ep *WebEndpoint) genRandomString(length int) string {
 // Signin / signout
 
 // SignIn creates a user session.
-func (ep *WebEndpoint) SignIn(w http.ResponseWriter, r *http.Request, userSlug string) {
-	ep.SetSecCookieVal(w, r, sessionCookieKey, userSlug)
+func (ep *WebEndpoint) SignIn(w http.ResponseWriter, r *http.Request, userData map[string]string) {
+	ep.SetSecCookieVals(w, r, userData)
 }
 
 func (ep *WebEndpoint) SignOut(w http.ResponseWriter, r *http.Request) {
 	ep.ClearSecCookie(w, r)
 }
 
-func (ep *WebEndpoint) IsAuthenticated(r *http.Request) (slug string, ok bool) {
-	return ep.ReadSecCookieVal(r, sessionCookieKey)
+func (ep *WebEndpoint) IsAuthenticated(r *http.Request) (userData map[string]string, ok bool) {
+	return ep.GetSecCookieValues(r, sessionCookieKey)
 }
 
 // Cookies
@@ -523,8 +542,54 @@ func (ep *WebEndpoint) GetSession(r *http.Request, name ...string) *sessions.Ses
 	return s
 }
 
+func (ep *WebEndpoint) SetSecCookieVals(w http.ResponseWriter, r *http.Request, values map[string]string) {
+	c, err := r.Cookie(secCookieName)
+	if err != nil {
+		ep.Log.Warn("No secure cookie present")
+		c = &http.Cookie{
+			Name: secCookieName,
+			Path: "/",
+			// TODO: Get domain from ep.Cfg
+			// Domain: "127.0.0.1",
+			// TODO: Dev -> false, Prod -> true
+			Secure: false,
+		}
+	}
+
+	vals := make(map[string]string)
+
+	// Decode the cookie content
+	if c.Value != "" {
+		err = ep.secCookieStore.Decode(secCookieName, c.Value, &vals)
+		if err != nil {
+			ep.Log.Warn("Cannot decode current secure cookie")
+		}
+	}
+
+	for k, v := range values {
+		// Update cookie value
+		delete(vals, k)
+
+		if v != "" {
+			vals[k] = v
+		}
+	}
+
+	// Encode values again
+	e, err := ep.secCookieStore.Encode(secCookieName, vals)
+	if err != nil {
+		ep.Log.Warn("Cannot encode secure cookie")
+		return
+	}
+
+	c.Value = e
+
+	ep.Log.Info("Storing secure cookie", "vals", vals, "encrypted", e)
+
+	http.SetCookie(w, c)
+}
+
 func (ep *WebEndpoint) SetSecCookieVal(w http.ResponseWriter, r *http.Request, key, value string) {
-	ep.Log.Debug("SetCookieVal begin")
 	c, err := r.Cookie(secCookieName)
 	if err != nil {
 		ep.Log.Warn("No secure cookie present")
@@ -567,7 +632,28 @@ func (ep *WebEndpoint) SetSecCookieVal(w http.ResponseWriter, r *http.Request, k
 	ep.Log.Info("Storing secure cookie", "vals", vals, "encrypted", e)
 
 	http.SetCookie(w, c)
-	ep.Log.Debug("SetCookieVal end")
+}
+
+func (ep *WebEndpoint) GetSecCookieValues(r *http.Request, key string) (userData map[string]string, ok bool) {
+	c, err := r.Cookie(SecureCookieKey)
+	if err != nil {
+		ep.Log.Warn("No secure cookie")
+		ep.Log.Error(err)
+		return nil, false
+	}
+
+	var vals map[string]string
+
+	// Decode the cookie content
+	err = ep.secCookieStore.Decode(secCookieName, c.Value, &vals)
+	if err != nil {
+		ep.Log.Error(err)
+		return vals, false
+	}
+
+	ep.Log.Debug("Retrieved from secure cookie", "key", key, "val", fmt.Sprintf("%+v", vals))
+
+	return vals, true
 }
 
 func (ep *WebEndpoint) ReadSecCookieVal(r *http.Request, key string) (val string, ok bool) {
@@ -668,6 +754,7 @@ func (ep *WebEndpoint) WrapRes(w http.ResponseWriter, r *http.Request, data inte
 		Flash:  f,
 	}
 
+	wr.addSessionData(r)
 	wr.AddCSRF(r)
 
 	ep.ClearFlash(w, r)
@@ -954,4 +1041,9 @@ func ResPathInitDelete(rootPath string, r Identifiable) string {
 // ResPathSlug
 func ResPathSlug(rootPath string, r Identifiable) string {
 	return fmt.Sprintf("/%s/%s", rootPath, r.GetSlug())
+}
+
+// Admin
+func ResAdmin(path, adminPathPfx string) string {
+	return fmt.Sprintf("/%s/%s", adminPathPfx, path)
 }

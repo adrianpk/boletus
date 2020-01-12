@@ -5,9 +5,9 @@ import (
 	"fmt"
 	"net/http"
 
-	fnd "github.com/adrianpk/foundation"
 	"github.com/adrianpk/boletus/internal/app/svc"
 	"github.com/adrianpk/boletus/internal/model"
+	fnd "github.com/adrianpk/foundation"
 )
 
 const (
@@ -25,7 +25,7 @@ const (
 	SignedOutInfoMsg   = "signed_out_info_msg"
 	// Error
 	CreateUserErrMsg        = "create_user_err_msg"
-	IndexUsersErrMsg        = "get_all_users_err_msg"
+	IndexUsersErrMsg        = "index_users_err_msg"
 	GetUserErrMsg           = "get_user_err_msg"
 	GetUsersErrMsg          = "get_users_err_msg"
 	UpdateUserErrMsg        = "update_user_err_msg"
@@ -406,8 +406,14 @@ func (ep *Endpoint) SignInUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Register user slug in session.
-	ep.SignIn(w, r, user.Slug.String)
+	// Register user data in secure session cookie.
+	userData := map[string]string{
+		"slug":     user.Slug.String,
+		"username": user.Username.String,
+		"name":     user.FullName(),
+		"role":     user.Role.String,
+	}
+	ep.SignIn(w, r, userData)
 	ep.Log.Debug("User signed in", "user", user.Username.String)
 
 	// Localize Ok info message, put it into a flash message

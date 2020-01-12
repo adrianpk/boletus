@@ -71,7 +71,7 @@ func (ur *EventRepo) GetAll() (events []model.Event, err error) {
 
 // Get event by ID.
 func (ur *EventRepo) Get(id uuid.UUID) (event model.Event, err error) {
-	st := `SELECT * FROM EVENTS WHERE id = '%s' AND (is_deleted IS NULL OR NOT is_deleted) LIMIT 1;`
+	st := `SELECT * FROM events WHERE id = '%s' AND (is_deleted IS NULL OR NOT is_deleted) LIMIT 1;`
 	st = fmt.Sprintf(st, id.String())
 
 	err = ur.DB.Get(&event, st)
@@ -84,7 +84,7 @@ func (ur *EventRepo) Get(id uuid.UUID) (event model.Event, err error) {
 
 // GetBySlug event from repo by slug.
 func (ur *EventRepo) GetBySlug(slug string) (event model.Event, err error) {
-	st := `SELECT * FROM EVENTS WHERE slug = '%s' AND (is_deleted IS NULL OR NOT is_deleted) LIMIT 1;`
+	st := `SELECT * FROM events WHERE slug = '%s' AND (is_deleted IS NULL OR NOT is_deleted) LIMIT 1;`
 	st = fmt.Sprintf(st, slug)
 
 	err = ur.DB.Get(&event, st)
@@ -96,7 +96,7 @@ func (ur *EventRepo) GetBySlug(slug string) (event model.Event, err error) {
 func (ur *EventRepo) GetByName(name string) (model.Event, error) {
 	var event model.Event
 
-	st := `SELECT * FROM EVENTS WHERE name = '%s' AND (is_deleted IS NULL OR NOT is_deleted) LIMIT 1;`
+	st := `SELECT * FROM events WHERE name = '%s' AND (is_deleted IS NULL OR NOT is_deleted) LIMIT 1;`
 	st = fmt.Sprintf(st, name)
 
 	err := ur.DB.Get(&event, st)
@@ -166,7 +166,7 @@ func (ur *EventRepo) Update(event *model.Event, tx ...*sqlx.Tx) error {
 
 // Delete event from repo by ID.
 func (ur *EventRepo) Delete(id uuid.UUID, tx ...*sqlx.Tx) error {
-	st := `DELETE FROM EVENTS WHERE id = '%s' AND (is_deleted IS NULL OR NOT is_deleted);`
+	st := `DELETE FROM events WHERE id = '%s' AND (is_deleted IS NULL OR NOT is_deleted);`
 	st = fmt.Sprintf(st, id)
 
 	t, local, err := ur.getTx(tx)
@@ -185,7 +185,7 @@ func (ur *EventRepo) Delete(id uuid.UUID, tx ...*sqlx.Tx) error {
 
 // DeleteBySlug:w event from repo by slug.
 func (ur *EventRepo) DeleteBySlug(slug string, tx ...*sqlx.Tx) error {
-	st := `DELETE FROM EVENTS WHERE slug = '%s' AND (is_deleted IS NULL OR NOT is_deleted);`
+	st := `DELETE FROM events WHERE slug = '%s' AND (is_deleted IS NULL OR NOT is_deleted);`
 	st = fmt.Sprintf(st, slug)
 
 	t, local, err := ur.getTx(tx)
@@ -204,7 +204,7 @@ func (ur *EventRepo) DeleteBySlug(slug string, tx ...*sqlx.Tx) error {
 
 // DeleteByeventname event from repo by eventname.
 func (ur *EventRepo) DeleteByEventname(eventname string, tx ...*sqlx.Tx) error {
-	st := `DELETE FROM EVENTS WHERE eventname = '%s' AND (is_deleted IS NULL OR NOT is_deleted);`
+	st := `DELETE FROM events WHERE eventname = '%s' AND (is_deleted IS NULL OR NOT is_deleted);`
 	st = fmt.Sprintf(st, eventname)
 
 	t, local, err := ur.getTx(tx)
@@ -224,7 +224,7 @@ func (ur *EventRepo) DeleteByEventname(eventname string, tx ...*sqlx.Tx) error {
 func (ur *EventRepo) GetBySlugAndToken(slug, token string) (model.Event, error) {
 	var event model.Event
 
-	st := `SELECT * FROM EVENTS WHERE slug = '%s' AND confirmation_token = '%s' AND (is_deleted IS NULL OR NOT is_deleted) LIMIT 1;`
+	st := `SELECT * FROM events WHERE slug = '%s' AND confirmation_token = '%s' AND (is_deleted IS NULL OR NOT is_deleted) LIMIT 1;`
 	st = fmt.Sprintf(st, slug, token)
 
 	err := ur.DB.Get(&event, st)
@@ -234,7 +234,7 @@ func (ur *EventRepo) GetBySlugAndToken(slug, token string) (model.Event, error) 
 
 // Confirm event from repo by slug.
 func (ur *EventRepo) ConfirmEvent(slug, token string, tx ...*sqlx.Tx) (err error) {
-	st := `UPDATE EVENTS SET is_confirmed = TRUE WHERE slug = '%s' AND confirmation_token = '%s' AND (is_deleted IS NULL OR NOT is_deleted);`
+	st := `UPDATE events SET is_confirmed = TRUE WHERE slug = '%s' AND confirmation_token = '%s' AND (is_deleted IS NULL OR NOT is_deleted);`
 	st = fmt.Sprintf(st, slug, token)
 
 	t, local, err := ur.getTx(tx)

@@ -14,17 +14,23 @@
 "signed_in_info_msg": "Signed in",
 "signed_out_info_msg": "Signed out",
 
-"get_all_err_msg": "Nie można uzyskać listy użytkowników",
+"index_err_msg": "Nie można uzyskać listy użytkowników",
 "create_err_msg": "Nie można uzyskać użytkownikai",
 "get_err_msg": "Nie można utworzyć użytkownika",
 "update_err_msg": "Nie można zaktualizować użytkownika",
 "delete_err_msg": "Nie można usunąć użytkownikai",
 "input_values_err_msg": "Sprawdź wprowadzone wartości",
 
+"event_created_info_msg": "Event created",
+"event_updated_info_msg": "Event updated",
+"event_deleted_info_msg": "Event deleted",
+
+"event_created_info_msg": "Event created",
+"event_updated_info_msg": "Event updated",
+"event_deleted_info_msg": "Event deleted",
+
 "credentials_err_msg": "Verify username and password",
-
 "cannot_proc_err_msg": "Obecnie nie można przetworzyć żądania",
-
 "required_err_msg": "Wymagany",
 "min_length_err_msg": "Bardzo krótko",
 "max_length_err_msg": "Bardzo długo",

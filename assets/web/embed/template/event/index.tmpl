@@ -1,0 +1,25 @@
+<!-- Head -->
+{{define "head"}}
+{{"event_index" | .Loc.Localize}}
+{{end}}
+<!-- Head -->
+
+<!-- Body -->
+{{define "body"}}
+{{$data := .}}
+
+<!-- Contextual bar -->
+{{template "ctxbar" .}}
+<!-- Contextual bar -->
+
+<!-- Header -->
+{{$title := "event_index" | .Loc.Localize}}
+{{template "header" $title}}
+<!-- Header -->
+
+<!-- List -->
+{{template "list" .}}
+<!-- List -->
+
+{{end}}
+<!-- Body -->

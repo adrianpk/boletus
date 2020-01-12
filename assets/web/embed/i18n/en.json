@@ -14,7 +14,7 @@
 "signed_in_info_msg": "Signed in",
 "signed_out_info_msg": "Signed out",
 
-"get_all_users_err_msg": "Cannot get user list'",
+"index_users_err_msg": "Cannot get user list'",
 "create_user_err_msg": "Cannot create user",
 "get_user_err_msg": "Cannot get user",
 "update_user_err_msg": "Cannot update user",
@@ -23,6 +23,15 @@
 "sign_in_err_msg": "Sign in error",
 "credentials_err_msg": "Verify username and password",
 "cannot_proc_err_msg": "It is not possible to process the request at this time",
+
+"event_index": "Event Index",
+"new_event": "New Event",
+"edit_event": "Edit Event",
+"show_event": "Show Event",
+
+"event_created_info_msg": "Event created",
+"event_updated_info_msg": "Event updated",
+"event_deleted_info_msg": "Event deleted",
 
 "required_err_msg": "Required",
 "min_length_err_msg": "Too short",

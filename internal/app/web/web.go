@@ -3,11 +3,13 @@ package web
 import (
 	//"encoding/gob"
 
+	"context"
 	"errors"
+	"fmt"
 	"net/http"
 
-	fnd "github.com/adrianpk/foundation"
 	"github.com/adrianpk/boletus/internal/app/svc"
+	fnd "github.com/adrianpk/foundation"
 )
 
 type (
@@ -59,7 +61,7 @@ func registerGobTypes() {
 // ReqAuth require user authentication middleware.
 func (ep *Endpoint) ReqAuth(next http.Handler) http.Handler {
 	fn := func(w http.ResponseWriter, r *http.Request) {
-		s, ok := ep.IsAuthenticated(r)
+		userData, ok := ep.IsAuthenticated(r)
 		if !ok {
 			ep.Log.Debug("User not authenticated")
 			http.Redirect(w, r, AuthPathSignIn(), 302)
@@ -68,9 +70,12 @@ func (ep *Endpoint) ReqAuth(next http.Handler) http.Handler {
 
 		w.Header().Add("Cache-Control", "no-store")
 
-		ep.Log.Debug("User authenticated", "slug", s)
+		// Update request context with user data
+		ctx := context.WithValue(r.Context(), fnd.SessionCtxKey, userData)
 
-		next.ServeHTTP(w, r)
+		ep.Log.Debug("User authenticated", "user-data", fmt.Sprintf("%+v", userData))
+
+		next.ServeHTTP(w, r.WithContext(ctx))
 	}
 
 	return http.HandlerFunc(fn)
