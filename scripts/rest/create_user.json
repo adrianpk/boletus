@@ -1,0 +1,9 @@
+{
+  "username": "username",
+  "password": "username@mail.com",
+  "email": "username@mail.com",
+  "emailConfirmation": "username@mail.com",
+  "givenName": "name",
+  "middleNames": "middle",
+  "familyName": "family"
+}

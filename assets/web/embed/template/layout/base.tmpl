@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>{{template "head" .}}</title>
+  <meta name="description" content="Foundation">
+  <meta name="author" content="adrianpk">
+
+  <link rel="stylesheet" href="/css/tailwind.css">
+  <noscript>
+    <style>
+      .is-jsonly {
+        display: none !important
+      }
+    </style>
+  </noscript>
+</head>
+
+<body class="bg-gray-100">
+  <div class="p-8 py-12">
+    <img class="h-20 m-1 inline-block align-baseline" src="/img/boletus_logo.png" alt="boletus logo" />
+    <img class="h-12 m-1 inline-block align-baseline" src="/img/boletus_text.png" alt="boletus" />
+  </div>
+
+  <div class="tile is-9 is-parent is-block">
+    <div class="section">
+      <!-- Flash message -->
+      {{template "flash" .}}
+      <!-- Flash message -->
+      <!-- Body -->
+      {{template "body" .}}
+      <!-- Body -->
+    </div>
+  </div>
+
+  <div class="p-8 py-12 text-center">
+  </div>
+  <!--<script src="js/scripts.js"></script>-->
+</body>
+</html>
+

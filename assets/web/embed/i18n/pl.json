@@ -1,0 +1,42 @@
+{
+"user_index": "Indeks użytkownikówi",
+"new_user": "Nowy użytkownik",
+"edit_user": "Edytuj użytkownika",
+"show_user": "Pokaż użytkownika",
+"sign_in": "Sign In",
+"sign_up": "Sign Up",
+
+"user_created_info_msg": "Utworzony przez użytkownika",
+"user_updated_info_msg": "Użytkownik zaktualizowany",
+"user_deleted_info_msg": "Użytkownik usunięty",
+"signed_up_info_msg": "Signed up completed",
+"confirmed_info_msg": "User email account confirmed",
+"signed_in_info_msg": "Signed in",
+"signed_out_info_msg": "Signed out",
+
+"get_all_err_msg": "Nie można uzyskać listy użytkowników",
+"create_err_msg": "Nie można uzyskać użytkownikai",
+"get_err_msg": "Nie można utworzyć użytkownika",
+"update_err_msg": "Nie można zaktualizować użytkownika",
+"delete_err_msg": "Nie można usunąć użytkownikai",
+"input_values_err_msg": "Sprawdź wprowadzone wartości",
+
+"credentials_err_msg": "Verify username and password",
+
+"cannot_proc_err_msg": "Obecnie nie można przetworzyć żądania",
+
+"required_err_msg": "Wymagany",
+"min_length_err_msg": "Bardzo krótko",
+"max_length_err_msg": "Bardzo długo",
+"not_allowed_err_msg": "Nieuwzględniony na liście",
+"not_email_err_msg": "Nie jest adres e-mail",
+"conf_match_err_msg": "Nie pasuje do potwierdzenia",
+
+"sample_message": "Przykładowa wiadomość",
+"sample_count_message": {
+  "description": "Some variable count message",
+  "one": "Pozycja {{.Name}} ma {{.Count}} wartość",
+  "many": "Pozycja {{.Name}} ma {{.Count}} wartości",
+  "other": "Pozycja {{.Name}} ma {{.Count}} wartości"
+  }
+}

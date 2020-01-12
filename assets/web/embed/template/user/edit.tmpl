@@ -1,0 +1,25 @@
+<!-- Head -->
+{{define "head"}}
+{{"edit_user" | .Loc.Localize}}
+{{end}}
+<!-- Head -->
+
+<!-- Body -->
+{{define "body"}}
+{{$data := .}}
+
+<!-- Contextual bar -->
+{{template "ctxbar" .}}
+<!-- Contextual bar -->
+
+<!-- Header -->
+{{$title := "edit_user" | .Loc.Localize}}
+{{template "header" $title}}
+<!-- Header -->
+
+<!-- Form -->
+{{template "form" .}}
+<!-- Form -->
+
+{{end}}
+<!-- Body -->
