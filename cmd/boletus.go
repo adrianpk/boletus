@@ -68,7 +68,7 @@ func main() {
 
 	// Repos
 	userRepo := repo.NewUserRepo(cfg, log, "user-repo", db)
-	//ticketRepo := repo.NewTicketRepo(cfg, log, "tickt-repo", db)
+	eventRepo := repo.NewEventRepo(cfg, log, "event-repo", db)
 
 	// Core service
 	svc := svc.NewService(cfg, log, "core-service", db)
@@ -76,7 +76,7 @@ func main() {
 	// Service dependencies
 	svc.Mailer = ml
 	svc.UserRepo = userRepo
-	//svc.TicketRepo = ticketRepo
+	svc.EventRepo = eventRepo
 
 	// App dependencies
 	a.Migrator = mg
