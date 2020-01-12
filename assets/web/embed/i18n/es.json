@@ -1,0 +1,42 @@
+{
+"user_index": "Índice de usuarios",
+"new_user": "Nuevo usuario",
+"edit_user": "Editar usuario",
+"show_user": "Mostrar usuario",
+"sign_in": "Sign In",
+"sign_up": "Sign Up",
+
+"user_created_info_msg": "Usuario ha sido creado",
+"user_updated_info_msg": "Usuario ha sido actualizado",
+"user_deleted_info_msg": "Usuario ha sido borrado",
+"signed_up_info_msg": "Signed up completed",
+"confirmed_info_msg": "User email account confirmed",
+"signed_in_info_msg": "Signed in",
+"signed_out_info_msg": "Signed out",
+
+"get_all_err_msg": "No se puede obtener la lista de usuarioso",
+"create_err_msg": "No es posible crear el usuario",
+"get_err_msg": "No se puede obtener el usuario",
+"update_err_msg": "No es posible actualizar el usuario",
+"delete_err_msg": "No es posible borrar usuario",
+"input_values_err_msg": "Verificar los valores ingresados",
+
+"credentials_err_msg": "Verify username and password",
+
+"cannot_proc_err_msg": "No es posible procesar el request en este momento",
+
+"required_err_msg": "Requerido",
+"min_length_err_msg": "Demasiado corto",
+"max_length_err_msg": "Demasiado largo",
+"not_allowed_err_msg": "Fuera de lista",
+"not_email_err_msg": "No es una direccion de correo válida",
+"conf_match_err_msg": "No coincide con la confirmación",
+
+"sample_message": "Mensaje de prueba",
+"sample_count_message": {
+  "description": "Some variable count message",
+  "one": "El íitem {{.Name}} tiene {{.Count}} valor",
+  "many": "El ítem {{.Name}} tiene {{.Count}} valores",
+  "other": "El ítem {{.Name}} tiene {{.Count}} valores"
+  }
+}

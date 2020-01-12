@@ -1,0 +1,89 @@
+# Tests
+
+test-selected:
+	clear
+	make -f makefile.test test-mock
+	@make spacer
+	make -f makefile.test test-auth-create-user
+	@make spacer
+	make -f makefile.test test-auth-create-user
+	@make spacer
+	make -f makefile.test test-auth-get-users
+	@make spacer
+	make -f makefile.test test-auth-get-user
+	@make spacer
+	make -f makefile.test test-auth-update-user
+	@make spacer
+	make -f makefile.test test-auth-delete-user
+	@make spacer
+	make -f makefile.test test-auth-create-account
+	@make spacer
+	make -f makefile.test test-auth-get-accounts
+	@make spacer
+	make -f makefile.test test-auth-get-account
+	@make spacer
+	make -f makefile.test test-auth-update-account
+	@make spacer
+	make -f makefile.test test-auth-delete-account
+
+## Auth
+
+### Mock
+test-mock:
+	go test -v -run TestMock -count=1 -timeout=5s  ./pkg/auth/service/user_test.go
+
+### User
+test-auth-create-user:
+	go test -v -run TestCreateUser -count=1 -timeout=5s  ./pkg/auth/service/user_test.go
+
+test-auth-get-users:
+	go test -v -run TestGetAllUsers -count=1 -timeout=5s  ./pkg/auth/service/user_test.go
+
+test-auth-get-user:
+	go test -v -run TestGetUser -count=1 -timeout=5s  ./pkg/auth/service/user_test.go
+
+test-auth-update-user:
+	go test -v -run TestUpdateUser -count=1 -timeout=5s  ./pkg/auth/service/user_test.go
+
+test-auth-delete-user:
+	go test -v -run TestDeleteUser -count=1 -timeout=5s  ./pkg/auth/service/user_test.go
+
+### Account
+test-auth-create-account:
+	go test -v -run TestCreateAccount -count=1 -timeout=5s  ./pkg/auth/service/account_test.go
+
+test-auth-get-accounts:
+	go test -v -run TestGetAllAccounts -count=1 -timeout=5s  ./pkg/auth/service/account_test.go
+
+test-auth-get-account:
+	go test -v -run TestGetAccount -count=1 -timeout=5s  ./pkg/auth/service/account_test.go
+
+test-auth-update-account:
+	go test -v -run TestUpdateAccount -count=1 -timeout=5s  ./pkg/auth/service/account_test.go
+
+test-auth-delete-account:
+	go test -v -run TestDeleteAccount -count=1 -timeout=5s  ./pkg/auth/service/account_test.go
+
+## Repo
+### User
+test-repo-create-user:
+	go test -v -run TestCreateUser -count=1 -timeout=5s  ./internal/repo/user_test.go
+
+test-repo-get-users:
+	go test -v -run TestGetAllUsers -count=1 -timeout=5s  ./internal/repo/user_test.go
+
+test-repo-get-user-by-id:
+	go test -v -run TestGetUserByID -count=1 -timeout=5s  ./internal/repo/user_test.go
+
+test-repo-get-user-by-slug:
+	go test -v -run TestGetUserBySlug -count=1 -timeout=5s  ./internal/repo/user_test.go
+
+test-repo-get-user-by-username:
+	go test -v -run TestGetUserByUsername -count=1 -timeout=5s  ./internal/repo/user_test.go
+
+test-repo-update-user:
+	go test -v -run TestUpdateUser -count=1 -timeout=5s  ./internal/repo/user_test.go
+
+test-repo-delete-user:
+	go test -v -run TestDeleteUser -count=1 -timeout=5s  ./internal/repo/user_test.go
+

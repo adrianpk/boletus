@@ -1,0 +1,25 @@
+<!-- Head -->
+{{define "head"}}
+{{"user_index" | .Loc.Localize}}
+{{end}}
+<!-- Head -->
+
+<!-- Body -->
+{{define "body"}}
+{{$data := .}}
+
+<!-- Contextual bar -->
+{{template "ctxbar" .}}
+<!-- Contextual bar -->
+
+<!-- Header -->
+{{$title := "user_index" | .Loc.Localize}}
+{{template "header" $title}}
+<!-- Header -->
+
+<!-- List -->
+{{template "list" .}}
+<!-- List -->
+
+{{end}}
+<!-- Body -->
