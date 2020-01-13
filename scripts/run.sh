@@ -26,6 +26,8 @@ export BLT_PG_PORT="5432"
 export BLT_PG_USER="boletus"
 export BLT_PG_PASSWORD="boletus"
 export BLT_PG_BACKOFF_MAXTRIES="3"
+# Seeding
+export BLT_SEEDING_FORCE="true"
 # Confirmation
 ## users/{slug}/{token}/confirm
 export BLT_USER_CONFIRMATION_PATH="auth/%s/%s/confirm"
