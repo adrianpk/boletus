@@ -1,7 +1,5 @@
 package mig
 
-import "log"
-
 // CreateUsersTable migration
 func (s *step) CreateEventsTable() error {
 	tx := s.GetTx()
@@ -48,7 +46,6 @@ func (s *step) DropEventsTable() error {
 
 	_, err := tx.Exec(st)
 	if err != nil {
-		log.Println(err)
 		return err
 	}
 
