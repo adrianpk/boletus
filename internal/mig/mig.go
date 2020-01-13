@@ -45,4 +45,9 @@ func (m *Migrator) addSteps() {
 	s = &step{}
 	s.Config(s.CreateEventsTable, s.DropEventsTable)
 	m.AddMigration(s)
+
+	// Create tickets table
+	s = &step{}
+	s.Config(s.CreateTicketsTable, s.DropTicketsTable)
+	m.AddMigration(s)
 }
