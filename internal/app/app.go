@@ -5,8 +5,8 @@ import (
 	"net/http"
 	"sync"
 
-	fnd "github.com/adrianpk/foundation"
 	"github.com/adrianpk/boletus/internal/app/web"
+	fnd "github.com/adrianpk/foundation"
 )
 
 type (
@@ -38,7 +38,12 @@ func NewApp(cfg *fnd.Config, log fnd.Logger, name string) (*App, error) {
 // Init runs pre Start process.
 func (app *App) Init() error {
 	//return app.Migrator.RollbackAll()
-	return app.Migrator.Migrate()
+	err := app.Migrator.Migrate()
+	if err != nil {
+		return err
+	}
+
+	return app.Seeder.Seed()
 }
 
 func (app *App) Start() error {
