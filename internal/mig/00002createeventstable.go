@@ -11,7 +11,7 @@ func (s *step) CreateEventsTable() error {
 		name VARCHAR(32) UNIQUE,
 		description VARCHAR(512) UNIQUE,
 		place VARCHAR(255) UNIQUE,
-		scheduled_at TIMESTAMP WITH TIME ZONE
+		scheduled_at TIMESTAMP
 	);`
 
 	_, err := tx.Exec(st)
@@ -27,8 +27,8 @@ func (s *step) CreateEventsTable() error {
 		ADD COLUMN is_deleted BOOLEAN,
 		ADD COLUMN created_by_id UUID,
 		ADD COLUMN updated_by_id UUID,
-		ADD COLUMN created_at TIMESTAMP WITH TIME ZONE,
-		ADD COLUMN updated_at TIMESTAMP WITH TIME ZONE;`
+		ADD COLUMN created_at TIMESTAMP,
+		ADD COLUMN updated_at TIMESTAMP;`
 
 	_, err = tx.Exec(st)
 	if err != nil {
