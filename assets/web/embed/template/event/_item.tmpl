@@ -34,7 +34,7 @@
             {{if not $event.IsNew}}
                   <div class="mt-4 mb-4 py-2">
                     <!-- Delete -->
-                    <form class="inline" accept-charset="UTF-8" action="{{$event | eventAdminPathSlug}}" method="POST">
+                    <form class="inline" accept-charset="UTF-8" action="{{$event | eventPathSlug}}" method="POST">
                       {{$csrf.csrfField}}
                       <input name="_method" type="hidden" value="DELETE">
                       <input class="bg-transparent hover:bg-red-500 text-red-700 font-semibold hover:text-white py-1 px-3 border border-red-500 hover:border-transparent rounded" type="submit" value="Are you sure you want to delete it?">
