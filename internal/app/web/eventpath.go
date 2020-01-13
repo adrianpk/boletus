@@ -4,9 +4,6 @@ import (
 	fnd "github.com/adrianpk/foundation"
 )
 
-// AdminRoot - Admin root path.
-var AdminRoot = "admin"
-
 // EventRoot - Event resource root path.
 var EventRoot = "events"
 
@@ -16,12 +13,12 @@ func EventPath() string {
 }
 
 func EventAdminPath() string {
-	return fnd.ResAdmin(fnd.ResPath(EventRoot), AdminRoot)
+	return fnd.ResPath(EventRoot)
 }
 
 // EventPathEdit
 func EventPathEdit(res fnd.Identifiable) string {
-	return fnd.ResAdmin(fnd.ResPathEdit(EventRoot, res), AdminRoot)
+	return fnd.ResPathEdit(EventRoot, res)
 }
 
 // EventPathNew
@@ -37,8 +34,4 @@ func EventPathInitDelete(res fnd.Identifiable) string {
 // EventPathSlug
 func EventPathSlug(res fnd.Identifiable) string {
 	return fnd.ResPathSlug(EventRoot, res)
-}
-
-func EventAdminPathSlug(res fnd.Identifiable) string {
-	return fnd.ResAdmin(fnd.ResPathSlug(EventRoot, res), AdminRoot)
 }

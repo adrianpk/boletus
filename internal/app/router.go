@@ -26,7 +26,6 @@ func (app *App) NewWebRouter() *fnd.Router {
 	app.addWebUserRouter(rt)
 	// Event
 	app.addWebEventRouter(rt)
-	app.addWebEventAdminRouter(rt)
 	return rt
 }
 

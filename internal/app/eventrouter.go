@@ -8,20 +8,9 @@ import (
 	"github.com/go-chi/chi"
 )
 
-func (app *App) addWebEventAdminRouter(parent chi.Router) chi.Router {
-	return parent.Route("/events", func(uar chi.Router) {
-		uar.Use(app.WebEP.ReqAuth)
-		uar.Get("/", app.WebEP.IndexEvents)
-		uar.Route("/{slug}", func(uarid chi.Router) {
-			uarid.Use(eventCtx)
-			uarid.Get("/", app.WebEP.ShowEvent)
-		})
-	})
-}
-
 // These routers require authorization
 func (app *App) addWebEventRouter(parent chi.Router) chi.Router {
-	return parent.Route("/admin/events", func(uar chi.Router) {
+	return parent.Route("/events", func(uar chi.Router) {
 		uar.Use(app.WebEP.ReqAuth)
 		uar.Get("/", app.WebEP.IndexEvents)
 		uar.Get("/new", app.WebEP.NewEvent)

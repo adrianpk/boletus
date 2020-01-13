@@ -16,7 +16,4 @@ var pathFxs = template.FuncMap{
 	"eventPathSlug":       EventPathSlug,
 	"eventPathInitDelete": EventPathInitDelete,
 	"eventPathNew":        EventPathNew,
-	// Admin
-	"eventAdminPath":     EventAdminPath,
-	"eventAdminPathSlug": EventAdminPathSlug,
 }
