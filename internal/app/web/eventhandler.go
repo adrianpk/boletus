@@ -308,10 +308,10 @@ func eventCreateAction() fnd.FormAction {
 
 // eventUpdateAction
 func eventUpdateAction(model fnd.Identifiable) fnd.FormAction {
-	return fnd.FormAction{Target: EventAdminPathSlug(model), Method: "PUT"}
+	return fnd.FormAction{Target: EventPathSlug(model), Method: "PUT"}
 }
 
 // eventDeleteAction
 func eventDeleteAction(model fnd.Identifiable) fnd.FormAction {
-	return fnd.FormAction{Target: EventAdminPathSlug(model), Method: "DELETE"}
+	return fnd.FormAction{Target: EventPathSlug(model), Method: "DELETE"}
 }
