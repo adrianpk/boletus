@@ -1,9 +1,9 @@
 {{define "ctxbar"}}
-{{$data := .}} {{$session := .SessionData}}
+{{$data := .}} {{$session := .SessionData}} {{$role := index $session "role"}}
     <div class="w-2/3 mx-auto">
       <div class="inline-flex float-center">
         <a class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-r" href="{{userPath}}">List</a>
-        {{if eq (index $session "role") "superadmin"}}
+        {{if hasRole $role "admin" "superadmin"}}
         <a class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-r" href="{{userPathNew}}">New</a>
         {{end}}
       </div>
