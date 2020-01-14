@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"sync"
 
-	"github.com/adrianpk/boletus/internal/app/web"
+	"github.com/adrianpk/boletus/pkg/web"
 	fnd "github.com/adrianpk/foundation"
 )
 

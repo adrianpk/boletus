@@ -4,7 +4,7 @@ import (
 	"context"
 	"net/http"
 
-	"github.com/adrianpk/boletus/internal/app/web"
+	"github.com/adrianpk/boletus/pkg/web"
 	"github.com/go-chi/chi"
 )
 
