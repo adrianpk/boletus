@@ -13,6 +13,14 @@ import (
 	"fmt"
 )
 
+func ToNullInt32(s string) sql.NullInt32 {
+	i, err := strconv.Atoi(s)
+	return sql.NullInt32{
+		Int32: int32(i),
+		Valid: err == nil,
+	}
+}
+
 func ToNullInt64(s string) sql.NullInt64 {
 	i, err := strconv.Atoi(s)
 	return sql.NullInt64{
