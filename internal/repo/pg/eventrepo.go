@@ -232,25 +232,6 @@ func (ur *EventRepo) GetBySlugAndToken(slug, token string) (model.Event, error) 
 	return event, err
 }
 
-// Confirm event from repo by slug.
-func (ur *EventRepo) ConfirmEvent(slug, token string, tx ...*sqlx.Tx) (err error) {
-	st := `UPDATE events SET is_confirmed = TRUE WHERE slug = '%s' AND confirmation_token = '%s' AND (is_deleted IS NULL OR NOT is_deleted);`
-	st = fmt.Sprintf(st, slug, token)
-
-	t, local, err := ur.getTx(tx)
-	if err != nil {
-		return err
-	}
-
-	_, err = t.Exec(st)
-
-	if local {
-		return t.Commit()
-	}
-
-	return err
-}
-
 func (ur *EventRepo) newTx() (tx *sqlx.Tx, err error) {
 	tx, err = ur.DB.Beginx()
 	if err != nil {
