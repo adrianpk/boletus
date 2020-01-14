@@ -2,6 +2,8 @@ package model
 
 import (
 	"database/sql"
+	"fmt"
+	"strconv"
 	"time"
 
 	fnd "github.com/adrianpk/foundation"
@@ -19,7 +21,7 @@ type (
 		Serie           sql.NullString `db:"serie" json:"serie" schema:"serie"`
 		Number          sql.NullString `db:"number" json:"number" schema:"number"`
 		Seat            sql.NullString `db:"seat" json:"seat" schema:"seat"`
-		Price           sql.NullString `db:"price" json:"price" schema:"price"`
+		Price           sql.NullInt32  `db:"price" json:"price" schema:"price"`
 		Currency        sql.NullString `db:"currency" json:"currency" schema:"currency"`
 		ReservedBy      sql.NullString `db:"reserved_by" json:"reservedBy" schema:"reserved-by"`
 		ReservedAt      pq.NullTime    `db:"reserved_at" json:"reserved_at" schema:"reserved-at"`
@@ -90,7 +92,7 @@ func (ticket *Ticket) Match(tc *Ticket) bool {
 		ticket.Serie.String == tc.Serie.String &&
 		ticket.Number.String == tc.Number.String &&
 		ticket.Seat.String == tc.Seat.String &&
-		ticket.Price.String == tc.Price.String &&
+		ticket.Price.Int32 == tc.Price.Int32 &&
 		ticket.Currency.String == tc.Currency.String &&
 		ticket.ReservedBy.String == tc.ReservedBy.String &&
 		ticket.ReservedAt.Time == tc.ReservedAt.Time &&
@@ -117,7 +119,7 @@ func (ticket *Ticket) ToForm() TicketForm {
 		Serie:           ticket.Serie.String,
 		Number:          ticket.Number.String,
 		Seat:            ticket.Seat.String,
-		Price:           ticket.Price.String,
+		Price:           formatCurrency(ticket.Price.Int32),
 		Currency:        ticket.Currency.String,
 		ReservedBy:      ticket.ReservedBy.String,
 		ReservedAt:      formatTime(ticket.ReservedAt.Time),
@@ -141,7 +143,7 @@ func (ticketForm *TicketForm) ToModel() Ticket {
 		Serie:           db.ToNullString(ticketForm.Serie),
 		Number:          db.ToNullString(ticketForm.Number),
 		Seat:            db.ToNullString(ticketForm.Seat),
-		Price:           db.ToNullString(ticketForm.Price),
+		Price:           db.ToNullInt32(toCurrencyStr(ticketForm.Price)),
 		Currency:        db.ToNullString(ticketForm.Currency),
 		ReservedBy:      db.ToNullString(ticketForm.ReservedBy),
 		BoughtBy:        db.ToNullString(ticketForm.BoughtBy),
@@ -151,10 +153,6 @@ func (ticketForm *TicketForm) ToModel() Ticket {
 	}
 }
 
-//LocalOrderID:     ticket.LocalOrderID.String,
-//GatewayOrderID:   ticket.GatewayOrderID.String,
-//GatewayiOpStatus: ticket.GatewayOpStatus.String,
-//IsNew:            ticket.IsNew(),
 func (ticketForm *TicketForm) GetSlug() string {
 	return ticketForm.Slug
 }
@@ -162,4 +160,21 @@ func (ticketForm *TicketForm) GetSlug() string {
 func formatTime(time time.Time) string {
 	layout := "2006-01-02T15:04:05.000Z"
 	return time.Format(layout)
+}
+
+func toCurrencyStr(millis string) string {
+	val := toCurrency(millis)
+	return fmt.Sprintf("%d", val)
+}
+
+func toCurrency(millis string) int32 {
+	val, err := strconv.ParseInt(millis, 10, 32)
+	if err != nil {
+		return int32(0)
+	}
+	return int32(val)
+}
+
+func formatCurrency(millis int32) string {
+	return fmt.Sprintf("%.2f", millis/1000)
 }
