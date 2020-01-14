@@ -159,6 +159,7 @@ const (
 
 func MakeWebEndpoint(cfg *Config, log Logger, templateFx template.FuncMap) (*WebEndpoint, error) {
 	registerGobTypes()
+	addBaseTemplateFxs(templateFx)
 
 	ep := WebEndpoint{
 		Cfg:        cfg,
@@ -190,6 +191,24 @@ func MakeWebEndpoint(cfg *Config, log Logger, templateFx template.FuncMap) (*Web
 // registerGobTypes
 func registerGobTypes() {
 	gob.Register(FlashSet{})
+}
+
+func addBaseTemplateFxs(userFxs template.FuncMap) {
+	userFxs["hasRole"] = HasRole
+}
+
+func HasRole(role string, in ...string) bool {
+	if len(in) == 0 {
+		return false
+	}
+
+	for _, r := range in {
+		if role == r {
+			return true
+		}
+	}
+
+	return false
 }
 
 func (ep *WebEndpoint) Templates() TemplateSet {

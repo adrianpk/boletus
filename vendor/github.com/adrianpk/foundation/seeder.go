@@ -83,6 +83,25 @@ func (s *Seeder) AddSeed(e SeedExec) {
 }
 
 func (s *Seeder) Seed() error {
+	force := s.Cfg.ValAsBool("seeding.force", false)
+
+	// For the moment we just only check if superadmin users
+	// where created.
+	// Future update will track applied and
+	// pending seeding using same approach as migrator.
+	// This will tet use the seeder not just only for
+	// initial setup but also for updates if required.
+	applied, err := s.isAlreadyExecuted()
+	if err != nil {
+		s.Log.Error(err, "Cannot verify is seeding was already executed")
+		return err
+	}
+
+	if applied || force {
+		s.Log.Info("Seeding was already executed")
+		return errors.New("seeding already applied")
+	}
+
 	for _, mg := range s.seeds {
 		exec := mg.Executor
 		fn := getFxName(exec.GetSeed())
@@ -98,25 +117,41 @@ func (s *Seeder) Seed() error {
 		// Read error
 		err, ok := values[0].Interface().(error)
 		if !ok && err != nil {
-			log.Printf("Migration not executed: %s\n", fn) // TODO: Remove log
+			log.Printf("Seed step not executed: %s\n", fn) // TODO: Remove log
 			log.Printf("Err  %+v' of type %T\n", err, err) // TODO: Remove log.
-			msg := fmt.Sprintf("cannot run migration '%s': %s", fn, err.Error())
+			msg := fmt.Sprintf("cannot run seeding '%s': %s", fn, err.Error())
 			tx.Rollback()
 			return errors.New(msg)
 		}
 
 		err = tx.Commit()
 		if err != nil {
-			msg := fmt.Sprintf("Cannot update migrations table: %s\n", err.Error())
+			msg := fmt.Sprintf("Commit error: %s\n", err.Error())
 			log.Printf("Commit error: %s", msg)
 			tx.Rollback()
 			return errors.New(msg)
 		}
 
-		log.Printf("Migration executed: %s\n", fn)
+		log.Printf("Seed step executed: %s\n", fn)
 	}
 
 	return nil
+}
+
+func (s *Seeder) isAlreadyExecuted() (alreadyApplied bool, err error) {
+	st := `SELECT username, role from users where username = 'superadmin' and role='superadmin'; `
+
+	r, err := s.DB.Query(st)
+	if err != nil {
+		log.Printf("Error checking database: %s\n", err.Error())
+		return true, err
+	}
+
+	if r.Next() {
+		return true, nil
+	}
+
+	return false, nil
 }
 
 func (m *Seeder) dbURL() string {
