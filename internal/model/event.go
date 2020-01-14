@@ -16,7 +16,6 @@ type (
 	// Event model
 	Event struct {
 		fnd.Identification
-		Role        sql.NullString `db:"role" json:"role" schema:"role"`
 		Name        sql.NullString `db:"name" json:"name" schema:"name"`
 		Description sql.NullString `db:"description" json:"description" schema:"description"`
 		Place       sql.NullString `db:"place" json:"place" schema:"place"`
