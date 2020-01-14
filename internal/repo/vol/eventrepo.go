@@ -105,7 +105,7 @@ func (ur *EventRepo) GetBySlug(slug string) (event model.Event, err error) {
 	return model.Event{}, nil
 }
 
-func (ur *EventRepo) GetByEventname(name string) (model.Event, error) {
+func (ur *EventRepo) GetByName(name string) (model.Event, error) {
 	for _, row := range eventsTable {
 		if name == row.model.Name.String {
 			return row.model, nil
