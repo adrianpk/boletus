@@ -88,6 +88,7 @@ func (event *Event) Match(tc *Event) bool {
 // null conterpart types. As long as is relatively simple, ergonomic
 // and could be easily implemented with generators I prefer to avoid
 // the use of reflection.
+// TODO: Move type conversion to web packate.
 func (event *Event) ToForm() EventForm {
 	date := destructureDate(event.ScheduledAt.Time)
 	return EventForm{

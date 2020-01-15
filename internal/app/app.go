@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"sync"
 
+	"github.com/adrianpk/boletus/pkg/grpc/api/v1"
 	"github.com/adrianpk/boletus/pkg/web"
 	fnd "github.com/adrianpk/foundation"
 )
@@ -12,7 +13,8 @@ import (
 type (
 	App struct {
 		*fnd.App
-		WebEP *web.Endpoint
+		WebEP      *web.Endpoint
+		GRPCServer v1.TicketerServer
 	}
 )
 
@@ -22,7 +24,7 @@ func NewApp(cfg *fnd.Config, log fnd.Logger, name string) (*App, error) {
 		App: fnd.NewApp(cfg, log, name),
 	}
 
-	// Endpoint
+	// Web Endpoint
 	wep, err := web.NewEndpoint(cfg, log, "web-endpoint")
 	if err != nil {
 		return nil, err
@@ -31,6 +33,10 @@ func NewApp(cfg *fnd.Config, log fnd.Logger, name string) (*App, error) {
 
 	// Router
 	app.WebRouter = app.NewWebRouter()
+
+	// gRPC Server
+	gs := v1.NewGRPCServer(cfg, log, "grpc-server")
+	app.GRPCServer = gs
 
 	return &app, nil
 }

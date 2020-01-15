@@ -111,6 +111,7 @@ func (ticket *Ticket) Match(tc *Ticket) bool {
 // null conterpart types. As long as is relatively simple, ergonomic
 // and could be easily implemented with generators I prefer to avoid
 // the use of reflection.
+// TODO: Move type conversion to web packate.
 func (ticket *Ticket) ToForm() TicketForm {
 	return TicketForm{
 		Slug:            ticket.Slug.String,

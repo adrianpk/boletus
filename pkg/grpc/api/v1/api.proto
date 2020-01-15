@@ -8,11 +8,18 @@ message EventIDReq {
 
 message EventRes {
   string api = 1;
-  string event = 2;
+  string slug = 2;
+  string name = 3;
+  string description = 4;
+  string place = 5;
+  string scheduledAt = 6;
+  string timezone = 7;
+  bool isNew = 8;
 }
 
 message IndexEventsRes {
-  repeated IndexEventsRes events = 1;
+  string api = 1;
+  repeated EventRes events = 2;
 }
 
 service Ticketer {
