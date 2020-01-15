@@ -40,7 +40,7 @@ type (
 		Day         string `json:"day" schema:"day"`
 		Hour        string `json:"hours" schema:"hour"`
 		Minute      string `json:"minute" schema:"minute"`
-		Timezone    string `json:"timezone" schema:"timezone"`
+		BaseTZ      string `json:"baseTZ" schema:"base-tz"`
 		IsNew       bool   `json:"-" schema:"-"`
 	}
 )
@@ -102,7 +102,7 @@ func (event *Event) ToForm() EventForm {
 		Day:         date["day"],
 		Hour:        date["hour"],
 		Minute:      date["minute"],
-		Timezone:    date["timezone"],
+		BaseTZ:      date["timezone"],
 		IsNew:       event.IsNew(),
 	}
 }

@@ -8,7 +8,7 @@ func (s *step) CreateTicketsTable() error {
 	(
 		id UUID PRIMARY KEY,
 		slug VARCHAR(36) UNIQUE,
-		name VARCHAR(32) UNIQUE,
+		name VARCHAR(32),
 		event_id UUID,
 		serie VARCHAR(8),
 		number INTEGER,
