@@ -12,7 +12,7 @@ import (
 )
 
 type (
-	Server struct {
+	GRPCService struct {
 		Cfg     *fnd.Config
 		Log     fnd.Logger
 		Name    string
@@ -24,9 +24,9 @@ const (
 	version = "v1"
 )
 
-// Server is an mplementation of Server proto interface
-func NewServer(cfg *fnd.Config, log fnd.Logger, name string) TicketerServer {
-	return &Server{
+// GRPCService is an implementation of Server proto interface
+func NewGRPCService(cfg *fnd.Config, log fnd.Logger, name string) *GRPCService {
+	return &GRPCService{
 		Cfg:  cfg,
 		Log:  log,
 		Name: name,
@@ -34,7 +34,7 @@ func NewServer(cfg *fnd.Config, log fnd.Logger, name string) TicketerServer {
 }
 
 // checkAPI checks API version.
-func (t *Server) checkAPI(api string) error {
+func (t *GRPCService) checkAPI(api string) error {
 	if len(api) > 0 {
 		if version != api {
 			return status.Errorf(codes.Unimplemented,
@@ -45,7 +45,7 @@ func (t *Server) checkAPI(api string) error {
 }
 
 // UserIndex returns all active Events
-func (s *Server) IndexEvents(ctx context.Context, req *EventIDReq) (*IndexEventsRes, error) {
+func (s *GRPCService) IndexEvents(ctx context.Context, req *EventIDReq) (*IndexEventsRes, error) {
 	// check if the API version requested by client is supported by server
 	if err := s.checkAPI(req.Api); err != nil {
 		return nil, err

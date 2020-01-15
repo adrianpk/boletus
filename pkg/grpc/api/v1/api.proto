@@ -3,7 +3,7 @@ package v1;
 
 message EventIDReq {
   string api = 1;
-  string eventID = 2;
+  string slug = 2;
 }
 
 message EventRes {
