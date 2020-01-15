@@ -23,8 +23,8 @@ var (
 	}
 )
 
-// CreateUsers seeding
-func (s *step) CreateUsers() error {
+// Users seeding
+func (s *step) Users() error {
 	tx := s.GetTx()
 
 	st := `INSERT INTO users (id, slug, role, username, password_digest, email, given_name, middle_names, family_name, last_ip,  confirmation_token, is_confirmed, locale, base_tz, current_tz, is_active, is_deleted, created_by_id, updated_by_id, created_at, updated_at)

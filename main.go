@@ -11,7 +11,7 @@ import (
 	_ "golang.org/x/text/message/catalog"
 )
 
-//go:generate gotext -srclang=en update -out=pkg/auth/web/i18n.go -lang=en,es,de,pl
+//go:generate gotext -srclang=en update -out=pkg/web/i18n.go -lang=en,es,de,pl
 
 func main() {
 	return
