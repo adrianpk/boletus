@@ -1,0 +1,20 @@
+syntax = "proto3";
+package v1;
+
+message EventIDReq {
+  string api = 1;
+  string eventID = 2;
+}
+
+message EventRes {
+  string api = 1;
+  string event = 2;
+}
+
+message IndexEventsRes {
+  repeated IndexEventsRes events = 1;
+}
+
+service Ticketer {
+  rpc IndexEvents(EventIDReq) returns (IndexEventsRes) {}
+}
