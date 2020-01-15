@@ -35,9 +35,6 @@ package-resources:
 list-package-resources:
 	pkger list -include /assets/web --json
 
-# Generators
-gen-resource:
-	mw generate all assets/gen/resource.yaml
 
 # Cloud
 connect-stg:
@@ -93,6 +90,9 @@ deploy-prod:
 	make install-prod
 
 ## Misc
+gen-proto:
+	sh third_party/protoc-gen.sh
+
 custom-build:
 	make mod tidy; go mod vendor; go build ./...
 
