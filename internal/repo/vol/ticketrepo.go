@@ -37,7 +37,7 @@ var (
 		Serie:    db.ToNullString("A"),
 		Number:   db.ToNullString("125"),
 		Seat:     db.ToNullString("25/A"),
-		Price:    db.ToNullString(50000),
+		Price:    db.ToNullInt32(50000),
 		Currency: db.ToNullString("PLN"),
 	}
 
@@ -51,7 +51,7 @@ var (
 		Serie:    db.ToNullString("C"),
 		Number:   db.ToNullString("12"),
 		Seat:     db.ToNullString("n/a"),
-		Price:    db.ToNullString(38000),
+		Price:    db.ToNullInt32(38000),
 		Currency: db.ToNullString("PLN"),
 	}
 
