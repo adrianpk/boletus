@@ -8,7 +8,6 @@ require (
 	github.com/adrianpk/foundation/db/pg v0.0.0-00010101000000-000000000000
 	github.com/go-chi/chi v4.0.3+incompatible
 	github.com/golang/protobuf v1.3.2
-	github.com/grpc-ecosystem/grpc-gateway v1.12.1 // indirect
 	github.com/jmoiron/sqlx v1.2.0
 	github.com/lib/pq v1.3.0
 	github.com/markbates/pkger v0.14.0
