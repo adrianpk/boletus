@@ -5,16 +5,20 @@ import (
 	"net/http"
 	"sync"
 
-	"github.com/adrianpk/boletus/pkg/grpc/api/v1"
+	v1 "github.com/adrianpk/boletus/pkg/grpc/api/v1"
 	"github.com/adrianpk/boletus/pkg/web"
 	fnd "github.com/adrianpk/foundation"
+
+	"net"
+
+	"google.golang.org/grpc"
 )
 
 type (
 	App struct {
 		*fnd.App
-		WebEP      *web.Endpoint
-		GRPCServer v1.TicketerServer
+		WebEP     *web.Endpoint
+		GRPCAPIV1 *v1.GRPCService
 	}
 )
 
@@ -35,8 +39,8 @@ func NewApp(cfg *fnd.Config, log fnd.Logger, name string) (*App, error) {
 	app.WebRouter = app.NewWebRouter()
 
 	// gRPC Server
-	gs := v1.NewGRPCServer(cfg, log, "grpc-server")
-	app.GRPCServer = gs
+	gsv1 := v1.NewGRPCService(cfg, log, "grpc-service-v1")
+	app.GRPCAPIV1 = gsv1
 
 	return &app, nil
 }
@@ -68,6 +72,13 @@ func (app *App) Start() error {
 	//wg.Done()
 	//}()
 
+	wg.Add(1)
+	go func() {
+		app.StartGRPC()
+
+		wg.Done()
+	}()
+
 	wg.Wait()
 	return nil
 }
@@ -76,6 +87,7 @@ func (app *App) Stop() {
 	// TODO: Gracefully stop all workers
 }
 
+// StartGRPC starts a web server to publish ticketer service.
 func (app *App) StartWeb() error {
 	p := app.Cfg.ValOrDef("web.server.port", "8080")
 	p = fmt.Sprintf(":%s", p)
@@ -86,4 +98,22 @@ func (app *App) StartWeb() error {
 	app.Log.Error(err)
 
 	return err
+}
+
+// StartGRPC starts a gRPC server to publish ticketer service.
+func (app *App) StartGRPC() error {
+	p := app.Cfg.ValOrDef("grpc.server.port", "8082")
+	p = fmt.Sprintf("tcp:%s", p)
+
+	app.Log.Info("gRPC server initializing", "port", p)
+
+	listen, err := net.Listen("tcp", p)
+	if err != nil {
+		return err
+	}
+
+	s := grpc.NewServer()
+	v1.RegisterTicketerServer(s, app.GRPCAPIV1)
+
+	return s.Serve(listen)
 }

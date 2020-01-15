@@ -11,7 +11,6 @@ import (
 	"github.com/adrianpk/boletus/internal/app/svc"
 	"github.com/adrianpk/boletus/internal/mig"
 	repo "github.com/adrianpk/boletus/internal/repo/pg"
-	v1 "github.com/adrianpk/boletus/pkg/grpc/api/v1"
 
 	//vrepo "github.com/adrianpk/boletus/internal/repo/vol"
 	"github.com/adrianpk/boletus/internal/seed"
@@ -85,7 +84,7 @@ func main() {
 	a.Migrator = mg
 	a.Seeder = sd
 	a.WebEP.Service = svc
-	a.GRPCServer.Service = svc
+	a.GRPCAPIV1.Service = svc
 
 	// Init service
 	a.Init()
