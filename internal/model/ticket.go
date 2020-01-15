@@ -144,7 +144,7 @@ func (ticketForm *TicketForm) ToModel() Ticket {
 		Serie:           db.ToNullString(ticketForm.Serie),
 		Number:          db.ToNullString(ticketForm.Number),
 		Seat:            db.ToNullString(ticketForm.Seat),
-		Price:           db.ToNullInt32(toCurrencyStr(ticketForm.Price)),
+		Price:           db.ToNullInt32(toCurrency(ticketForm.Price)),
 		Currency:        db.ToNullString(ticketForm.Currency),
 		ReservedBy:      db.ToNullString(ticketForm.ReservedBy),
 		BoughtBy:        db.ToNullString(ticketForm.BoughtBy),
