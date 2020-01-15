@@ -103,7 +103,7 @@ func (app *App) StartWeb() error {
 // StartGRPC starts a gRPC server to publish ticketer service.
 func (app *App) StartGRPC() error {
 	p := app.Cfg.ValOrDef("grpc.server.port", "8082")
-	p = fmt.Sprintf("tcp:%s", p)
+	p = fmt.Sprintf(":%s", p)
 
 	app.Log.Info("gRPC server initializing", "port", p)
 
