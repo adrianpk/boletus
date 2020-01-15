@@ -30,7 +30,7 @@ run:
 	./scripts/run.sh
 
 package-resources:
-	pkger -include /assets/web/embed -o internal/app/web
+	pkger -include /assets/web/embed -o pkg/web
 
 list-package-resources:
 	pkger list -include /assets/web --json
@@ -101,9 +101,6 @@ clean-and-run:
 	make package-resources
 	make run
 
-gen-sample:
-	mw generate Sample --all --force
-
 current-conn:
 	kubectl config current-context
 
@@ -113,6 +110,12 @@ grc-install:
 
 spacer:
 	@echo "\n"
+
+build-client:
+	go build -o ./bin/client ./cmd/client/client.go
+
+client:
+	./scripts/client.sh
 
 get-deps:
 	go get -u "github.com/aws/aws-sdk-go"
