@@ -130,6 +130,7 @@ func (user *User) Match(tc *User) bool {
 // null conterpart types. As long as is relatively simple, ergonomic
 // and could be easily implemented with generators I prefer to avoid
 // the use of reflection.
+// TODO: Move type conversion to web packate.
 func (user *User) ToForm() UserForm {
 	return UserForm{
 		Slug:              user.Slug.String,
