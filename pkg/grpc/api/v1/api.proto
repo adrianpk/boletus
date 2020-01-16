@@ -9,12 +9,13 @@ message EventIDReq {
 message EventRes {
   string api = 1;
   string slug = 2;
-  string name = 3;
-  string description = 4;
-  string place = 5;
-  string scheduledAt = 6;
-  string timezone = 7;
-  bool isNew = 8;
+  string type = 3;
+  string name = 4;
+  string description = 5;
+  string place = 6;
+  string scheduledAt = 7;
+  string timezone = 8;
+  bool isNew = 9;
 }
 
 message IndexEventsRes {

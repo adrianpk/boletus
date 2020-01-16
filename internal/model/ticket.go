@@ -18,6 +18,7 @@ type (
 		fnd.Identification
 		Name            sql.NullString `db:"name_id" json:"name_id" schema:"name_id"`
 		EventID         sql.NullString `db:"event_id" json:"event_id" schema:"event_id"`
+		Type            sql.NullString `db:"type" json:"type" schema:"type"`
 		Serie           sql.NullString `db:"serie" json:"serie" schema:"serie"`
 		Number          sql.NullString `db:"number" json:"number" schema:"number"`
 		Seat            sql.NullString `db:"seat" json:"seat" schema:"seat"`
@@ -43,6 +44,7 @@ type (
 		Slug            string `json:"slug" schema:"slug"`
 		Name            string `json:"name" schema:"name"`
 		EventID         string `json:"eventID" schema:"event-id"`
+		Type            string `json:"type" schema:"type"`
 		Serie           string `json:"serie" schema:"serie"`
 		Number          string `json:"number" schema:"number"`
 		Seat            string `json:"seat" schema:"seat"`
@@ -89,6 +91,7 @@ func (ticket *Ticket) Match(tc *Ticket) bool {
 	r := ticket.Identification.Match(tc.Identification) &&
 		ticket.Name.String == tc.Name.String &&
 		ticket.EventID.String == tc.EventID.String &&
+		ticket.Type.String == tc.Type.String &&
 		ticket.Serie.String == tc.Serie.String &&
 		ticket.Number.String == tc.Number.String &&
 		ticket.Seat.String == tc.Seat.String &&
@@ -117,6 +120,7 @@ func (ticket *Ticket) ToForm() TicketForm {
 		Slug:            ticket.Slug.String,
 		Name:            ticket.Name.String,
 		EventID:         ticket.EventID.String,
+		Type:            ticket.Type.String,
 		Serie:           ticket.Serie.String,
 		Number:          ticket.Number.String,
 		Seat:            ticket.Seat.String,
@@ -141,6 +145,7 @@ func (ticketForm *TicketForm) ToModel() Ticket {
 		},
 		Name:            db.ToNullString(ticketForm.Name),
 		EventID:         db.ToNullString(ticketForm.EventID),
+		Type:            db.ToNullString(ticketForm.Type),
 		Serie:           db.ToNullString(ticketForm.Serie),
 		Number:          db.ToNullString(ticketForm.Number),
 		Seat:            db.ToNullString(ticketForm.Seat),
