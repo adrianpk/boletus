@@ -4,6 +4,60 @@ import (
 	"database/sql"
 )
 
+var (
+	TicketTypes = ticketTypesReg()
+)
+
+var (
+	normalTT = TicketType{
+		SellingOptions: []string{"none"},
+	}
+
+	goldenTT = TicketType{
+		SellingOptions: []string{"all-together"},
+	}
+
+	silverTT = TicketType{
+		SellingOptions: []string{"even", "all-together"},
+	}
+
+	bronzeTT = TicketType{
+		SellingOptions: []string{"none", "even", "all-together"},
+	}
+
+	couplesTT = TicketType{
+		SellingOptions: []string{"even"},
+	}
+)
+
+// Ticket kind
+type (
+	// Ticket
+	TicketType struct {
+		SellingOptions []string
+	}
+
+	ticketTypes struct {
+		Normal  TicketType
+		Golden  TicketType
+		Silver  TicketType
+		Bronze  TicketType
+		Couples TicketType
+	}
+)
+
+// Ticket kinds
+func ticketTypesReg() *ticketTypes {
+	return &ticketTypes{
+		Normal:  normalTT,
+		Golden:  goldenTT,
+		Silver:  silverTT,
+		Bronze:  bronzeTT,
+		Couples: couplesTT,
+	}
+}
+
+// Ticket summary
 type (
 	// TicketSummary model
 	TicketSummary struct {

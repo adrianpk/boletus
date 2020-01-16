@@ -41,7 +41,27 @@ message TicketSummaryRes {
 }
 
 
+message PreBookReq {
+  string api = 1;
+  string eventSlug = 2;
+  string ticketType = 3;
+  int32  qty = 4;
+}
+
+
+message PreBookRes{
+  string api = 1;
+  string eventSlug = 2;
+  string ticketType = 3;
+  int32  qty = 4;
+  float  price = 5;
+  float  total = 6;
+  string currency = 7;
+  string status = 8;
+}
+
 service Ticketer {
   rpc IndexEvents(EventIDReq) returns (IndexEventsRes) {}
   rpc EventTicketSummary(EventIDReq) returns (TicketSummaryListRes) {}
+  rpc PreBookTickets(PreBookReq) returns (PreBookRes) {}
 }
