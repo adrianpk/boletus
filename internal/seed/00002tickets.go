@@ -43,11 +43,41 @@ VALUES (:id, :slug, :name, :description, :place, :scheduled_at, :base_tz, :is_ac
 func (s *step) Tickets() error {
 	tx := s.GetTx()
 
-	st := `INSERT INTO tickets (id, slug, name, event_id, serie, number, seat, price, currency, reserved_by, reserved_at, bought_by, bought_at, local_order_id, gateway_order_id, gateway_op_status, base_tz, is_active, is_deleted, created_by_id, updated_by_id, created_at, updated_at)
-VALUES (:id, :slug, :name, :event_id, :serie, :number, :seat, :price, :currency, :reserved_by, :reserved_at, :bought_by, :bought_at, :local_order_id, :gateway_order_id, :gateway_op_status, :base_tz, :is_active, :is_deleted, :created_by_id, :updated_by_id, :created_at, :updated_at);`
+	st := `INSERT INTO tickets (id, slug, name, event_id, type, serie, number, seat, price, currency, reserved_by, reserved_at, bought_by, bought_at, local_order_id, gateway_order_id, gateway_op_status, base_tz, is_active, is_deleted, created_by_id, updated_by_id, created_at, updated_at)
+VALUES (:id, :slug, :name, :event_id, :type, :serie, :number, :seat, :price, :currency, :reserved_by, :reserved_at, :bought_by, :bought_at, :local_order_id, :gateway_order_id, :gateway_op_status, :base_tz, :is_active, :is_deleted, :created_by_id, :updated_by_id, :created_at, :updated_at);`
 
 	// eventMap, serie, qty, priceInMillis
-	tickets := newTicketSerie(event, "A", 1000, 50000)
+	tickets := newTicketSerie(event, "normal", "A", 500, 30000)
+
+	for _, t := range tickets {
+		_, err := tx.NamedExec(st, t)
+		if err != nil {
+			log.Println(err)
+			log.Fatal(err)
+		}
+	}
+
+	tickets = newTicketSerie(event, "golden-circle", "A", 20, 75000)
+
+	for _, t := range tickets {
+		_, err := tx.NamedExec(st, t)
+		if err != nil {
+			log.Println(err)
+			log.Fatal(err)
+		}
+	}
+
+	tickets = newTicketSerie(event, "silver-circle", "A", 40, 50000)
+
+	for _, t := range tickets {
+		_, err := tx.NamedExec(st, t)
+		if err != nil {
+			log.Println(err)
+			log.Fatal(err)
+		}
+	}
+
+	tickets = newTicketSerie(event, "bronze-circle", "A", 40, 40000)
 
 	for _, t := range tickets {
 		_, err := tx.NamedExec(st, t)
@@ -80,7 +110,7 @@ func newEventMap(name, description, place string, scheduledAt time.Time) map[str
 	}
 }
 
-func newTicketSerie(eventMap map[string]interface{}, serie string, qty, priceInMillis int) (ticketMap []map[string]interface{}) {
+func newTicketSerie(eventMap map[string]interface{}, ticketType, serie string, qty, priceInMillis int) (ticketMap []map[string]interface{}) {
 	//ts := make([]map[string]interface{}, qty)
 	ts := []map[string]interface{}{}
 
@@ -92,7 +122,7 @@ func newTicketSerie(eventMap map[string]interface{}, serie string, qty, priceInM
 
 	n, ok := eventMap["name"]
 	if !ok {
-		log.Println("Invalid event name")
+		log.Println("Invalid ticket name")
 		return ticketMap
 	}
 
@@ -121,7 +151,7 @@ func newTicketSerie(eventMap map[string]interface{}, serie string, qty, priceInM
 	}
 
 	for i := 0; i < qty; i++ {
-		t := newTicketMap(eventID, name, schedule, priceInMillis, serie, i)
+		t := newTicketMap(eventID, name, ticketType, schedule, priceInMillis, serie, i)
 		//fmt.Printf("%+v", t)
 		ts = append(ts, t)
 	}
@@ -130,12 +160,13 @@ func newTicketSerie(eventMap map[string]interface{}, serie string, qty, priceInM
 	return ts
 }
 
-func newTicketMap(eventID uuid.UUID, name string, scheduledAt time.Time, priceInMillis int, serie string, number int) (ticketMap map[string]interface{}) {
+func newTicketMap(eventID uuid.UUID, name string, ticketType string, scheduledAt time.Time, priceInMillis int, serie string, number int) (ticketMap map[string]interface{}) {
 	return map[string]interface{}{
 		"id":                genUUID(),
 		"slug":              genSlug(name),
 		"name":              name,
 		"event_id":          eventID,
+		"type":              ticketType,
 		"serie":             serie,
 		"number":            number,
 		"seat":              scheduledAt,
