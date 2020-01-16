@@ -10,6 +10,7 @@ func (s *step) CreateTicketsTable() error {
 		slug VARCHAR(36) UNIQUE,
 		name VARCHAR(32),
 		event_id UUID,
+		type VARCHAR(32),
 		serie VARCHAR(8),
 		number INTEGER,
 		seat VARCHAR(32),
