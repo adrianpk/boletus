@@ -31,8 +31,8 @@ func NewTicketRepo(cfg *fnd.Config, log fnd.Logger, name string, db *sqlx.DB) *T
 
 // Create a ticket
 func (ur *TicketRepo) Create(ticket *model.Ticket, tx ...*sqlx.Tx) error {
-	st := `INSERT INTO tickets (id, slug, name, event_id, serie, number, seat, price, currency, reserved_by, reserved_at, bought_by, bought_at, local_order_id, gateway_order_id, gateway_op_status, locale, base_tz, is_active, is_deleted, created_by_id, updated_by_id, created_at, updated_at)
-VALUES (:id, :slug, :name, :event_id, :serie, :number, :seat, :price, :currency, :reserved_by, :reserved_at, :bought_by, :bought_at, :local_order_id, gateway_order_id, gateway_op_status, :locale, :base_tz, :current_tz, :is_active, :is_deleted, :created_by_id, :updated_by_id, :created_at, :updated_at)`
+	st := `INSERT INTO tickets (id, slug, name, event_id, serie, number, seat, price, currency, reserved_by, reserved_at, bought_by, bought_at, status, local_order_id, gateway_op_id,gateway_order_id, gateway_op_status, locale, base_tz, is_active, is_deleted, created_by_id, updated_by_id, created_at, updated_at)
+VALUES (:id, :slug, :name, :event_id, :serie, :number, :seat, :price, :currency, :reserved_by, :reserved_at, :bought_by, :bought_at, :status, :local_order_id, :gateway_op_id, gateway_order_id, gateway_op_status, :locale, :base_tz, :current_tz, :is_active, :is_deleted, :created_by_id, :updated_by_id, :created_at, :updated_at)`
 
 	// Create a local transaction if it is not passed as argument.
 	t, local, err := ur.getTx(tx)
@@ -282,6 +282,20 @@ func (ur *TicketRepo) GetBySlugAndToken(slug, token string) (model.Ticket, error
 
 	return ticket, err
 }
+
+// Custom queries and process
+
+func (ur *TicketRepo) TicketSummary(eventSlug string) (ts []model.TicketSummary, err error) {
+	st := `SELECT count(tickets.id) as qty, event_id, events.slug as event_slug, type, (tickets.price/1000) as price, currency FROM tickets INNER JOIN events ON tickets.event_id = events.id WHERE events.slug = '%s' AND (tickets.is_deleted IS NULL OR NOT tickets.is_deleted) AND (events.is_deleted IS NULL OR NOT events.is_deleted) AND (reserved_by IS NULL OR reserved_by::text='00000000-0000-0000-0000-000000000000') AND (bought_by IS NULL OR NOT bought_by::text='00000000-0000-0000-0000-00000000') AND (status IS NULL OR status='') AND (gateway_op_id IS NULL or gateway_op_id='') GROUP BY event_id, event_slug, type, price, currency ORDER BY tickets.price ASC;`
+
+	st = fmt.Sprintf(st, eventSlug)
+
+	err = ur.DB.Select(&ts, st)
+
+	return ts, err
+}
+
+// Tx
 
 func (ur *TicketRepo) newTx() (tx *sqlx.Tx, err error) {
 	tx, err = ur.DB.Beginx()

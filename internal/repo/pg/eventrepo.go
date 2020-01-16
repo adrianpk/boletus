@@ -232,6 +232,8 @@ func (ur *EventRepo) GetBySlugAndToken(slug, token string) (model.Event, error) 
 	return event, err
 }
 
+// Tx
+
 func (ur *EventRepo) newTx() (tx *sqlx.Tx, err error) {
 	tx, err = ur.DB.Beginx()
 	if err != nil {

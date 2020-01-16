@@ -63,7 +63,26 @@ func (s *GRPCService) IndexEvents(ctx context.Context, req *EventIDReq) (*IndexE
 	}, err
 }
 
-// Misc
+// EventTicketsInfo returns info about ticket types, price and availability bv event.
+func (s *GRPCService) EventTicketSummary(ctx context.Context, req *EventIDReq) (*TicketSummaryListRes, error) {
+	// check if the API version requested by client is supported by server
+	if err := s.checkAPI(req.Api); err != nil {
+		return nil, err
+	}
+
+	// Get ticket info from service
+	ts, err := s.Service.TicketSummary(req.Slug)
+
+	// Convert result list into a EventRes list
+	list := toTicketSummaryList(ts)
+
+	return &TicketSummaryListRes{
+		Api:  version,
+		List: list,
+	}, err
+}
+
+// Convertions
 func toEventResList(events []model.Event) (ers []*EventRes) {
 	for _, m := range events {
 		ers = append(ers, toEventRes(m))
@@ -79,5 +98,23 @@ func toEventRes(event model.Event) *EventRes {
 		Place:       event.Place.String,
 		ScheduledAt: event.ScheduledAt.Time.Format(time.RFC3339),
 		IsNew:       event.IsNew(),
+	}
+}
+
+func toTicketSummaryList(tss []model.TicketSummary) (ers []*TicketSummaryRes) {
+	for _, m := range tss {
+		ers = append(ers, toTicketSummaryRes(m))
+	}
+	return ers
+}
+
+func toTicketSummaryRes(ts model.TicketSummary) *TicketSummaryRes {
+	return &TicketSummaryRes{
+		Qty:       ts.Qty.Int32,
+		Name:      ts.Name.String,
+		EventSlug: ts.EventSlug.String,
+		Type:      ts.Type.String,
+		Price:     ts.PriceFloat32(),
+		Currency:  ts.Currency.String,
 	}
 }

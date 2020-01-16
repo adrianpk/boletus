@@ -18,11 +18,30 @@ message EventRes {
   bool isNew = 9;
 }
 
+
 message IndexEventsRes {
   string api = 1;
   repeated EventRes events = 2;
 }
 
+
+message TicketSummaryListRes {
+  string api = 1;
+  repeated TicketSummaryRes list = 2;
+}
+
+message TicketSummaryRes {
+  string api = 1;
+  string name = 2;
+  string eventSlug = 3;
+  string type = 4;
+  int32  qty = 5;
+  float  price = 6;
+  string currency = 7;
+}
+
+
 service Ticketer {
   rpc IndexEvents(EventIDReq) returns (IndexEventsRes) {}
+  rpc EventTicketSummary(EventIDReq) returns (TicketSummaryListRes) {}
 }
