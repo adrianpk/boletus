@@ -161,3 +161,7 @@ func (ur *TicketRepo) DeleteySlug(slug string, tx ...*sqlx.Tx) error {
 	}
 	return errors.New("no records deleted")
 }
+
+func (ur *TicketRepo) TicketSummary(eventSlug string) (ts []model.TicketSummary, err error) {
+	panic("not implemented")
+}

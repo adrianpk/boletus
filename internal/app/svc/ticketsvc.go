@@ -119,3 +119,13 @@ func (s *Service) DeleteTicket(slug string) error {
 	// Output
 	return nil
 }
+
+// Custom queries and process
+func (s *Service) TicketSummary(eventSlug string) (users []model.TicketSummary, err error) {
+	repo := s.TicketRepo
+	if repo == nil {
+		return users, NoRepoErr
+	}
+
+	return repo.TicketSummary(eventSlug)
+}

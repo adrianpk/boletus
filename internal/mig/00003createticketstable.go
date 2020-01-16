@@ -20,7 +20,9 @@ func (s *step) CreateTicketsTable() error {
 		reserved_at TIMESTAMP,
 		bought_by UUID,
 		bought_at TIMESTAMP,
+		status VARCHAR(16),
 		local_order_id VARCHAR(128),
+		gateway_op_id VARCHAR(32),
 		gateway_order_id VARCHAR(128),
 		gateway_op_status VARCHAR(128)
 	);`

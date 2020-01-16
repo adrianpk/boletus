@@ -28,7 +28,9 @@ type (
 		ReservedAt      pq.NullTime    `db:"reserved_at" json:"reserved_at" schema:"reserved-at"`
 		BoughtBy        sql.NullString `db:"bought_by" json:"boughtBy" schema:"bought-by"`
 		BoughtAt        pq.NullTime    `db:"bought_at" json:"boughtAt" schema:"bought-at"`
+		Status          sql.NullString `db:"status" json:"status" schema:"status"`
 		LocalOrderID    sql.NullString `db:"local_order_id" json:"localOrderID" schema:"local-order-at"`
+		GatewayOpID     sql.NullString `db:"gateway_op_id" json:"gatewayOpID" schema:"gateway-op-id"`
 		GatewayOrderID  sql.NullString `db:"gateway_order_id" json:"gatewayOrderID" schema:"local-order-at"`
 		GatewayOpStatus sql.NullString `db:"gateway_op_status" json:"gatewayOpStatus" schema:"gateway-op-status"`
 		Locale          sql.NullString `db:"locale" json:"-" schema:"-"`
@@ -54,7 +56,9 @@ type (
 		ReservedAt      string `json:"reservedAt" schema:"reserved-at"`
 		BoughtBy        string `json:"boughtBy" schema:"bought-by"`
 		BoughtAt        string `json:"boughtAt" schema:"bought-at"`
+		Status          string `json:"status" schema:"status"`
 		LocalOrderID    string `json:"localOrderID" schema:"local-order-id"`
+		GatewayOpID     string `json:"GatewayOpID" schema:"gateway-op-id"`
 		GatewayOrderID  string `json:"GatewayOrderID" schema:"gateway-order-id"`
 		GatewayOpStatus string `json:"GatewayOpStatus" schema:"gateway-op-status"`
 		IsNew           bool   `json:"-" schema:"-"`
@@ -101,7 +105,9 @@ func (ticket *Ticket) Match(tc *Ticket) bool {
 		ticket.ReservedAt.Time == tc.ReservedAt.Time &&
 		ticket.BoughtBy.String == tc.BoughtBy.String &&
 		ticket.BoughtAt.Time == tc.BoughtAt.Time &&
+		ticket.Status.String == tc.Status.String &&
 		ticket.LocalOrderID.String == tc.LocalOrderID.String &&
+		ticket.GatewayOpID.String == tc.GatewayOpID.String &&
 		ticket.GatewayOrderID.String == tc.GatewayOrderID.String &&
 		ticket.GatewayOpStatus.String == tc.GatewayOpStatus.String
 	return r
@@ -130,7 +136,9 @@ func (ticket *Ticket) ToForm() TicketForm {
 		ReservedAt:      formatTime(ticket.ReservedAt.Time),
 		BoughtBy:        ticket.BoughtBy.String,
 		BoughtAt:        formatTime(ticket.BoughtAt.Time),
+		Status:          ticket.Status.String,
 		LocalOrderID:    ticket.LocalOrderID.String,
+		GatewayOpID:     ticket.GatewayOpID.String,
 		GatewayOrderID:  ticket.GatewayOrderID.String,
 		GatewayOpStatus: ticket.GatewayOpStatus.String,
 		IsNew:           ticket.IsNew(),
@@ -153,7 +161,9 @@ func (ticketForm *TicketForm) ToModel() Ticket {
 		Currency:        db.ToNullString(ticketForm.Currency),
 		ReservedBy:      db.ToNullString(ticketForm.ReservedBy),
 		BoughtBy:        db.ToNullString(ticketForm.BoughtBy),
+		Status:          db.ToNullString(ticketForm.Status),
 		LocalOrderID:    db.ToNullString(ticketForm.LocalOrderID),
+		GatewayOpID:     db.ToNullString(ticketForm.GatewayOpID),
 		GatewayOrderID:  db.ToNullString(ticketForm.GatewayOrderID),
 		GatewayOpStatus: db.ToNullString(ticketForm.GatewayOpStatus),
 	}

@@ -16,5 +16,7 @@ type (
 		Update(user *model.Ticket, tx ...*sqlx.Tx) error
 		Delete(id uuid.UUID, tx ...*sqlx.Tx) error
 		DeleteBySlug(slug string, tx ...*sqlx.Tx) error
+		// WIP: Later this methods can be moved to a custom repo
+		TicketSummary(eventSlug string) (ticketSummary []model.TicketSummary, err error)
 	}
 )

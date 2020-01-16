@@ -309,6 +309,8 @@ func (ur *UserRepo) SignIn(username, password string) (model.User, error) {
 	return u, nil
 }
 
+// Tx
+
 func (ur *UserRepo) newTx() (tx *sqlx.Tx, err error) {
 	tx, err = ur.DB.Beginx()
 	if err != nil {
