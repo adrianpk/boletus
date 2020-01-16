@@ -88,6 +88,18 @@ VALUES (:id, :slug, :name, :event_id, :type, :serie, :number, :seat, :price, :cu
 	}
 
 	return nil
+
+	tickets = newTicketSerie(event, "promo-couples", "A", 40, 20000)
+
+	for _, t := range tickets {
+		_, err := tx.NamedExec(st, t)
+		if err != nil {
+			log.Println(err)
+			log.Fatal(err)
+		}
+	}
+
+	return nil
 }
 
 func newEventMap(name, description, place string, scheduledAt time.Time) map[string]interface{} {

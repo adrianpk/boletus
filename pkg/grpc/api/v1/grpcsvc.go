@@ -2,10 +2,8 @@ package v1
 
 import (
 	"context"
-	"time"
 
 	"github.com/adrianpk/boletus/internal/app/svc"
-	"github.com/adrianpk/boletus/internal/model"
 	fnd "github.com/adrianpk/foundation"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
@@ -82,39 +80,22 @@ func (s *GRPCService) EventTicketSummary(ctx context.Context, req *EventIDReq) (
 	}, err
 }
 
-// Convertions
-func toEventResList(events []model.Event) (ers []*EventRes) {
-	for _, m := range events {
-		ers = append(ers, toEventRes(m))
+// Info returns info about ticket types, price and availability bv event.
+// NOTE:
+func (s *GRPCService) PreBook(ctx context.Context, req *PreBookReq) (*TicketSummaryListRes, error) {
+	// check if the API version requested by client is supported by server
+	if err := s.checkAPI(req.Api); err != nil {
+		return nil, err
 	}
-	return ers
-}
 
-func toEventRes(event model.Event) *EventRes {
-	return &EventRes{
-		Slug:        event.Slug.String,
-		Name:        event.Name.String,
-		Description: event.Description.String,
-		Place:       event.Place.String,
-		ScheduledAt: event.ScheduledAt.Time.Format(time.RFC3339),
-		IsNew:       event.IsNew(),
-	}
-}
+	// Get ticket info from service
+	ts, err := s.Service.TicketSummary(req.Slug)
 
-func toTicketSummaryList(tss []model.TicketSummary) (ers []*TicketSummaryRes) {
-	for _, m := range tss {
-		ers = append(ers, toTicketSummaryRes(m))
-	}
-	return ers
-}
+	// Convert result list into a EventRes list
+	list := toTicketSummaryList(ts)
 
-func toTicketSummaryRes(ts model.TicketSummary) *TicketSummaryRes {
-	return &TicketSummaryRes{
-		Qty:       ts.Qty.Int32,
-		Name:      ts.Name.String,
-		EventSlug: ts.EventSlug.String,
-		Type:      ts.Type.String,
-		Price:     ts.PriceFloat32(),
-		Currency:  ts.Currency.String,
-	}
+	return &TicketSummaryListRes{
+		Api:  version,
+		List: list,
+	}, err
 }
