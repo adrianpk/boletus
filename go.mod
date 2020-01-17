@@ -11,7 +11,7 @@ require (
 	github.com/jmoiron/sqlx v1.2.0
 	github.com/lib/pq v1.3.0
 	github.com/markbates/pkger v0.14.0
-	github.com/robfig/cron v1.2.0
+	github.com/robfig/cron/v3 v3.0.1
 	github.com/satori/go.uuid v1.2.0
 	golang.org/x/crypto v0.0.0-20200109152110-61a87790db17
 	golang.org/x/net v0.0.0-20200114155413-6afb5195e5aa // indirect
