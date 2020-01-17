@@ -45,7 +45,7 @@ func (t *GRPCService) checkAPI(api string) error {
 // UserIndex returns all active Events
 func (s *GRPCService) IndexEvents(ctx context.Context, req *EventIDReq) (*IndexEventsRes, error) {
 	// check if the API version requested by client is supported by server
-	if err := s.checkAPI(req.Api); err != nil {
+	if err := s.checkAPI(req.GetApi()); err != nil {
 		return nil, err
 	}
 
@@ -64,12 +64,12 @@ func (s *GRPCService) IndexEvents(ctx context.Context, req *EventIDReq) (*IndexE
 // EventTicketsInfo returns info about ticket types, price and availability bv event.
 func (s *GRPCService) EventTicketSummary(ctx context.Context, req *EventIDReq) (*TicketSummaryListRes, error) {
 	// check if the API version requested by client is supported by server
-	if err := s.checkAPI(req.Api); err != nil {
+	if err := s.checkAPI(req.GetApi()); err != nil {
 		return nil, err
 	}
 
 	// Get ticket info from service
-	ts, err := s.Service.TicketSummary(req.Slug)
+	ts, err := s.Service.TicketSummary(req.GetSlug())
 
 	// Convert result list into a EventRes list
 	list := toTicketSummaryList(ts)
@@ -80,22 +80,28 @@ func (s *GRPCService) EventTicketSummary(ctx context.Context, req *EventIDReq) (
 	}, err
 }
 
-// Info returns info about ticket types, price and availability bv event.
-// NOTE:
-func (s *GRPCService) PreBook(ctx context.Context, req *PreBookReq) (*TicketSummaryListRes, error) {
+// PreBook makes a ticket reservation for an event.
+// NOTE: Isn't it risky to let pre-book ticket that as 'all-together' as selling option?
+// It will make all tickets appear unavailable for 15 minutes.
+// and nothing prevents from pre-booking all them again later.
+func (s *GRPCService) PreBook(ctx context.Context, req *PreBookReq) (*PreBookRes, error) {
 	// check if the API version requested by client is supported by server
-	if err := s.checkAPI(req.Api); err != nil {
+	if err := s.checkAPI(req.GetApi()); err != nil {
 		return nil, err
 	}
 
 	// Get ticket info from service
-	ts, err := s.Service.TicketSummary(req.Slug)
+	qty := int(req.GetQty())
+	ts, err := s.Service.PreBookTickets(req.GetEventSlug(), req.GetTicketType(), qty, req.GetUserSlug())
 
-	// Convert result list into a EventRes list
-	list := toTicketSummaryList(ts)
+	// Convert result list into a TicketRes list
+	list, total, currency := toTicketResList(ts)
 
-	return &TicketSummaryListRes{
-		Api:  version,
-		List: list,
+	return &PreBookRes{
+		Api:      version,
+		List:     list,
+		Total:    total,
+		Currency: currency,
+		Status:   "processed",
 	}, err
 }

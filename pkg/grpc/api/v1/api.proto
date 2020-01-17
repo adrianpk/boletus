@@ -40,28 +40,41 @@ message TicketSummaryRes {
   string currency = 7;
 }
 
-
 message PreBookReq {
   string api = 1;
-  string eventSlug = 2;
-  string ticketType = 3;
-  int32  qty = 4;
+  string userSlug = 2;
+  string eventSlug = 3;
+  string ticketType = 4;
+  int32  qty = 5;
 }
-
 
 message PreBookRes{
   string api = 1;
-  string eventSlug = 2;
-  string ticketType = 3;
-  int32  qty = 4;
-  float  price = 5;
-  float  total = 6;
-  string currency = 7;
-  string status = 8;
+  repeated TicketRes list = 2;
+  float  total = 3;
+  string currency = 4;
+  string status = 5;
+}
+
+message TicketRes {
+  string api = 1;
+  string name = 2;
+  string eventSlug = 3;
+  string type = 4;
+  string serie = 5;
+  int32 number = 6;
+  string seat = 7;
+  int32  price = 8;
+  string currency = 9;
+  string status = 10;
+  string localOrderID = 11;
+  string gatewayOpID = 12;
+  string gatewayOpStatus = 13;
+  bool isNew = 16;
 }
 
 service Ticketer {
   rpc IndexEvents(EventIDReq) returns (IndexEventsRes) {}
   rpc EventTicketSummary(EventIDReq) returns (TicketSummaryListRes) {}
-  rpc PreBookTickets(PreBookReq) returns (PreBookRes) {}
+  rpc PreBook(PreBookReq) returns (PreBookRes) {}
 }

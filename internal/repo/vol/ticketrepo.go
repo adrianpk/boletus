@@ -165,3 +165,11 @@ func (ur *TicketRepo) DeleteySlug(slug string, tx ...*sqlx.Tx) error {
 func (ur *TicketRepo) TicketSummary(eventSlug string) (ts []model.TicketSummary, err error) {
 	panic("not implemented")
 }
+
+func (ur *TicketRepo) Available(eventSlug, ticketType string) (ts model.TicketSummary, err error) {
+	panic("not implemented")
+}
+
+func (ur *TicketRepo) PreBook(eventSlug, ticketType string, qty int, userSlug string, tx ...*sqlx.Tx) (ts []model.Ticket, err error) {
+	panic("not implemented")
+}
