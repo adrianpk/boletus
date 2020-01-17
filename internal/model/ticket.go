@@ -24,9 +24,10 @@ type (
 		Seat            sql.NullString `db:"seat" json:"seat" schema:"seat"`
 		Price           sql.NullInt32  `db:"price" json:"price" schema:"price"`
 		Currency        sql.NullString `db:"currency" json:"currency" schema:"currency"`
-		ReservedBy      sql.NullString `db:"reserved_by" json:"reservedBy" schema:"reserved-by"`
+		ReservationID   sql.NullString `db:"reservation_id" json:"reservationID" schema:"reservation-id"`
+		ReservedBy      sql.NullString `db:"reserved_by_id" json:"reservedBy" schema:"reserved-by"`
 		ReservedAt      pq.NullTime    `db:"reserved_at" json:"reserved_at" schema:"reserved-at"`
-		BoughtBy        sql.NullString `db:"bought_by" json:"boughtBy" schema:"bought-by"`
+		BoughtBy        sql.NullString `db:"bought_by_id" json:"boughtBy" schema:"bought-by"`
 		BoughtAt        pq.NullTime    `db:"bought_at" json:"boughtAt" schema:"bought-at"`
 		Status          sql.NullString `db:"status" json:"status" schema:"status"`
 		LocalOrderID    sql.NullString `db:"local_order_id" json:"localOrderID" schema:"local-order-at"`
@@ -52,6 +53,7 @@ type (
 		Seat            string `json:"seat" schema:"seat"`
 		Price           string `json:"price" schema:"price"`
 		Currency        string `json:"currency" schema:"currency"`
+		ReservationID   string `json:"reservationID" schema:"reservation-id"`
 		ReservedBy      string `json:"reservedBy" schema:"reserved-by"`
 		ReservedAt      string `json:"reservedAt" schema:"reserved-at"`
 		BoughtBy        string `json:"boughtBy" schema:"bought-by"`
@@ -105,6 +107,7 @@ func (ticket *Ticket) Match(tc *Ticket) bool {
 		ticket.Seat.String == tc.Seat.String &&
 		ticket.Price.Int32 == tc.Price.Int32 &&
 		ticket.Currency.String == tc.Currency.String &&
+		ticket.ReservationID.String == tc.ReservationID.String &&
 		ticket.ReservedBy.String == tc.ReservedBy.String &&
 		ticket.ReservedAt.Time == tc.ReservedAt.Time &&
 		ticket.BoughtBy.String == tc.BoughtBy.String &&
@@ -136,6 +139,7 @@ func (ticket *Ticket) ToForm() TicketForm {
 		Seat:            ticket.Seat.String,
 		Price:           formatCurrency(ticket.Price.Int32),
 		Currency:        ticket.Currency.String,
+		ReservationID:   ticket.ReservationID.String,
 		ReservedBy:      ticket.ReservedBy.String,
 		ReservedAt:      formatTime(ticket.ReservedAt.Time),
 		BoughtBy:        ticket.BoughtBy.String,
@@ -163,6 +167,7 @@ func (ticketForm *TicketForm) ToModel() Ticket {
 		Seat:            db.ToNullString(ticketForm.Seat),
 		Price:           db.ToNullInt32(toMillisFromStr(ticketForm.Price)),
 		Currency:        db.ToNullString(ticketForm.Currency),
+		ReservationID:   db.ToNullString(ticketForm.ReservationID),
 		ReservedBy:      db.ToNullString(ticketForm.ReservedBy),
 		BoughtBy:        db.ToNullString(ticketForm.BoughtBy),
 		Status:          db.ToNullString(ticketForm.Status),

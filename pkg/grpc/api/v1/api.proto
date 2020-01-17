@@ -66,11 +66,12 @@ message TicketRes {
   string seat = 7;
   int32  price = 8;
   string currency = 9;
-  string status = 10;
-  string localOrderID = 11;
-  string gatewayOpID = 12;
-  string gatewayOpStatus = 13;
-  bool isNew = 16;
+  string reservationID = 10;
+  string status = 11;
+  string localOrderID = 12;
+  string gatewayOpID = 13;
+  string gatewayOpStatus = 14;
+  bool isNew = 15;
 }
 
 service Ticketer {

@@ -4,6 +4,7 @@ import (
 	"log"
 	"time"
 
+	fnd "github.com/adrianpk/foundation"
 	uuid "github.com/satori/go.uuid"
 )
 
@@ -43,8 +44,8 @@ VALUES (:id, :slug, :name, :description, :place, :scheduled_at, :base_tz, :is_ac
 func (s *step) Tickets() error {
 	tx := s.GetTx()
 
-	st := `INSERT INTO tickets (id, slug, name, event_id, type, serie, number, seat, price, currency, reserved_by, reserved_at, bought_by, bought_at, local_order_id, gateway_order_id, gateway_op_status, base_tz, is_active, is_deleted, created_by_id, updated_by_id, created_at, updated_at)
-VALUES (:id, :slug, :name, :event_id, :type, :serie, :number, :seat, :price, :currency, :reserved_by, :reserved_at, :bought_by, :bought_at, :local_order_id, :gateway_order_id, :gateway_op_status, :base_tz, :is_active, :is_deleted, :created_by_id, :updated_by_id, :created_at, :updated_at);`
+	st := `INSERT INTO tickets (id, slug, name, event_id, type, serie, number, seat, price, currency, reservation_id, reserved_by_id, reserved_at, bought_by_id, bought_at, local_order_id, gateway_order_id, gateway_op_status, base_tz, is_active, is_deleted, created_by_id, updated_by_id, created_at, updated_at)
+VALUES (:id, :slug, :name, :event_id, :type, :serie, :number, :seat, :price, :currency, :reservation_id, :reserved_by_id, :reserved_at, :bought_by_id, :bought_at, :local_order_id, :gateway_order_id, :gateway_op_status, :base_tz, :is_active, :is_deleted, :created_by_id, :updated_by_id, :created_at, :updated_at);`
 
 	// eventMap, serie, qty, priceInMillis
 	tickets := newTicketSerie(event, "normal", "A", 500, 30000)
@@ -184,9 +185,10 @@ func newTicketMap(eventID uuid.UUID, name string, ticketType string, scheduledAt
 		"seat":              scheduledAt,
 		"price":             priceInMillis,
 		"currency":          "PLN",
-		"reserved_by":       uuid.Nil,
+		"reservation_id":    fnd.GenShortID(),
+		"reserved_by_id":    uuid.Nil,
 		"reserved_at":       time.Time{},
-		"bought_by":         uuid.Nil,
+		"bought_by_id":      uuid.Nil,
 		"bought_at":         time.Time{},
 		"local_order_id":    "",
 		"gateway_order_id":  "",

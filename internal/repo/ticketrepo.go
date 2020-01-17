@@ -20,6 +20,6 @@ type (
 		TicketSummary(eventSlug string) (ticketSummary []model.TicketSummary, err error)
 		Available(eventSlug, ticketType string) (ts model.TicketSummary, err error)
 		GetAvailable(eventSlug, ticketType string, qty int) (tickets []model.Ticket, err error)
-		PreBook(eventSlug, ticketType string, qty int, userSlug string, tx ...*sqlx.Tx) (ts []model.Ticket, err error)
+		PreBook(eventSlug, ticketType string, qty int, reservationID, userSlug string, tx ...*sqlx.Tx) (ts []model.Ticket, err error)
 	}
 )

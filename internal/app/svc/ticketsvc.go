@@ -161,7 +161,8 @@ func (s *Service) PreBookTickets(eventSlug, ticketType string, qty int, userSlug
 	}
 
 	// Pre book tickets
-	tickets, err = repo.PreBook(eventSlug, ticketType, qty, userSlug, tx)
+	reservationID := fnd.GenShortID()
+	tickets, err = repo.PreBook(eventSlug, ticketType, qty, reservationID, userSlug, tx)
 	if err != nil {
 		tx.Rollback()
 		return tickets, err
