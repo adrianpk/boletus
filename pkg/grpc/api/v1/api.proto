@@ -1,0 +1,81 @@
+syntax = "proto3";
+package v1;
+
+message EventIDReq {
+  string api = 1;
+  string slug = 2;
+}
+
+message EventRes {
+  string api = 1;
+  string slug = 2;
+  string type = 3;
+  string name = 4;
+  string description = 5;
+  string place = 6;
+  string scheduledAt = 7;
+  string timezone = 8;
+  bool isNew = 9;
+}
+
+
+message IndexEventsRes {
+  string api = 1;
+  repeated EventRes events = 2;
+}
+
+
+message TicketSummaryListRes {
+  string api = 1;
+  repeated TicketSummaryRes list = 2;
+}
+
+message TicketSummaryRes {
+  string api = 1;
+  string name = 2;
+  string eventSlug = 3;
+  string type = 4;
+  int32  qty = 5;
+  float  price = 6;
+  string currency = 7;
+}
+
+message PreBookReq {
+  string api = 1;
+  string userSlug = 2;
+  string eventSlug = 3;
+  string ticketType = 4;
+  int32  qty = 5;
+}
+
+message PreBookRes{
+  string api = 1;
+  repeated TicketRes list = 2;
+  float  total = 3;
+  string currency = 4;
+  string status = 5;
+}
+
+message TicketRes {
+  string api = 1;
+  string name = 2;
+  string eventSlug = 3;
+  string type = 4;
+  string serie = 5;
+  int32 number = 6;
+  string seat = 7;
+  int32  price = 8;
+  string currency = 9;
+  string reservationID = 10;
+  string status = 11;
+  string localOrderID = 12;
+  string gatewayOpID = 13;
+  string gatewayOpStatus = 14;
+  bool isNew = 15;
+}
+
+service Ticketer {
+  rpc IndexEvents(EventIDReq) returns (IndexEventsRes) {}
+  rpc EventTicketSummary(EventIDReq) returns (TicketSummaryListRes) {}
+  rpc PreBook(PreBookReq) returns (PreBookRes) {}
+}

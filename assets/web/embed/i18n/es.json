@@ -14,16 +14,18 @@
 "signed_in_info_msg": "Signed in",
 "signed_out_info_msg": "Signed out",
 
-"get_all_err_msg": "No se puede obtener la lista de usuarioso",
+"index_err_msg": "No se puede obtener la lista de usuarioso",
 "create_err_msg": "No es posible crear el usuario",
 "get_err_msg": "No se puede obtener el usuario",
 "update_err_msg": "No es posible actualizar el usuario",
 "delete_err_msg": "No es posible borrar usuario",
 "input_values_err_msg": "Verificar los valores ingresados",
-
 "credentials_err_msg": "Verify username and password",
-
 "cannot_proc_err_msg": "No es posible procesar el request en este momento",
+
+"event_created_info_msg": "Event created",
+"event_updated_info_msg": "Event updated",
+"event_deleted_info_msg": "Event deleted",
 
 "required_err_msg": "Requerido",
 "min_length_err_msg": "Demasiado corto",

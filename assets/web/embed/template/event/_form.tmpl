@@ -1,0 +1,185 @@
+{{define "form"}} {{$event := .Data}} {{$errors := .Errors}} {{$action := .Action}} {{$loc := .Loc}} {{$csrf := .CSRF}}
+    <div class="w-2/3 mx-auto">
+
+          <form class="bg-white shadow-md px-8 py-4 mb-4 rounded" accept-charset="UTF-8" action="{{$action.Target}}" method="POST">
+            <input name="_method" type="hidden" value="{{$action.Method}}">
+
+            {{$csrf.csrfField}}
+
+            <div class="mb-4">
+              <label class="block text-gray-700 text-sm font-bold mb-2" for="name">Name</label>
+              <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="name" name="aname" placeholder="Min. 4 characters" value="{{$event.Name}}"/>
+              {{with $errors.Name}}
+                {{range $errors.Name}}
+                  <label class='py-2 text-red-700 block'>{{. | $loc.Localize}}</label>
+                {{end}}
+              {{end}}
+            </div>
+
+
+            <div class="mb-4">
+              <label class="block text-gray-700 text-sm font-bold mb-2" for="description">Description</label>
+              <textarea class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="description" name="description" placeholder="Min. 12 characters" value="{{$event.Description}}"/>
+              </textarea>
+              {{with $errors.Description}}
+                {{range $errors.Description}}
+                  <label class='py-2 text-red-700 block'>{{. | $loc.Localize}}</label>
+                {{end}}
+              {{end}}
+            </div>
+
+            <div class="mb-4">
+              <label class="block text-gray-700 text-sm font-bold mb-2" for="description">Place</label>
+              <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="place" name="place" placeholder="" value="{{$event.Place}}"/>
+              {{with $errors.Place}}
+                {{range $errors.Place}}
+                  <label class='py-2 text-red-700 block'>{{. | $loc.Localize}}</label>
+                {{end}}
+              {{end}}
+            </div>
+
+            <div class="mb-4">
+              <label class="block text-gray-700 text-sm font-bold mb-2" for="scheduled-at">Schedule</label>
+              <div class="flex flex-row">
+              <select class="shadow appearance-none border rounded py-2 px-3 m-2 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="day" name="day">
+              <option>Day</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+                <option value="11">11</option>
+                <option value="12">12</option>
+                <option value="13">13</option>
+                <option value="14">14</option>
+                <option value="15">15</option>
+                <option value="16">16</option>
+                <option value="17">17</option>
+                <option value="18">18</option>
+                <option value="19">19</option>
+                <option value="20">20</option>
+                <option value="21">21</option>
+                <option value="22">22</option>
+                <option value="23">23</option>
+                <option value="24">24</option>
+                <option value="25">25</option>
+                <option value="26">26</option>
+                <option value="27">27</option>
+                <option value="28">28</option>
+                <option value="29">29</option>
+                <option value="30">30</option>
+                <option value="31">31</option>
+              </select>
+              <select class="shadow appearance-none border rounded py-2 px-3 m-2 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="month" name="month">
+                <option>Month</option>
+                <option value="January">January</option>
+                <option value="Febuary">Febuary</option>
+                <option value="March">March</option>
+                <option value="April">April</option>
+                <option value="May">May</option>
+                <option value="June">June</option>
+                <option value="July">July</option>
+                <option value="August">August</option>
+                <option value="September">September</option>
+                <option value="October">October</option>
+                <option value="November">November</option>
+                <option value="December">December</option>
+              </select>
+              <select class="shadow appearance-none border rounded py-2 px-3 m-2 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="year" name="year">
+              <option>Year</option>
+                <option value="2020">2020</option>
+                <option value="2021">2021</option>
+                <option value="2022">2022</option>
+                <option value="2023">2023</option>
+                <option value="2024">2024</option>
+                <option value="2025">2025</option>
+                <option value="2026">2026</option>
+                <option value="2027">2027</option>
+                <option value="2028">2028</option>
+                <option value="2029">2029</option>
+                <option value="2030">2030</option>
+                <option value="2031">2031</option>
+                <option value="2032">2032</option>
+                <option value="2033">2033</option>
+                <option value="2034">2034</option>
+                <option value="2035">2035</option>
+                <option value="2036">2036</option>
+                <option value="2037">2037</option>
+                <option value="2038">2038</option>
+                <option value="2039">2039</option>
+                <option value="2040">2040</option>
+              </select>
+              <select class="shadow appearance-none border rounded py-2 px-3 m-2 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="year" name="year">
+              i <option>Hour</option>
+                <option value="0">0</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+                <option value="11">11</option>
+                <option value="12">12</option>
+                <option value="13">13</option>
+                <option value="14">14</option>
+                <option value="15">15</option>
+                <option value="16">16</option>
+                <option value="17">17</option>
+                <option value="18">18</option>
+                <option value="19">19</option>
+                <option value="20">20</option>
+                <option value="21">21</option>
+                <option value="22">22</option>
+                <option value="23">23</option>
+              </select>
+              <select class="shadow appearance-none border rounded py-2 px-3 m-2 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="minute" name="minute">
+                <option>Hour</option>
+                <option value="0">0</option>
+                <option value="5">5</option>
+                <option value="10">10</option>
+                <option value="15">15</option>
+                <option value="20">20</option>
+                <option value="25">25</option>
+                <option value="30">30</option>
+                <option value="35">35</option>
+                <option value="40">40</option>
+                <option value="45">45</option>
+                <option value="50">50</option>
+                <option value="55">55</option>
+              </select>
+              </div>
+              {{with $errors.ScheduledAt}}
+                {{range $errors.ScheduledAt}}
+                  <label class='py-2 text-red-700 block'>{{. | $loc.Localize}}</label>
+                {{end}}
+              {{end}}
+            </div>
+
+
+            <div class="">
+              {{if $event.IsNew}}
+              <!-- Save -->
+              <div class="mt-4 pt-4">
+                <input class="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-1 px-3 border border-blue-500 hover:border-transparent rounded" type="submit" value="Save">
+              </div>
+              <!-- Save -->
+              {{else}}
+              <!-- Update -->
+              <div class="mt-4 pt-4">
+                <input class="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-1 px-3 border border-blue-500 hover:border-transparent rounded" type="submit" value="Update">
+              </div>
+              <!-- Update -->
+              {{end}}
+            </div>
+          </form>
+      </div>
+{{end}}

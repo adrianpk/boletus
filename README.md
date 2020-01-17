@@ -19,8 +19,18 @@ Noun
 
   * ticket
 
-
 ## Features
+
+  * List events
+  * Ticket summary by events
+  * Pre booking
+  * Ticket purchasing
+
+## Screenshots
+
+<img src="docs/img/new_event.png" width="480">
+
+[More](docs/screenshots.md)
 
 ## Routes
 
@@ -113,4 +123,8 @@ If you change this envvar prefix from "BLT" to, lets say, "APP"
 	// cfg := fnd.LoadConfig("app") // <- to something like this
   (...)
 ```
+
+## Notes
+
+* [To do list](docs/gtd/gtd.md)
 

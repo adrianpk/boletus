@@ -10,8 +10,10 @@ import (
 type (
 	Service struct {
 		*fnd.Service
-		DB       *sqlx.DB
-		UserRepo repo.UserRepo
+		DB         *sqlx.DB
+		UserRepo   repo.UserRepo
+		EventRepo  repo.EventRepo
+		TicketRepo repo.TicketRepo
 	}
 )
 
