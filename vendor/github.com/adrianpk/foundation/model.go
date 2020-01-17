@@ -1,4 +1,4 @@
-package kabestan
+package foundation
 
 import (
 	"database/sql"
@@ -7,9 +7,9 @@ import (
 	"strings"
 	"unicode/utf8"
 
-	"github.com/lib/pq"
 	"github.com/adrianpk/foundation/db"
 	"github.com/adrianpk/foundation/db/pg"
+	"github.com/lib/pq"
 
 	"time"
 

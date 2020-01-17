@@ -1,7 +1,5 @@
 package mig
 
-import "log"
-
 // CreateUsersTable migration
 func (s *step) CreateUsersTable() error {
 	tx := s.GetTx()
@@ -30,14 +28,14 @@ func (s *step) CreateUsersTable() error {
 		ADD COLUMN confirmation_token VARCHAR(36),
 		ADD COLUMN is_confirmed BOOLEAN,
 		ADD COLUMN locale VARCHAR(32),
-		ADD COLUMN base_tz VARCHAR(2),
-		ADD COLUMN current_tz VARCHAR(2),
+		ADD COLUMN base_tz VARCHAR(64),
+		ADD COLUMN current_tz VARCHAR(64),
 		ADD COLUMN is_active BOOLEAN,
 		ADD COLUMN is_deleted BOOLEAN,
 		ADD COLUMN created_by_id UUID,
 		ADD COLUMN updated_by_id UUID,
-		ADD COLUMN created_at TIMESTAMP WITH TIME ZONE,
-		ADD COLUMN updated_at TIMESTAMP WITH TIME ZONE;`
+		ADD COLUMN created_at TIMESTAMP,
+		ADD COLUMN updated_at TIMESTAMP;`
 
 	_, err = tx.Exec(st)
 	if err != nil {
@@ -55,7 +53,6 @@ func (s *step) DropUsersTable() error {
 
 	_, err := tx.Exec(st)
 	if err != nil {
-		log.Println(err)
 		return err
 	}
 

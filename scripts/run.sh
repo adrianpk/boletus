@@ -8,12 +8,13 @@ killall -9 boletus
 # Set environment variables
 REV=$(eval git rev-parse HEAD)
 # Service
-export BLT_SVC_NAME="foundation"
+export BLT_SVC_NAME="boletus"
 export BLT_SVC_REVISION=$REV
 export BLT_SVC_PINGPORT=8090
 # Servers
 export BLT_WEB_SERVER_PORT=8080
 export BLT_JSONREST_SERVER_PORT=8081
+export BLT_GRPC_SERVER_PORT=8082
 export BLT_WEB_COOKIESTORE_KEY="iVuOOv4PNBnqTk2o13JsBMOPcPAe4p18"
 export BLT_WEB_SECCOOKIE_HASH="iVuOOv4PNBnqTk2o13JsBMOPcPAe4p18"
 export BLT_WEB_SECCOOKIE_BLOCK="iVuOOv4PNBnqTk2o"
@@ -26,6 +27,8 @@ export BLT_PG_PORT="5432"
 export BLT_PG_USER="boletus"
 export BLT_PG_PASSWORD="boletus"
 export BLT_PG_BACKOFF_MAXTRIES="3"
+# Seeding
+export BLT_SEEDING_FORCE="false"
 # Confirmation
 ## users/{slug}/{token}/confirm
 export BLT_USER_CONFIRMATION_PATH="auth/%s/%s/confirm"
@@ -38,6 +41,9 @@ export AWS_SECRET_KEY=9BiWmd5Hdgmk2rR4pwG332bHwvLGiJOoxLLtDy12
 
 # Switches
 export BLT_APP_USERNAME_UPDATABLE=false
+
+# Client
+export BLT_GRPC_CLIENT_HOST=8082
 
 go build -o ./bin/boletus ./cmd/boletus.go
 ./bin/boletus

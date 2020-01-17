@@ -30,14 +30,11 @@ run:
 	./scripts/run.sh
 
 package-resources:
-	pkger -include /assets/web/embed -o internal/app/web
+	pkger -include /assets/web/embed -o pkg/web
 
 list-package-resources:
 	pkger list -include /assets/web --json
 
-# Generators
-gen-resource:
-	mw generate all assets/gen/resource.yaml
 
 # Cloud
 connect-stg:
@@ -93,6 +90,9 @@ deploy-prod:
 	make install-prod
 
 ## Misc
+gen-proto:
+	sh third_party/protoc-gen.sh
+
 custom-build:
 	make mod tidy; go mod vendor; go build ./...
 
@@ -100,9 +100,6 @@ clean-and-run:
 	clear
 	make package-resources
 	make run
-
-gen-sample:
-	mw generate Sample --all --force
 
 current-conn:
 	kubectl config current-context
@@ -113,6 +110,23 @@ grc-install:
 
 spacer:
 	@echo "\n"
+
+build-client:
+	go build -o ./bin/client ./cmd/client/client.go
+
+client:
+	./scripts/client.sh
+
+enable-grpc-logging:
+
+	export GRPC_GO_LOG_VERBOSITY_LEVEL=99
+	export GRPC_GO_LOG_SEVERITY_LEVEL=info
+
+
+disable-grpc-logging:
+
+	export GRPC_GO_LOG_VERBOSITY_LEVEL=0
+	export GRPC_GO_LOG_SEVERITY_LEVEL=error
 
 get-deps:
 	go get -u "github.com/aws/aws-sdk-go"

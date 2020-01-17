@@ -14,7 +14,7 @@
 "signed_in_info_msg": "Signed in",
 "signed_out_info_msg": "Signed out",
 
-"get_all_err_msg": "Benutzerliste kann nicht abgerufen werden",
+"index_err_msg": "Benutzerliste kann nicht abgerufen werden",
 "create_err_msg": "Benutzer kann nicht abgerufen werden",
 "get_err_msg": "Benutzer kann nicht erstellt werden",
 "update_err_msg": "Benutzer kann nicht aktualisiert werden",
@@ -22,6 +22,15 @@
 "input_values_err_msg": "Überprüfen Sie die eingegebenen Werte",
 "credentials_err_msg": "Verify username and password",
 "cannot_proc_err_msg": "Es ist derzeit nicht möglich, die Anfrage zu bearbeiten",
+
+"event_index": "Event Index",
+"new_event": "New Event",
+"edit_event": "Edit Event",
+"show_event": "Show Event",
+
+"event_created_info_msg": "Event created",
+"event_updated_info_msg": "Event updated",
+"event_deleted_info_msg": "Event deleted",
 
 "required_err_msg": "Erforderlich",
 "min_length_err_msg": "Zu kurz",

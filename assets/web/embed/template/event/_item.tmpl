@@ -1,0 +1,47 @@
+{{define "item"}} {{$event := .Data}} {{$action := .Action}} {{$csrf := .CSRF}}
+    <div class="w-2/3 mx-auto">
+      <div class="bg-white shadow-md px-8 py-4 mb-4 rounded">
+
+            <div class="mb-4">
+              <label class="block text-gray-700 text-sm font-bold mb-2" for="name">Name</label>
+              <label class="appearance-none w-full py-2 px-3 text-gray-900" id="name"/>
+                {{$event.Name}}
+              </label>
+            </div>
+
+            <div class="mb-4">
+              <label class="block text-gray-700 text-sm font-bold mb-2" for="description">Description</label>
+              <label class="appearance-none w-full py-2 px-3 text-gray-900" id="description"/>
+                {{$event.Description}}
+              </label>
+            </div>
+
+            <div class="mb-4">
+              <label class="block text-gray-700 text-sm font-bold mb-2" for="email">Place</label>
+              <label class="appearance-none w-full py-2 px-3 text-gray-900" id="place"/>
+                {{$event.Place}}
+              </label>
+            </div>
+
+            <div class="mb-4">
+              <label class="block text-gray-700 text-sm font-bold mb-2" for="scheduledAt">Schedule</label>
+              <label class="appearance-none w-full py-2 px-3 text-gray-900" id=""/>
+                {{$event.ScheduledAt}}
+              </label>
+            </div>
+
+            {{if eq $action.Method "DELETE"}}
+            {{if not $event.IsNew}}
+                  <div class="mt-4 mb-4 py-2">
+                    <!-- Delete -->
+                    <form class="inline" accept-charset="UTF-8" action="{{$event | eventPathSlug}}" method="POST">
+                      {{$csrf.csrfField}}
+                      <input name="_method" type="hidden" value="DELETE">
+                      <input class="bg-transparent hover:bg-red-500 text-red-700 font-semibold hover:text-white py-1 px-3 border border-red-500 hover:border-transparent rounded" type="submit" value="Are you sure you want to delete it?">
+                    </form>
+                    <!-- Delete -->
+           {{end}}
+           {{end}}
+      </div>
+  </div>
+{{end}}

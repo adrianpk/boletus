@@ -1,4 +1,4 @@
-{{define "list"}} {{$csrf := .CSRF}}
+{{define "list"}} {{$session := .SessionData}} {{$csrf := .CSRF}}
 <div class="w-2/3 mx-auto">
   <div class="bg-white shadow-md rounded my-6">
     <table class="text-left w-full border-collapse">

@@ -20,9 +20,12 @@ var (
 
 func (app *App) NewWebRouter() *fnd.Router {
 	rt := app.makeWebHomeRouter(app.Cfg, app.Log)
+	// Auth
 	app.addWebAuthRouter(rt)
+	// User
 	app.addWebUserRouter(rt)
-	//app.addWebTicketRouter(rt)
+	// Event
+	app.addWebEventRouter(rt)
 	return rt
 }
 
