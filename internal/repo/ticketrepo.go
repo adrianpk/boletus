@@ -18,5 +18,8 @@ type (
 		DeleteBySlug(slug string, tx ...*sqlx.Tx) error
 		// WIP: Later this methods can be moved to a custom repo
 		TicketSummary(eventSlug string) (ticketSummary []model.TicketSummary, err error)
+		Available(eventSlug, ticketType string) (ts model.TicketSummary, err error)
+		GetAvailable(eventSlug, ticketType string, qty int) (tickets []model.Ticket, err error)
+		PreBook(eventSlug, ticketType string, qty int, userSlug string, tx ...*sqlx.Tx) (ts []model.Ticket, err error)
 	}
 )

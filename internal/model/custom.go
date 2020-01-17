@@ -77,3 +77,26 @@ type (
 func (ts *TicketSummary) PriceFloat32() float32 {
 	return float32(ts.Price.Float64)
 }
+
+// PreBookOp
+type (
+	// PreBookOp model
+	PreBookOp struct {
+		Name      sql.NullString  `db:"name"`
+		EventID   sql.NullString  `db:"event_id""`
+		EventSlug sql.NullString  `db:"event_slug""`
+		Type      sql.NullString  `db:"type"`
+		Qty       sql.NullInt64   `db:"qty"`
+		Price     sql.NullFloat64 `db:"price"`
+		Total     sql.NullFloat64 `db:"total"`
+		Currency  sql.NullString  `db:"currency"`
+	}
+)
+
+func (pbo *PreBookOp) PriceFloat32() float32 {
+	return float32(pbo.Price.Float64)
+}
+
+func (pbo *PreBookOp) TotalFloat32() float32 {
+	return float32(pbo.Total.Float64)
+}

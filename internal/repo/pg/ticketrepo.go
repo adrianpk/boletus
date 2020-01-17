@@ -285,6 +285,7 @@ func (ur *TicketRepo) GetBySlugAndToken(slug, token string) (model.Ticket, error
 
 // Custom queries and process
 
+// TicketSummary returns an availability of tickets report for all ticket types in an event.
 func (ur *TicketRepo) TicketSummary(eventSlug string) (ts []model.TicketSummary, err error) {
 	st := `SELECT count(tickets.id) as qty, event_id, events.slug as event_slug, type, (tickets.price/1000) as price, currency FROM tickets INNER JOIN events ON tickets.event_id = events.id WHERE events.slug = '%s' AND (tickets.is_deleted IS NULL OR NOT tickets.is_deleted) AND (events.is_deleted IS NULL OR NOT events.is_deleted) AND (reserved_by IS NULL OR reserved_by::text='00000000-0000-0000-0000-000000000000') AND (bought_by IS NULL OR NOT bought_by::text='00000000-0000-0000-0000-00000000') AND (status IS NULL OR status='') AND (gateway_op_id IS NULL or gateway_op_id='') GROUP BY event_id, event_slug, type, price, currency ORDER BY tickets.price ASC;`
 
@@ -293,6 +294,96 @@ func (ur *TicketRepo) TicketSummary(eventSlug string) (ts []model.TicketSummary,
 	err = ur.DB.Select(&ts, st)
 
 	return ts, err
+}
+
+// Available returns a report of number of available tickets for a specific ticket type in an event.
+func (ur *TicketRepo) Available(eventSlug, ticketType string) (ts model.TicketSummary, err error) {
+	st := `SELECT count(tickets.id) as qty, event_id, events.slug as event_slug, type, (tickets.price/1000) as price, currency FROM tickets INNER JOIN events ON tickets.event_id = events.id WHERE events.slug = '%s' AND tickets.type = '%s' AND (tickets.is_deleted IS NULL OR NOT tickets.is_deleted) AND (events.is_deleted IS NULL OR NOT events.is_deleted) AND (reserved_by IS NULL OR reserved_by::text='00000000-0000-0000-0000-000000000000') AND (bought_by IS NULL OR NOT bought_by::text='00000000-0000-0000-0000-00000000') AND (status IS NULL OR status='') AND (gateway_op_id IS NULL or gateway_op_id='') GROUP BY event_id, event_slug, type, price, currency ORDER BY tickets.price ASC LIMIT 1;`
+
+	st = fmt.Sprintf(st, eventSlug, ticketType)
+
+	err = ur.DB.Get(&ts, st)
+
+	return ts, err
+}
+
+// Available returns a set of available tickets for a specific ticket type in an event.
+func (ur *TicketRepo) GetAvailable(eventSlug, ticketType string, qty int) (tickets []model.Ticket, err error) {
+	st := `SELECT tickets.* FROM tickets INNER JOIN events ON tickets.event_id = events.id WHERE events.slug = '%s' AND tickets.type = '%s' AND (tickets.is_deleted IS NULL OR NOT tickets.is_deleted) AND (events.is_deleted IS NULL OR NOT events.is_deleted) AND (reserved_by IS NULL OR reserved_by::text='00000000-0000-0000-0000-000000000000') AND (bought_by IS NULL OR NOT bought_by::text='00000000-0000-0000-0000-00000000') AND (status IS NULL OR status='') AND (gateway_op_id IS NULL or gateway_op_id='') GROUP BY event_id, event_slug, type, price, currency ORDER BY tickets.price ASC LIMIT %s;`
+
+	st = fmt.Sprintf(st, eventSlug, ticketType, qty)
+
+	err = ur.DB.Select(&tickets, st)
+
+	return tickets, err
+}
+
+// PreBook mark as reserved a specific number of tickets of a certain type associated to an event.
+func (ur *TicketRepo) PreBook(eventSlug, ticketType string, qty int, userSlug string, tx ...*sqlx.Tx) (tickets []model.Ticket, err error) {
+
+	// Create a local transaction if it is not passed as argument.
+	t, local, err := ur.getTx(tx)
+	if err != nil {
+		return tickets, err
+	}
+
+	// TODO: Replace this extra query making another join
+	// in update statement.
+	st := `select ID from users where slug = '%s';`
+	st = fmt.Sprintf(st, userSlug)
+
+	var userID string
+	row := t.QueryRow(st)
+	err = row.Scan(&userID)
+	if err != nil {
+		ur.Log.Error(err)
+		return tickets, err
+	}
+
+	//st = `UPDATE selected
+	//SET
+	//selected.reserved_by = '%s',
+	//selected.reserved_at = now(),
+	//selected.status = 'reserved',
+	//selected.updated_by = 'system',
+	//selected.updated_at = now()
+	//FROM (
+	//SELECT FROM tickets INNER JOIN events ON tickets.event_id = events.id WHERE events.slug = '%s' AND tickets.type = '%s' AND (tickets.is_deleted IS NULL OR NOT tickets.is_deleted) AND (events.is_deleted IS NULL OR NOT events.is_deleted) AND (reserved_by IS NULL OR reserved_by::text='00000000-0000-0000-0000-000000000000') AND (bought_by IS NULL OR NOT bought_by::text='00000000-0000-0000-0000-00000000') AND (status IS NULL OR status='') AND (gateway_op_id IS NULL or gateway_op_id='') ORDER BY tickets.price ASC LIMIT %d) AS selected;`
+
+	st = `UPDATE tickets
+					SET
+						reserved_by = '%s',
+						reserved_at = now(),
+						status = 'reserved',
+						updated_by_id = '%s',
+						updated_at = now()
+					WHERE tickets.id IN (
+						SELECT tickets.id FROM tickets INNER JOIN events ON tickets.event_id = events.id WHERE events.slug = '%s' AND tickets.type = '%s' AND (tickets.is_deleted IS NULL OR NOT tickets.is_deleted) AND (events.is_deleted IS NULL OR NOT events.is_deleted) AND (reserved_by IS NULL OR reserved_by::text='00000000-0000-0000-0000-000000000000') AND (bought_by IS NULL OR NOT bought_by::text='00000000-0000-0000-0000-00000000') AND (status IS NULL OR status='') AND (gateway_op_id IS NULL or gateway_op_id='') ORDER BY tickets.price ASC LIMIT %d);`
+
+	st = fmt.Sprintf(st, userID, userID, eventSlug, ticketType, qty)
+
+	// Update
+	_, err = t.Query(st)
+	if err != nil {
+		return tickets, err
+	}
+
+	// Select all updated
+	st = `SELECT tickets.* FROM tickets INNER JOIN events ON tickets.event_id = events.id WHERE events.slug = '%s' AND tickets.type = '%s' AND (tickets.is_deleted IS NULL OR NOT tickets.is_deleted) AND (events.is_deleted IS NULL OR NOT events.is_deleted) AND reserved_by::text='%s' AND (bought_by IS NULL OR NOT bought_by::text='00000000-0000-0000-0000-00000000') AND status='reserved' AND (gateway_op_id IS NULL or gateway_op_id='') ORDER BY tickets.updated_at ASC;`
+
+	st = fmt.Sprintf(st, eventSlug, ticketType, userID)
+
+	err = ur.DB.Select(&tickets, st)
+	if err != nil {
+		return tickets, err
+	}
+
+	// Commit on local transactions
+	if local {
+		return tickets, t.Commit()
+	}
+
+	return tickets, nil
 }
 
 // Tx

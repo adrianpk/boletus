@@ -20,9 +20,18 @@ type (
 )
 
 const (
-	version = "v1"
-	// Replace by a valid event slug
-	eventSlug = "rockpartyinwrocław-0bf753d4c397"
+	apiVer = "v1"
+
+	// To test replace by valid user and event slugs
+
+	// sql: select slug from users;
+	userSlug = "lauriem-79acb689e888"
+
+	// sql: select slug from events;
+	eventSlug = "rockpartyinwrocław-56ea757fdad9"
+
+	// PreBook ticket type [normal, golden-circle, silver-circle, bronce-circle, couple]
+	ticketType = "normal"
 )
 
 // This is simple client that can be used to
@@ -40,14 +49,19 @@ func main() {
 	defer clt.Conn.Close()
 
 	// IndexEvents
-	log.Info("IndexEvents begin")
-	clt.IndexEvents()
-	log.Info("IndexEvents end/n")
+	//log.Info("IndexEvents begin")
+	//clt.IndexEvents()
+	//log.Info("IndexEvents end/n")
 
 	// Ticket summary
-	log.Info("TicketSummary begin")
-	clt.EventTicketSummary()
-	log.Info("TicketSummary end/n")
+	//log.Info("TicketSummary begin")
+	//clt.EventTicketSummary()
+	//log.Info("TicketSummary end/n")
+
+	// Ticket summary
+	log.Info("PreBook begin")
+	clt.PreBook()
+	log.Info("PreBook end/n")
 }
 
 // NewClient for Ticketer gRPC server
@@ -77,7 +91,7 @@ func NewClient(cfg *fnd.Config, log fnd.Logger) (*client, error) {
 func (c *client) IndexEvents() error {
 	// EventID request
 	req := v1.EventIDReq{
-		Api: version,
+		Api: apiVer,
 	}
 
 	// Context timeout
@@ -100,7 +114,7 @@ func (c *client) IndexEvents() error {
 func (c *client) EventTicketSummary() error {
 	// EventID request
 	req := v1.EventIDReq{
-		Api:  version,
+		Api:  apiVer,
 		Slug: eventSlug,
 	}
 
@@ -116,6 +130,33 @@ func (c *client) EventTicketSummary() error {
 
 	// Dump result
 	c.Log.Info("IndexEvents result:")
+	c.Log.Info(fmt.Sprintf("%+v", res))
+	return nil
+}
+
+// EventTicketSummary
+func (c *client) PreBook() error {
+	// EventID request
+	req := v1.PreBookReq{
+		Api:        apiVer,
+		UserSlug:   userSlug,
+		EventSlug:  eventSlug,
+		TicketType: ticketType,
+		Qty:        4,
+	}
+
+	// Context timeout
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+
+	res, err := c.Ticketer.PreBook(ctx, &req)
+	if err != nil {
+		c.Log.Error(err)
+		return err
+	}
+
+	// Dump result
+	c.Log.Info("PreBook result:")
 	c.Log.Info(fmt.Sprintf("%+v", res))
 	return nil
 }

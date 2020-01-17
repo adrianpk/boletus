@@ -1,6 +1,9 @@
 package svc
 
 import (
+	"errors"
+	"fmt"
+
 	"github.com/adrianpk/boletus/internal/model"
 	fnd "github.com/adrianpk/foundation"
 )
@@ -121,6 +124,7 @@ func (s *Service) DeleteTicket(slug string) error {
 }
 
 // Custom queries and process
+// TicketSummary returns a list including availability and price for each ticket type od an event.
 func (s *Service) TicketSummary(eventSlug string) (users []model.TicketSummary, err error) {
 	repo := s.TicketRepo
 	if repo == nil {
@@ -128,4 +132,46 @@ func (s *Service) TicketSummary(eventSlug string) (users []model.TicketSummary, 
 	}
 
 	return repo.TicketSummary(eventSlug)
+}
+
+// PreBookTickets
+func (s *Service) PreBookTickets(eventSlug, ticketType string, qty int, userSlug string) (tickets []model.Ticket, err error) {
+	repo := s.TicketRepo
+	if repo == nil {
+		return tickets, NoRepoErr
+	}
+
+	// Get a new transaction
+	tx, err := s.getTx()
+	if err != nil {
+		return tickets, err
+	}
+
+	// Non resource intensive availabilty check
+	ts, err := repo.Available(eventSlug, ticketType)
+	if err != nil {
+		tx.Commit()
+		return tickets, err
+	}
+
+	avail := int(ts.Qty.Int32)
+	if qty > avail {
+		msg := fmt.Sprintf("requested quantity exceeds availability (avail.: %d)", avail)
+		return tickets, errors.New(msg)
+	}
+
+	// Pre book tickets
+	tickets, err = repo.PreBook(eventSlug, ticketType, qty, userSlug, tx)
+	if err != nil {
+		tx.Rollback()
+		return tickets, err
+	}
+
+	// Commit on local transactions
+	err = tx.Commit()
+	if err != nil {
+		return tickets, err
+	}
+
+	return tickets, nil
 }

@@ -16,11 +16,11 @@ type (
 	// Ticket model
 	Ticket struct {
 		fnd.Identification
-		Name            sql.NullString `db:"name_id" json:"name_id" schema:"name_id"`
+		Name            sql.NullString `db:"name" json:"name" schema:"name"`
 		EventID         sql.NullString `db:"event_id" json:"event_id" schema:"event_id"`
 		Type            sql.NullString `db:"type" json:"type" schema:"type"`
 		Serie           sql.NullString `db:"serie" json:"serie" schema:"serie"`
-		Number          sql.NullString `db:"number" json:"number" schema:"number"`
+		Number          sql.NullInt32  `db:"number" json:"number" schema:"number"`
 		Seat            sql.NullString `db:"seat" json:"seat" schema:"seat"`
 		Price           sql.NullInt32  `db:"price" json:"price" schema:"price"`
 		Currency        sql.NullString `db:"currency" json:"currency" schema:"currency"`
@@ -72,6 +72,10 @@ func ToTicketFormList(tickets []Ticket) (fs []TicketForm) {
 	return fs
 }
 
+func (ticket *Ticket) GetPrice() float32 {
+	return toCurrencyFromMillis(ticket.Price.Int32)
+}
+
 // SetCreateValues sets de ID and slug.
 func (ticket *Ticket) SetCreateValues() error {
 	// Set create values only only if they were not previously
@@ -97,7 +101,7 @@ func (ticket *Ticket) Match(tc *Ticket) bool {
 		ticket.EventID.String == tc.EventID.String &&
 		ticket.Type.String == tc.Type.String &&
 		ticket.Serie.String == tc.Serie.String &&
-		ticket.Number.String == tc.Number.String &&
+		ticket.Number.Int32 == tc.Number.Int32 &&
 		ticket.Seat.String == tc.Seat.String &&
 		ticket.Price.Int32 == tc.Price.Int32 &&
 		ticket.Currency.String == tc.Currency.String &&
@@ -128,7 +132,7 @@ func (ticket *Ticket) ToForm() TicketForm {
 		EventID:         ticket.EventID.String,
 		Type:            ticket.Type.String,
 		Serie:           ticket.Serie.String,
-		Number:          ticket.Number.String,
+		Number:          formatInt32(ticket.Number.Int32),
 		Seat:            ticket.Seat.String,
 		Price:           formatCurrency(ticket.Price.Int32),
 		Currency:        ticket.Currency.String,
@@ -155,9 +159,9 @@ func (ticketForm *TicketForm) ToModel() Ticket {
 		EventID:         db.ToNullString(ticketForm.EventID),
 		Type:            db.ToNullString(ticketForm.Type),
 		Serie:           db.ToNullString(ticketForm.Serie),
-		Number:          db.ToNullString(ticketForm.Number),
+		Number:          db.ToNullInt32(toInt32(ticketForm.Number)),
 		Seat:            db.ToNullString(ticketForm.Seat),
-		Price:           db.ToNullInt32(toCurrency(ticketForm.Price)),
+		Price:           db.ToNullInt32(toMillisFromStr(ticketForm.Price)),
 		Currency:        db.ToNullString(ticketForm.Currency),
 		ReservedBy:      db.ToNullString(ticketForm.ReservedBy),
 		BoughtBy:        db.ToNullString(ticketForm.BoughtBy),
@@ -178,19 +182,47 @@ func formatTime(time time.Time) string {
 	return time.Format(layout)
 }
 
-func toCurrencyStr(millis string) string {
-	val := toCurrency(millis)
-	return fmt.Sprintf("%d", val)
-}
-
-func toCurrency(millis string) int32 {
-	val, err := strconv.ParseInt(millis, 10, 32)
+func toInt32(intVal string) int32 {
+	val, err := strconv.ParseInt(intVal, 10, 32)
 	if err != nil {
 		return int32(0)
 	}
 	return int32(val)
 }
 
+func formatInt32(intVal int32) string {
+	return fmt.Sprintf("%d", intVal)
+}
+
+func toCurrencyStr(millis string) string {
+	val := toCurrency(millis)
+	return fmt.Sprintf("%d", val)
+}
+
+func toCurrencyFromMillis(millis int32) float32 {
+	return toCurrency(fmt.Sprintf("%d", millis))
+}
+
+func toCurrency(millis string) float32 {
+	val, err := strconv.ParseFloat(millis, 32)
+	if err != nil {
+		return float32(0)
+	}
+	return float32(val)
+}
+
 func formatCurrency(millis int32) string {
 	return fmt.Sprintf("%.2f", millis/1000)
+}
+
+func toMillisFromStr(price string) int32 {
+	return int32(parseFloat(price))
+}
+
+func parseFloat(price string) float32 {
+	val, err := strconv.ParseFloat(price, 32)
+	if err != nil {
+		return float32(0)
+	}
+	return float32(val)
 }
