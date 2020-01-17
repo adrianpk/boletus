@@ -24,11 +24,11 @@ const (
 
 	// To test replace by valid user and event slugs
 
-	// sql: select slug from users;
-	userSlug = "lauriem-79acb689e888"
+	// select slug from users;
+	userSlug = "lauriem-e15edded5b76"
 
-	// sql: select slug from events;
-	eventSlug = "rockpartyinwrocław-56ea757fdad9"
+	// select slug from events;
+	eventSlug = "rockpartyinwrocław-b36806a5d9a8"
 
 	// PreBook ticket type [normal, golden-circle, silver-circle, bronce-circle, couple]
 	ticketType = "normal"
