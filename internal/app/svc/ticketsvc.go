@@ -176,3 +176,19 @@ func (s *Service) PreBookTickets(eventSlug, ticketType string, qty int, userSlug
 
 	return tickets, nil
 }
+
+// ExpireTicketReservations
+func (s *Service) ExpireTicketReservations() {
+	s.Log.Info("Expire tickets process init.")
+	repo := s.TicketRepo
+	if repo == nil {
+		s.Log.Error(NoRepoErr)
+	}
+
+	mins := int(s.Cfg.ValAsInt("reservation.expire.minutes", 15))
+
+	err := repo.ExpireReservations(mins)
+	if err != nil {
+		s.Log.Error(err)
+	}
+}

@@ -14,7 +14,6 @@ type (
 		UserRepo   repo.UserRepo
 		EventRepo  repo.EventRepo
 		TicketRepo repo.TicketRepo
-		Scheduler  *scheduler
 	}
 )
 
@@ -23,14 +22,6 @@ func NewService(cfg *fnd.Config, log fnd.Logger, name string, db *sqlx.DB) *Serv
 		Service: fnd.NewService(cfg, log, name),
 		DB:      db,
 	}
-}
-
-func (s *Service) Init() error {
-	return s.InitScheduler()
-}
-
-func (s *Service) Start() {
-	s.Scheduler.Start()
 }
 
 func (s *Service) getTx() (tx *sqlx.Tx, err error) {

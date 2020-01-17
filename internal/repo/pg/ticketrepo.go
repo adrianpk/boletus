@@ -325,7 +325,6 @@ func (ur *TicketRepo) GetAvailable(eventSlug, ticketType string, qty int) (ticke
 
 // PreBook mark as reserved a specific number of tickets of a certain type associated to an event.
 func (ur *TicketRepo) PreBook(eventSlug, ticketType string, qty int, reservationID, userSlug string, tx ...*sqlx.Tx) (tickets []model.Ticket, err error) {
-
 	// Create a local transaction if it is not passed as argument.
 	t, local, err := ur.getTx(tx)
 	if err != nil {
@@ -380,6 +379,30 @@ func (ur *TicketRepo) PreBook(eventSlug, ticketType string, qty int, reservation
 	}
 
 	return tickets, nil
+}
+
+// ExpireReservations removes reservation marks from tickets if they are not confirmed after some expTimeMins minutes.
+func (ur *TicketRepo) ExpireReservations(expMins int) (err error) {
+	st := `UPDATE tickets
+					SET
+						reservation_id = '',
+						reserved_by_id = '00000000-0000-0000-0000-000000000000',
+						reserved_at = NULL,
+						status = '',
+						updated_by_id = '00000000-0000-0000-0000-000000000001',
+						updated_at = now()
+					WHERE tickets.id IN (
+						SELECT tickets.id FROM tickets WHERE (tickets.is_deleted IS NULL OR NOT tickets.is_deleted) AND (reserved_by_id IS NOT NULL AND NOT reserved_by_id::text='00000000-0000-0000-0000-000000000000') AND (bought_by_id IS NULL OR bought_by_id::text='00000000-0000-0000-0000-000000000000') AND (status='reserved') AND (gateway_op_id IS NULL or gateway_op_id='') AND ((DATE_PART('hour', NOW() - tickets.reserved_at) * 60 + DATE_PART('minute', NOW() - reserved_at) > %d)));`
+
+	st = fmt.Sprintf(st, expMins)
+
+	// Update
+	_, err = ur.DB.Query(st)
+	if err != nil {
+		return err
+	}
+
+	return nil
 }
 
 // Tx
