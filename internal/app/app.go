@@ -53,11 +53,18 @@ func (app *App) Init() error {
 		return err
 	}
 
-	return app.Seeder.Seed()
+	err = app.Seeder.Seed()
+	if err != nil {
+		return err
+	}
+
+	return app.GRPCAPIV1.Service.Init()
 }
 
 func (app *App) Start() error {
 	var wg sync.WaitGroup
+
+	app.GRPCAPIV1.Service.Start()
 
 	wg.Add(1)
 	go func() {
