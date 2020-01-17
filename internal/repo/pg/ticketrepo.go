@@ -31,8 +31,8 @@ func NewTicketRepo(cfg *fnd.Config, log fnd.Logger, name string, db *sqlx.DB) *T
 
 // Create a ticket
 func (ur *TicketRepo) Create(ticket *model.Ticket, tx ...*sqlx.Tx) error {
-	st := `INSERT INTO tickets (id, slug, name, event_id, serie, number, seat, price, currency, reserved_by, reserved_at, bought_by, bought_at, status, local_order_id, gateway_op_id,gateway_order_id, gateway_op_status, locale, base_tz, is_active, is_deleted, created_by_id, updated_by_id, created_at, updated_at)
-VALUES (:id, :slug, :name, :event_id, :serie, :number, :seat, :price, :currency, :reserved_by, :reserved_at, :bought_by, :bought_at, :status, :local_order_id, :gateway_op_id, gateway_order_id, gateway_op_status, :locale, :base_tz, :current_tz, :is_active, :is_deleted, :created_by_id, :updated_by_id, :created_at, :updated_at)`
+	st := `INSERT INTO tickets (id, slug, name, event_id, serie, number, seat, price, currency, reservation_id, reserved_by_id, reserved_at, bought_by_id, bought_at, status, local_order_id, gateway_op_id,gateway_order_id, gateway_op_status, locale, base_tz, is_active, is_deleted, created_by_id, updated_by_id, created_at, updated_at)
+VALUES (:id, :slug, :name, :event_id, :serie, :number, :seat, :price, :currency, :reservation_id, :reserved_by_id, :reserved_at, :bought_by_id, :bought_at, :status, :local_order_id, :gateway_op_id, gateway_order_id, gateway_op_status, :locale, :base_tz, :current_tz, :is_active, :is_deleted, :created_by_id, :updated_by_id, :created_at, :updated_at)`
 
 	// Create a local transaction if it is not passed as argument.
 	t, local, err := ur.getTx(tx)
@@ -154,8 +154,13 @@ func (ur *TicketRepo) Update(ticket *model.Ticket, tx ...*sqlx.Tx) error {
 		pcu = true
 	}
 
+	if ticket.ReservationID != ref.ReservationID {
+		st.WriteString(fnd.SQLStrUpd("reservation_id", "reservation_id"))
+		pcu = true
+	}
+
 	if ticket.ReservedBy != ref.ReservedBy {
-		st.WriteString(fnd.SQLStrUpd("reserved_by", "reserved_by"))
+		st.WriteString(fnd.SQLStrUpd("reserved_by_id", "reserved_by_id"))
 		pcu = true
 	}
 
@@ -165,7 +170,7 @@ func (ur *TicketRepo) Update(ticket *model.Ticket, tx ...*sqlx.Tx) error {
 	}
 
 	if ticket.BoughtBy != ref.BoughtBy {
-		st.WriteString(fnd.SQLStrUpd("bought_by", "bought_by"))
+		st.WriteString(fnd.SQLStrUpd("bought_by_id", "bought_by_id"))
 		pcu = true
 	}
 
@@ -287,7 +292,7 @@ func (ur *TicketRepo) GetBySlugAndToken(slug, token string) (model.Ticket, error
 
 // TicketSummary returns an availability of tickets report for all ticket types in an event.
 func (ur *TicketRepo) TicketSummary(eventSlug string) (ts []model.TicketSummary, err error) {
-	st := `SELECT count(tickets.id) as qty, event_id, events.slug as event_slug, type, (tickets.price/1000) as price, currency FROM tickets INNER JOIN events ON tickets.event_id = events.id WHERE events.slug = '%s' AND (tickets.is_deleted IS NULL OR NOT tickets.is_deleted) AND (events.is_deleted IS NULL OR NOT events.is_deleted) AND (reserved_by IS NULL OR reserved_by::text='00000000-0000-0000-0000-000000000000') AND (bought_by IS NULL OR NOT bought_by::text='00000000-0000-0000-0000-00000000') AND (status IS NULL OR status='') AND (gateway_op_id IS NULL or gateway_op_id='') GROUP BY event_id, event_slug, type, price, currency ORDER BY tickets.price ASC;`
+	st := `SELECT count(tickets.id) as qty, event_id, events.slug as event_slug, type, (tickets.price/1000) as price, currency FROM tickets INNER JOIN events ON tickets.event_id = events.id WHERE events.slug = '%s' AND (tickets.is_deleted IS NULL OR NOT tickets.is_deleted) AND (events.is_deleted IS NULL OR NOT events.is_deleted) AND (reserved_by_id IS NULL OR reserved_by_id::text='00000000-0000-0000-0000-000000000000') AND (bought_by_id IS NULL OR NOT bought_by_id::text='00000000-0000-0000-0000-00000000') AND (status IS NULL OR status='') AND (gateway_op_id IS NULL or gateway_op_id='') GROUP BY event_id, event_slug, type, price, currency ORDER BY tickets.price ASC;`
 
 	st = fmt.Sprintf(st, eventSlug)
 
@@ -298,7 +303,7 @@ func (ur *TicketRepo) TicketSummary(eventSlug string) (ts []model.TicketSummary,
 
 // Available returns a report of number of available tickets for a specific ticket type in an event.
 func (ur *TicketRepo) Available(eventSlug, ticketType string) (ts model.TicketSummary, err error) {
-	st := `SELECT count(tickets.id) as qty, event_id, events.slug as event_slug, type, (tickets.price/1000) as price, currency FROM tickets INNER JOIN events ON tickets.event_id = events.id WHERE events.slug = '%s' AND tickets.type = '%s' AND (tickets.is_deleted IS NULL OR NOT tickets.is_deleted) AND (events.is_deleted IS NULL OR NOT events.is_deleted) AND (reserved_by IS NULL OR reserved_by::text='00000000-0000-0000-0000-000000000000') AND (bought_by IS NULL OR NOT bought_by::text='00000000-0000-0000-0000-00000000') AND (status IS NULL OR status='') AND (gateway_op_id IS NULL or gateway_op_id='') GROUP BY event_id, event_slug, type, price, currency ORDER BY tickets.price ASC LIMIT 1;`
+	st := `SELECT count(tickets.id) as qty, event_id, events.slug as event_slug, type, (tickets.price/1000) as price, currency FROM tickets INNER JOIN events ON tickets.event_id = events.id WHERE events.slug = '%s' AND tickets.type = '%s' AND (tickets.is_deleted IS NULL OR NOT tickets.is_deleted) AND (events.is_deleted IS NULL OR NOT events.is_deleted) AND (reserved_by_id IS NULL OR reserved_by_id::text='00000000-0000-0000-0000-000000000000') AND (bought_by_id IS NULL OR NOT bought_by_id::text='00000000-0000-0000-0000-00000000') AND (status IS NULL OR status='') AND (gateway_op_id IS NULL or gateway_op_id='') GROUP BY event_id, event_slug, type, price, currency ORDER BY tickets.price ASC LIMIT 1;`
 
 	st = fmt.Sprintf(st, eventSlug, ticketType)
 
@@ -309,7 +314,7 @@ func (ur *TicketRepo) Available(eventSlug, ticketType string) (ts model.TicketSu
 
 // Available returns a set of available tickets for a specific ticket type in an event.
 func (ur *TicketRepo) GetAvailable(eventSlug, ticketType string, qty int) (tickets []model.Ticket, err error) {
-	st := `SELECT tickets.* FROM tickets INNER JOIN events ON tickets.event_id = events.id WHERE events.slug = '%s' AND tickets.type = '%s' AND (tickets.is_deleted IS NULL OR NOT tickets.is_deleted) AND (events.is_deleted IS NULL OR NOT events.is_deleted) AND (reserved_by IS NULL OR reserved_by::text='00000000-0000-0000-0000-000000000000') AND (bought_by IS NULL OR NOT bought_by::text='00000000-0000-0000-0000-00000000') AND (status IS NULL OR status='') AND (gateway_op_id IS NULL or gateway_op_id='') GROUP BY event_id, event_slug, type, price, currency ORDER BY tickets.price ASC LIMIT %s;`
+	st := `SELECT tickets.* FROM tickets INNER JOIN events ON tickets.event_id = events.id WHERE events.slug = '%s' AND tickets.type = '%s' AND (tickets.is_deleted IS NULL OR NOT tickets.is_deleted) AND (events.is_deleted IS NULL OR NOT events.is_deleted) AND (reserved_by_id IS NULL OR reserved_by_id::text='00000000-0000-0000-0000-000000000000') AND (bought_by_id IS NULL OR NOT bought_by_id::text='00000000-0000-0000-0000-00000000') AND (status IS NULL OR status='') AND (gateway_op_id IS NULL or gateway_op_id='') GROUP BY event_id, event_slug, type, price, currency ORDER BY tickets.price ASC LIMIT %s;`
 
 	st = fmt.Sprintf(st, eventSlug, ticketType, qty)
 
@@ -319,7 +324,7 @@ func (ur *TicketRepo) GetAvailable(eventSlug, ticketType string, qty int) (ticke
 }
 
 // PreBook mark as reserved a specific number of tickets of a certain type associated to an event.
-func (ur *TicketRepo) PreBook(eventSlug, ticketType string, qty int, userSlug string, tx ...*sqlx.Tx) (tickets []model.Ticket, err error) {
+func (ur *TicketRepo) PreBook(eventSlug, ticketType string, qty int, reservationID, userSlug string, tx ...*sqlx.Tx) (tickets []model.Ticket, err error) {
 
 	// Create a local transaction if it is not passed as argument.
 	t, local, err := ur.getTx(tx)
@@ -340,27 +345,18 @@ func (ur *TicketRepo) PreBook(eventSlug, ticketType string, qty int, userSlug st
 		return tickets, err
 	}
 
-	//st = `UPDATE selected
-	//SET
-	//selected.reserved_by = '%s',
-	//selected.reserved_at = now(),
-	//selected.status = 'reserved',
-	//selected.updated_by = 'system',
-	//selected.updated_at = now()
-	//FROM (
-	//SELECT FROM tickets INNER JOIN events ON tickets.event_id = events.id WHERE events.slug = '%s' AND tickets.type = '%s' AND (tickets.is_deleted IS NULL OR NOT tickets.is_deleted) AND (events.is_deleted IS NULL OR NOT events.is_deleted) AND (reserved_by IS NULL OR reserved_by::text='00000000-0000-0000-0000-000000000000') AND (bought_by IS NULL OR NOT bought_by::text='00000000-0000-0000-0000-00000000') AND (status IS NULL OR status='') AND (gateway_op_id IS NULL or gateway_op_id='') ORDER BY tickets.price ASC LIMIT %d) AS selected;`
-
 	st = `UPDATE tickets
 					SET
-						reserved_by = '%s',
+						reservation_id = '%s',
+						reserved_by_id = '%s',
 						reserved_at = now(),
 						status = 'reserved',
 						updated_by_id = '%s',
 						updated_at = now()
 					WHERE tickets.id IN (
-						SELECT tickets.id FROM tickets INNER JOIN events ON tickets.event_id = events.id WHERE events.slug = '%s' AND tickets.type = '%s' AND (tickets.is_deleted IS NULL OR NOT tickets.is_deleted) AND (events.is_deleted IS NULL OR NOT events.is_deleted) AND (reserved_by IS NULL OR reserved_by::text='00000000-0000-0000-0000-000000000000') AND (bought_by IS NULL OR NOT bought_by::text='00000000-0000-0000-0000-00000000') AND (status IS NULL OR status='') AND (gateway_op_id IS NULL or gateway_op_id='') ORDER BY tickets.price ASC LIMIT %d);`
+						SELECT tickets.id FROM tickets INNER JOIN events ON tickets.event_id = events.id WHERE events.slug = '%s' AND tickets.type = '%s' AND (tickets.is_deleted IS NULL OR NOT tickets.is_deleted) AND (events.is_deleted IS NULL OR NOT events.is_deleted) AND (reserved_by_id IS NULL OR reserved_by_id::text='00000000-0000-0000-0000-000000000000') AND (bought_by_id IS NULL OR NOT bought_by_id::text='00000000-0000-0000-0000-00000000') AND (status IS NULL OR status='') AND (gateway_op_id IS NULL or gateway_op_id='') ORDER BY tickets.price ASC LIMIT %d);`
 
-	st = fmt.Sprintf(st, userID, userID, eventSlug, ticketType, qty)
+	st = fmt.Sprintf(st, reservationID, userID, userID, eventSlug, ticketType, qty)
 
 	// Update
 	_, err = t.Query(st)
@@ -369,9 +365,9 @@ func (ur *TicketRepo) PreBook(eventSlug, ticketType string, qty int, userSlug st
 	}
 
 	// Select all updated
-	st = `SELECT tickets.* FROM tickets INNER JOIN events ON tickets.event_id = events.id WHERE events.slug = '%s' AND tickets.type = '%s' AND (tickets.is_deleted IS NULL OR NOT tickets.is_deleted) AND (events.is_deleted IS NULL OR NOT events.is_deleted) AND reserved_by::text='%s' AND (bought_by IS NULL OR NOT bought_by::text='00000000-0000-0000-0000-00000000') AND status='reserved' AND (gateway_op_id IS NULL or gateway_op_id='') ORDER BY tickets.updated_at ASC;`
+	st = `SELECT tickets.* FROM tickets INNER JOIN events ON tickets.event_id = events.id WHERE events.slug = '%s' AND tickets.type = '%s' AND (tickets.is_deleted IS NULL OR NOT tickets.is_deleted) AND (events.is_deleted IS NULL OR NOT events.is_deleted) AND reservation_id = '%s' AND reserved_by_id::text='%s' AND (bought_by_id IS NULL OR NOT bought_by_id::text='00000000-0000-0000-0000-00000000') AND status='reserved' AND (gateway_op_id IS NULL or gateway_op_id='') ORDER BY tickets.updated_at ASC;`
 
-	st = fmt.Sprintf(st, eventSlug, ticketType, userID)
+	st = fmt.Sprintf(st, eventSlug, ticketType, reservationID, userID)
 
 	err = ur.DB.Select(&tickets, st)
 	if err != nil {

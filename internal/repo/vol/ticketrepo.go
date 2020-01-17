@@ -170,6 +170,6 @@ func (ur *TicketRepo) Available(eventSlug, ticketType string) (ts model.TicketSu
 	panic("not implemented")
 }
 
-func (ur *TicketRepo) PreBook(eventSlug, ticketType string, qty int, userSlug string, tx ...*sqlx.Tx) (ts []model.Ticket, err error) {
+func (ur *TicketRepo) PreBook(eventSlug, ticketType string, qty int, reservationID, userSlug string, tx ...*sqlx.Tx) (ts []model.Ticket, err error) {
 	panic("not implemented")
 }
