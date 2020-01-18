@@ -59,9 +59,9 @@ func main() {
 	//log.Info("IndexEvents end\n")
 
 	// Ticket summary
-	//log.Info("TicketSummary begin")
-	//clt.EventTicketSummary()
-	//log.Info("TicketSummary end\n")
+	log.Info("TicketSummary begin")
+	clt.EventTicketSummary()
+	log.Info("TicketSummary end\n")
 
 	// PreBook
 	//log.Info("PreBook begin")
@@ -69,9 +69,9 @@ func main() {
 	//log.Info("PreBook end\n")
 
 	// ConfirmBooking
-	log.Info("ConfirmBooking begin")
-	clt.ConfirmBooking()
-	log.Info("ConfirmBooking end\n")
+	//log.Info("ConfirmBooking begin")
+	//clt.ConfirmBooking()
+	//log.Info("ConfirmBooking end\n")
 }
 
 // NewClient for Ticketer gRPC server
