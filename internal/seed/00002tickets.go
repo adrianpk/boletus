@@ -186,7 +186,7 @@ func newTicketMap(eventID uuid.UUID, name string, ticketType string, scheduledAt
 		"number":            number,
 		"seat":              scheduledAt,
 		"price":             priceInMillis,
-		"currency":          "PLN",
+		"currency":          "EUR",
 		"reservation_id":    fnd.GenShortID(),
 		"reserved_by_id":    uuid.Nil,
 		"reserved_at":       time.Time{},
