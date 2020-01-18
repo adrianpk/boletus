@@ -141,12 +141,16 @@ func (s *Service) TicketSummary(eventSlug string) (tss []model.TicketSummary, er
 
 	for i, ts := range tss {
 
+		cc.SetAmount(ts.Price.Float64, ts.Currency.String)
 		prices, err := cc.CalculateF32()
 		if err != nil {
-			cc.SetAmount(ts.Price.Float64, ts.Currency.String)
 			// Not severe, just log the issue
 			// Base price and currency will be shown anyway
-			s.Log.Warn("Cannot make currency conversion", "event-id", ts.EventID, "type", ts.Type, "price", ts.Price, "currency", ts.Currency)
+			s.Log.Warn("Cannot make currency conversion",
+				"event-slug", ts.EventSlug.String,
+				"type", ts.Type.String,
+				"price", ts.Price.Float64,
+				"currency", ts.Currency.String)
 		}
 
 		ts.Prices = prices
