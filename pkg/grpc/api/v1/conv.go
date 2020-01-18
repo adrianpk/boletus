@@ -37,6 +37,7 @@ func toTicketSummaryRes(ts model.TicketSummary) *TicketSummaryRes {
 		Type:      ts.Type.String,
 		Price:     ts.PriceFloat32(),
 		Currency:  ts.Currency.String,
+		Prices:    ts.Prices,
 	}
 }
 
