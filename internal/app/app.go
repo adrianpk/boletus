@@ -60,7 +60,6 @@ func (app *App) Init() error {
 
 	err = app.Seeder.Seed()
 	if err != nil {
-		app.Log.Info("aaaaaaaaaaaaaaaaa")
 		return err
 	}
 

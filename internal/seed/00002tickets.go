@@ -9,9 +9,11 @@ import (
 )
 
 var (
+	eventSlug = "rockpartyinwrocław-000000000001"
+
 	t1, _ = time.Parse(time.RFC3339, "2020-01-02T19:00:00Z00:00")
 
-	event = newEventMap("Rock Party in Wrocław", "Make some noise!", "Wrocław Stadion Miejski", t1)
+	event = newEventMap(eventSlug, "Rock Party in Wrocław", "Make some noise!", "Wrocław Stadion Miejski", t1)
 )
 
 // EventsAndTickets seeding
@@ -103,11 +105,11 @@ VALUES (:id, :slug, :name, :event_id, :type, :serie, :number, :seat, :price, :cu
 	return nil
 }
 
-func newEventMap(name, description, place string, scheduledAt time.Time) map[string]interface{} {
+func newEventMap(slug, name, description, place string, scheduledAt time.Time) map[string]interface{} {
 
 	return map[string]interface{}{
 		"id":            genUUID(),
-		"slug":          genSlug(name),
+		"slug":          slug, //genSlug(name)
 		"name":          name,
 		"description":   description,
 		"place":         place,
