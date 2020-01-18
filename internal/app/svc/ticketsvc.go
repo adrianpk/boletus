@@ -125,13 +125,35 @@ func (s *Service) DeleteTicket(slug string) error {
 
 // Custom queries and process
 // TicketSummary returns a list including availability and price for each ticket type od an event.
-func (s *Service) TicketSummary(eventSlug string) (users []model.TicketSummary, err error) {
+func (s *Service) TicketSummary(eventSlug string) (tss []model.TicketSummary, err error) {
 	repo := s.TicketRepo
 	if repo == nil {
-		return users, NoRepoErr
+		return tss, NoRepoErr
 	}
 
-	return repo.TicketSummary(eventSlug)
+	tss, err = repo.TicketSummary(eventSlug)
+	if err != nil {
+		return tss, err
+	}
+
+	// Set price in other currencies
+	cc := NewCurrencyConversor(s.Rates.Rates)
+
+	for i, ts := range tss {
+
+		prices, err := cc.CalculateF32()
+		if err != nil {
+			cc.SetAmount(ts.Price.Float64, ts.Currency.String)
+			// Not severe, just log the issue
+			// Base price and currency will be shown anyway
+			s.Log.Warn("Cannot make currency conversion", "event-id", ts.EventID, "type", ts.Type, "price", ts.Price, "currency", ts.Currency)
+		}
+
+		ts.Prices = prices
+		tss[i] = ts
+	}
+
+	return tss, nil
 }
 
 // PreBookTickets

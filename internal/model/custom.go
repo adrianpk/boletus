@@ -61,13 +61,14 @@ func ticketTypesReg() *ticketTypes {
 type (
 	// TicketSummary model
 	TicketSummary struct {
-		Qty       sql.NullInt32   `db:"qty"`
-		Name      sql.NullString  `db:"name"`
-		EventID   sql.NullString  `db:"event_id""`
-		EventSlug sql.NullString  `db:"event_slug""`
-		Type      sql.NullString  `db:"type"`
-		Price     sql.NullFloat64 `db:"price"`
-		Currency  sql.NullString  `db:"currency"`
+		Qty       sql.NullInt32      `db:"qty"`
+		Name      sql.NullString     `db:"name"`
+		EventID   sql.NullString     `db:"event_id""`
+		EventSlug sql.NullString     `db:"event_slug""`
+		Type      sql.NullString     `db:"type"`
+		Price     sql.NullFloat64    `db:"price"`
+		Currency  sql.NullString     `db:"currency"`
+		Prices    map[string]float32 `db:"-"`
 	}
 )
 
