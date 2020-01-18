@@ -11,7 +11,8 @@ type (
 		Cfg     *fnd.Config
 		Log     fnd.Logger
 		Name    string
-		cron    *cron.Cron
+		cron1   *cron.Cron
+		cron2   *cron.Cron
 		Service *svc.Service
 	}
 )
@@ -25,29 +26,47 @@ func NewScheduler(cfg *fnd.Config, log fnd.Logger, name string) *scheduler {
 }
 
 func (sc *scheduler) Start() error {
-	mins := int(sc.Cfg.ValAsInt("scheduler.one.minutes", 1))
-
-	// Expire reservations job
-	c, err := newCron(mins, sc.Service.ExpireTicketReservations)
+	err := sc.startCron1()
 	if err != nil {
 		return err
 	}
 
-	sc.cron = c
-	sc.cron.Start()
+	return sc.startCron2()
+}
+
+func (sc *scheduler) startCron1() error {
+	cronStr1 := sc.Cfg.ValOrDef("scheduler.cron.one.str", "* * * * *")
+
+	// Expire reservations job
+	c1, err := newCron(cronStr1, sc.Service.ExpireTicketReservations)
+	if err != nil {
+		return err
+	}
+
+	sc.cron1 = c1
+	sc.cron1.Start()
+	return nil
+}
+
+func (sc *scheduler) startCron2() error {
+	// Update currency rates cache
+	cronStr1 := sc.Cfg.ValOrDef("scheduler.cron.two.str", "0 * * * *")
+
+	c2, err := newCron(cronStr1, sc.Service.UpdateRates)
+	if err != nil {
+		return err
+	}
+
+	sc.cron2 = c2
+	sc.cron2.Start()
 
 	return nil
 }
 
-func newCron(mins int, f func()) (*cron.Cron, error) {
+func newCron(cronStr string, f func()) (*cron.Cron, error) {
 	c := cron.New()
 
-	// FIX: Runing every minute.
-	// Lib robfig/cron/ changed behaviour in v3.
-	//cstr := fmt.Sprintf("0 %d * * *", mins)
-	cstr := "* * * * *"
-
-	_, err := c.AddFunc(cstr, f)
+	_, err := c.AddFunc(cronStr, f)
 	if err != nil {
 		return c, err
 	}
