@@ -38,7 +38,7 @@ var (
 		Number:   db.ToNullInt32(125),
 		Seat:     db.ToNullString("25/A"),
 		Price:    db.ToNullInt32(50000),
-		Currency: db.ToNullString("PLN"),
+		Currency: db.ToNullString("EUR"),
 	}
 
 	jesseCook1 = model.Ticket{
@@ -52,7 +52,7 @@ var (
 		Number:   db.ToNullInt32(12),
 		Seat:     db.ToNullString("n/a"),
 		Price:    db.ToNullInt32(38000),
-		Currency: db.ToNullString("PLN"),
+		Currency: db.ToNullString("EUR"),
 	}
 
 	ticketsTable = map[uuid.UUID]ticketRow{
