@@ -39,7 +39,7 @@ export BLT_SCHEDULER_ONE_MINUTES="1"
 #export BLT_SCHEDULER_TWO_MINUTES="10"
 
 # Scheduler
-export BLT_RESERVATION_EXPIRE_MINUTES="2"
+export BLT_RESERVATION_EXPIRE_MINUTES="60"
 
 # Confirmation
 # users/{slug}/{token}/confirm

@@ -33,10 +33,14 @@ const (
 
 	// PreBook ticket type [normal, golden-circle, silver-circle, bronce-circle, couple]
 	ticketType = "normal"
+
+	// replace by a a valid reservation ID
+	reservationID = "cab86283242c"
 )
 
 // This is simple client that can be used to
 // manually test ticketer gRPC server exposed functions
+// TODO: Accept commands and IDs as flags to avoid harcoding arguments.
 func main() {
 	// Replace by custom envar prefix
 	cfg := fnd.LoadConfig("blt")
@@ -59,10 +63,15 @@ func main() {
 	//clt.EventTicketSummary()
 	//log.Info("TicketSummary end\n")
 
-	// Ticket summary
-	log.Info("PreBook begin")
-	clt.PreBook()
-	log.Info("PreBook end\n")
+	// PreBook
+	//log.Info("PreBook begin")
+	//clt.PreBook()
+	//log.Info("PreBook end\n")
+
+	// ConfirmBooking
+	log.Info("ConfirmBooking begin")
+	clt.ConfirmBooking()
+	log.Info("ConfirmBooking end\n")
 }
 
 // NewClient for Ticketer gRPC server
@@ -106,7 +115,7 @@ func (c *client) IndexEvents() error {
 	}
 
 	// Dump result
-	c.Log.Info("IndexEvents result:")
+	c.Log.Info("Result:")
 	c.Log.Info(spew.Sdump(res))
 	return nil
 }
@@ -130,12 +139,12 @@ func (c *client) EventTicketSummary() error {
 	}
 
 	// Dump result
-	c.Log.Info("EventTicketSummary result:")
+	c.Log.Info("Result:")
 	c.Log.Info(spew.Sdump(res))
 	return nil
 }
 
-// EventTicketSummary
+// PreBook
 func (c *client) PreBook() error {
 	// EventID request
 	req := v1.PreBookReq{
@@ -157,7 +166,33 @@ func (c *client) PreBook() error {
 	}
 
 	// Dump result
-	c.Log.Info("PreBook result:")
+	c.Log.Info("Result:")
+	c.Log.Info(spew.Sdump(res))
+	return nil
+}
+
+// ConfirmBooking
+func (c *client) ConfirmBooking() error {
+	// EventID request
+	req := v1.ConfirmBookingReq{
+		Api:           apiVer,
+		EventSlug:     eventSlug,
+		UserSlug:      userSlug,
+		ReservationID: reservationID,
+	}
+
+	// Context timeout
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+
+	res, err := c.Ticketer.ConfirmBooking(ctx, &req)
+	if err != nil {
+		c.Log.Error(err)
+		return err
+	}
+
+	// Dump result
+	c.Log.Info("Result:")
 	c.Log.Info(spew.Sdump(res))
 	return nil
 }
