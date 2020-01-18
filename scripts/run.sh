@@ -35,11 +35,11 @@ export BLT_PG_BACKOFF_MAXTRIES="3"
 export BLT_SEEDING_FORCE="false"
 
 # Scheduler
-export BLT_SCHEDULER_ONE_MINUTES="1"
-#export BLT_SCHEDULER_TWO_MINUTES="10"
+export BLT_SCHEDULER_CRON_ONE_STR="* * * * *"
+export BLT_SCHEDULER_CRON_TWO_STR="0 * * * *"
 
 # Scheduler
-export BLT_RESERVATION_EXPIRE_MINUTES="60"
+export BLT_RESERVATION_EXPIRE_MINUTES="5"
 
 # Confirmation
 # users/{slug}/{token}/confirm
