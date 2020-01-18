@@ -63,6 +63,8 @@ func (app *App) Init() error {
 		return err
 	}
 
+	app.GRPCAPIV1.Service.Init()
+
 	return nil
 }
 
