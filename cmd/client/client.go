@@ -7,6 +7,7 @@ import (
 
 	v1 "github.com/adrianpk/boletus/pkg/grpc/api/v1"
 	fnd "github.com/adrianpk/foundation"
+	"github.com/davecgh/go-spew/spew"
 	"google.golang.org/grpc"
 )
 
@@ -51,17 +52,17 @@ func main() {
 	// IndexEvents
 	//log.Info("IndexEvents begin")
 	//clt.IndexEvents()
-	//log.Info("IndexEvents end/n")
+	//log.Info("IndexEvents end\n")
 
 	// Ticket summary
 	//log.Info("TicketSummary begin")
 	//clt.EventTicketSummary()
-	//log.Info("TicketSummary end/n")
+	//log.Info("TicketSummary end\n")
 
 	// Ticket summary
 	log.Info("PreBook begin")
 	clt.PreBook()
-	log.Info("PreBook end/n")
+	log.Info("PreBook end\n")
 }
 
 // NewClient for Ticketer gRPC server
@@ -106,7 +107,7 @@ func (c *client) IndexEvents() error {
 
 	// Dump result
 	c.Log.Info("IndexEvents result:")
-	c.Log.Info(fmt.Sprintf("%+v", res))
+	c.Log.Info(spew.Sdump(res))
 	return nil
 }
 
@@ -129,8 +130,8 @@ func (c *client) EventTicketSummary() error {
 	}
 
 	// Dump result
-	c.Log.Info("IndexEvents result:")
-	c.Log.Info(fmt.Sprintf("%+v", res))
+	c.Log.Info("EventTicketSummary result:")
+	c.Log.Info(spew.Sdump(res))
 	return nil
 }
 
@@ -157,6 +158,6 @@ func (c *client) PreBook() error {
 
 	// Dump result
 	c.Log.Info("PreBook result:")
-	c.Log.Info(fmt.Sprintf("%+v", res))
+	c.Log.Info(spew.Sdump(res))
 	return nil
 }

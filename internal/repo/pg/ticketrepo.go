@@ -29,6 +29,10 @@ func NewTicketRepo(cfg *fnd.Config, log fnd.Logger, name string, db *sqlx.DB) *T
 	}
 }
 
+const (
+	zeroUUID = "00000000-0000-0000-0000-000000000000"
+)
+
 // Create a ticket
 func (ur *TicketRepo) Create(ticket *model.Ticket, tx ...*sqlx.Tx) error {
 	st := `INSERT INTO tickets (id, slug, name, event_id, serie, number, seat, price, currency, reservation_id, reserved_by_id, reserved_at, bought_by_id, bought_at, status, local_order_id, gateway_op_id,gateway_order_id, gateway_op_status, locale, base_tz, is_active, is_deleted, created_by_id, updated_by_id, created_at, updated_at)
@@ -364,11 +368,11 @@ func (ur *TicketRepo) PreBook(eventSlug, ticketType string, qty int, reservation
 	}
 
 	// Select all updated
-	st = `SELECT tickets.* FROM tickets INNER JOIN events ON tickets.event_id = events.id WHERE events.slug = '%s' AND tickets.type = '%s' AND (tickets.is_deleted IS NULL OR NOT tickets.is_deleted) AND (events.is_deleted IS NULL OR NOT events.is_deleted) AND reservation_id = '%s' AND reserved_by_id::text='%s' AND (bought_by_id IS NULL OR NOT bought_by_id::text='00000000-0000-0000-0000-00000000') AND status='reserved' AND (gateway_op_id IS NULL or gateway_op_id='') ORDER BY tickets.updated_at ASC;`
+	st = `SELECT tickets.* FROM tickets INNER JOIN events ON tickets.event_id = events.id WHERE events.slug = '%s' AND tickets.type = '%s' AND (tickets.is_deleted IS NULL OR NOT tickets.is_deleted) AND (events.is_deleted IS NULL OR NOT events.is_deleted) AND reservation_id = '%s' AND reserved_by_id::text='%s' AND (bought_by_id IS NULL OR bought_by_id::text='00000000-0000-0000-0000-000000000000') AND status='reserved' AND (gateway_op_id IS NULL or gateway_op_id='') ORDER BY tickets.updated_at ASC;`
 
 	st = fmt.Sprintf(st, eventSlug, ticketType, reservationID, userID)
 
-	err = ur.DB.Select(&tickets, st)
+	err = t.Select(&tickets, st)
 	if err != nil {
 		return tickets, err
 	}

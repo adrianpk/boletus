@@ -95,13 +95,14 @@ func (s *GRPCService) PreBook(ctx context.Context, req *PreBookReq) (*PreBookRes
 	ts, err := s.Service.PreBookTickets(req.GetEventSlug(), req.GetTicketType(), qty, req.GetUserSlug())
 
 	// Convert result list into a TicketRes list
-	list, total, currency := toTicketResList(ts)
+	list, total, currency, resID := toTicketResList(ts)
 
 	return &PreBookRes{
-		Api:      version,
-		List:     list,
-		Total:    total,
-		Currency: currency,
-		Status:   "processed",
+		Api:           version,
+		List:          list,
+		Total:         total,
+		Currency:      currency,
+		ReservationID: resID,
+		Status:        "processed",
 	}, err
 }

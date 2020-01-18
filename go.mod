@@ -6,6 +6,7 @@ require (
 	github.com/adrianpk/foundation v0.0.0-00010101000000-000000000000
 	github.com/adrianpk/foundation/db v0.0.0-20200111024303-1eea754ea2f3
 	github.com/adrianpk/foundation/db/pg v0.0.0-00010101000000-000000000000
+	github.com/davecgh/go-spew v1.1.1
 	github.com/go-chi/chi v4.0.3+incompatible
 	github.com/golang/protobuf v1.3.2
 	github.com/jmoiron/sqlx v1.2.0

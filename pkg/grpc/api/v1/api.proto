@@ -53,7 +53,8 @@ message PreBookRes{
   repeated TicketRes list = 2;
   float  total = 3;
   string currency = 4;
-  string status = 5;
+  string reservationID = 5;
+  string status = 6;
 }
 
 message TicketRes {
