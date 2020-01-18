@@ -30,12 +30,12 @@ func NewEventRepo(cfg *fnd.Config, log fnd.Logger, name string, db *sqlx.DB) *Ev
 }
 
 // Create a event
-func (ur *EventRepo) Create(event *model.Event, tx ...*sqlx.Tx) error {
+func (er *EventRepo) Create(event *model.Event, tx ...*sqlx.Tx) error {
 	st := `INSERT INTO events (id, slug, name, description, place, scheduled_at, locale, base_tz, is_active, is_deleted, created_by_id, updated_by_id, created_at, updated_at)
 VALUES (:id, :slug, :name, :description, :place, :scheduled_at, :locale, :base_tz, :current_tz, :is_active, :is_deleted, :created_by_id, :updated_by_id, :created_at, :updated_at)`
 
 	// Create a local transaction if it is not passed as argument.
-	t, local, err := ur.getTx(tx)
+	t, local, err := er.getTx(tx)
 	if err != nil {
 		return err
 	}
@@ -58,10 +58,10 @@ VALUES (:id, :slug, :name, :description, :place, :scheduled_at, :locale, :base_t
 }
 
 // GetAll events from
-func (ur *EventRepo) GetAll() (events []model.Event, err error) {
+func (er *EventRepo) GetAll() (events []model.Event, err error) {
 	st := `SELECT * FROM events WHERE is_deleted IS NULL OR NOT is_deleted;`
 
-	err = ur.DB.Select(&events, st)
+	err = er.DB.Select(&events, st)
 	if err != nil {
 		return events, err
 	}
@@ -70,11 +70,11 @@ func (ur *EventRepo) GetAll() (events []model.Event, err error) {
 }
 
 // Get event by ID.
-func (ur *EventRepo) Get(id uuid.UUID) (event model.Event, err error) {
+func (er *EventRepo) Get(id uuid.UUID) (event model.Event, err error) {
 	st := `SELECT * FROM events WHERE id = '%s' AND (is_deleted IS NULL OR NOT is_deleted) LIMIT 1;`
 	st = fmt.Sprintf(st, id.String())
 
-	err = ur.DB.Get(&event, st)
+	err = er.DB.Get(&event, st)
 	if err != nil {
 		return event, err
 	}
@@ -83,30 +83,30 @@ func (ur *EventRepo) Get(id uuid.UUID) (event model.Event, err error) {
 }
 
 // GetBySlug event from repo by slug.
-func (ur *EventRepo) GetBySlug(slug string) (event model.Event, err error) {
+func (er *EventRepo) GetBySlug(slug string) (event model.Event, err error) {
 	st := `SELECT * FROM events WHERE slug = '%s' AND (is_deleted IS NULL OR NOT is_deleted) LIMIT 1;`
 	st = fmt.Sprintf(st, slug)
 
-	err = ur.DB.Get(&event, st)
+	err = er.DB.Get(&event, st)
 
 	return event, err
 }
 
 // GetByName event from repo by eventname.
-func (ur *EventRepo) GetByName(name string) (model.Event, error) {
+func (er *EventRepo) GetByName(name string) (model.Event, error) {
 	var event model.Event
 
 	st := `SELECT * FROM events WHERE name = '%s' AND (is_deleted IS NULL OR NOT is_deleted) LIMIT 1;`
 	st = fmt.Sprintf(st, name)
 
-	err := ur.DB.Get(&event, st)
+	err := er.DB.Get(&event, st)
 
 	return event, err
 }
 
 // Update event data in
-func (ur *EventRepo) Update(event *model.Event, tx ...*sqlx.Tx) error {
-	ref, err := ur.Get(event.ID)
+func (er *EventRepo) Update(event *model.Event, tx ...*sqlx.Tx) error {
+	ref, err := er.Get(event.ID)
 	if err != nil {
 		return fmt.Errorf("cannot retrieve reference event: %s", err.Error())
 	}
@@ -149,7 +149,7 @@ func (ur *EventRepo) Update(event *model.Event, tx ...*sqlx.Tx) error {
 	}
 
 	// Create a local transaction if it is not passed as argument.
-	t, local, err := ur.getTx(tx)
+	t, local, err := er.getTx(tx)
 	if err != nil {
 		return err
 	}
@@ -157,7 +157,7 @@ func (ur *EventRepo) Update(event *model.Event, tx ...*sqlx.Tx) error {
 	_, err = t.NamedExec(st.String(), event)
 
 	if local {
-		ur.Log.Info("Transaction created by repo: committing")
+		er.Log.Info("Transaction created by repo: committing")
 		return t.Commit()
 	}
 
@@ -165,11 +165,11 @@ func (ur *EventRepo) Update(event *model.Event, tx ...*sqlx.Tx) error {
 }
 
 // Delete event from repo by ID.
-func (ur *EventRepo) Delete(id uuid.UUID, tx ...*sqlx.Tx) error {
+func (er *EventRepo) Delete(id uuid.UUID, tx ...*sqlx.Tx) error {
 	st := `DELETE FROM events WHERE id = '%s' AND (is_deleted IS NULL OR NOT is_deleted);`
 	st = fmt.Sprintf(st, id)
 
-	t, local, err := ur.getTx(tx)
+	t, local, err := er.getTx(tx)
 	if err != nil {
 		return err
 	}
@@ -184,11 +184,11 @@ func (ur *EventRepo) Delete(id uuid.UUID, tx ...*sqlx.Tx) error {
 }
 
 // DeleteBySlug:w event from repo by slug.
-func (ur *EventRepo) DeleteBySlug(slug string, tx ...*sqlx.Tx) error {
+func (er *EventRepo) DeleteBySlug(slug string, tx ...*sqlx.Tx) error {
 	st := `DELETE FROM events WHERE slug = '%s' AND (is_deleted IS NULL OR NOT is_deleted);`
 	st = fmt.Sprintf(st, slug)
 
-	t, local, err := ur.getTx(tx)
+	t, local, err := er.getTx(tx)
 	if err != nil {
 		return err
 	}
@@ -203,11 +203,11 @@ func (ur *EventRepo) DeleteBySlug(slug string, tx ...*sqlx.Tx) error {
 }
 
 // DeleteByeventname event from repo by eventname.
-func (ur *EventRepo) DeleteByEventname(eventname string, tx ...*sqlx.Tx) error {
+func (er *EventRepo) DeleteByEventname(eventname string, tx ...*sqlx.Tx) error {
 	st := `DELETE FROM events WHERE eventname = '%s' AND (is_deleted IS NULL OR NOT is_deleted);`
 	st = fmt.Sprintf(st, eventname)
 
-	t, local, err := ur.getTx(tx)
+	t, local, err := er.getTx(tx)
 	if err != nil {
 		return err
 	}
@@ -221,21 +221,21 @@ func (ur *EventRepo) DeleteByEventname(eventname string, tx ...*sqlx.Tx) error {
 }
 
 // GetBySlug event from repo by slug token.
-func (ur *EventRepo) GetBySlugAndToken(slug, token string) (model.Event, error) {
+func (er *EventRepo) GetBySlugAndToken(slug, token string) (model.Event, error) {
 	var event model.Event
 
 	st := `SELECT * FROM events WHERE slug = '%s' AND confirmation_token = '%s' AND (is_deleted IS NULL OR NOT is_deleted) LIMIT 1;`
 	st = fmt.Sprintf(st, slug, token)
 
-	err := ur.DB.Get(&event, st)
+	err := er.DB.Get(&event, st)
 
 	return event, err
 }
 
 // Tx
 
-func (ur *EventRepo) newTx() (tx *sqlx.Tx, err error) {
-	tx, err = ur.DB.Beginx()
+func (er *EventRepo) newTx() (tx *sqlx.Tx, err error) {
+	tx, err = er.DB.Beginx()
 	if err != nil {
 		return tx, err
 	}
@@ -243,13 +243,13 @@ func (ur *EventRepo) newTx() (tx *sqlx.Tx, err error) {
 	return tx, err
 }
 
-func (ur *EventRepo) getTx(txs []*sqlx.Tx) (tx *sqlx.Tx, local bool, err error) {
+func (er *EventRepo) getTx(txs []*sqlx.Tx) (tx *sqlx.Tx, local bool, err error) {
 	// Create a new transaction if its no passed as argument.
 	if len(txs) > 0 {
 		return txs[0], false, nil
 	}
 
-	tx, err = ur.DB.Beginx()
+	tx, err = er.DB.Beginx()
 	if err != nil {
 		return tx, true, err
 	}

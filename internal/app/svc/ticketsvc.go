@@ -192,3 +192,32 @@ func (s *Service) ExpireTicketReservations() {
 		s.Log.Error(err)
 	}
 }
+
+// ConfirmTicketsReservation
+func (s *Service) ConfirmTicketsReservation(eventSlug, reservationID, userSlug string) (tickets []model.Ticket, err error) {
+	repo := s.TicketRepo
+	if repo == nil {
+		return tickets, NoRepoErr
+	}
+
+	// Get a new transaction
+	tx, err := s.getTx()
+	if err != nil {
+		return tickets, err
+	}
+
+	// Confirm reservation
+	tickets, err = repo.ConfirmReservation(eventSlug, reservationID, userSlug)
+	if err != nil {
+		tx.Commit()
+		return tickets, err
+	}
+
+	// Commit on local transactions
+	err = tx.Commit()
+	if err != nil {
+		return tickets, err
+	}
+
+	return tickets, nil
+}

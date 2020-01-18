@@ -19,7 +19,6 @@ func toEventRes(event model.Event) *EventRes {
 		Description: event.Description.String,
 		Place:       event.Place.String,
 		ScheduledAt: event.ScheduledAt.Time.Format(time.RFC3339),
-		IsNew:       event.IsNew(),
 	}
 }
 

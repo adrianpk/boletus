@@ -15,7 +15,6 @@ message EventRes {
   string place = 6;
   string scheduledAt = 7;
   string timezone = 8;
-  bool isNew = 9;
 }
 
 
@@ -48,7 +47,7 @@ message PreBookReq {
   int32  qty = 5;
 }
 
-message PreBookRes{
+message TicketOpRes{
   string api = 1;
   repeated TicketRes list = 2;
   float  total = 3;
@@ -72,11 +71,18 @@ message TicketRes {
   string localOrderID = 12;
   string gatewayOpID = 13;
   string gatewayOpStatus = 14;
-  bool isNew = 15;
+}
+
+message ConfirmBookingReq {
+  string api = 1;
+  string userSlug = 2;
+  string eventSlug = 3;
+  string reservationID = 4;
 }
 
 service Ticketer {
   rpc IndexEvents(EventIDReq) returns (IndexEventsRes) {}
   rpc EventTicketSummary(EventIDReq) returns (TicketSummaryListRes) {}
-  rpc PreBook(PreBookReq) returns (PreBookRes) {}
+  rpc PreBook(PreBookReq) returns (TicketOpRes) {}
+  rpc ConfirmBooking(ConfirmBookingReq) returns (TicketOpRes) {}
 }

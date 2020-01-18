@@ -35,7 +35,7 @@ var (
 		Name:     db.ToNullString("Rock Party in Wrocław"),
 		EventID:  db.ToNullString("03bc0622-4612-4490-9818-c50b2fd2340"),
 		Serie:    db.ToNullString("A"),
-		Number:   db.ToNullString("125"),
+		Number:   db.ToNullInt32(125),
 		Seat:     db.ToNullString("25/A"),
 		Price:    db.ToNullInt32(50000),
 		Currency: db.ToNullString("PLN"),
@@ -49,7 +49,7 @@ var (
 		Name:     db.ToNullString("Jesse Cook"),
 		EventID:  db.ToNullString("f2553fc3-3c63-4adb-bc92-be8c66aecd19"),
 		Serie:    db.ToNullString("C"),
-		Number:   db.ToNullString("12"),
+		Number:   db.ToNullInt32(12),
 		Seat:     db.ToNullString("n/a"),
 		Price:    db.ToNullInt32(38000),
 		Currency: db.ToNullString("PLN"),
@@ -61,7 +61,7 @@ var (
 	}
 )
 
-func (ur *TicketRepo) Create(ticket *model.Ticket, tx ...*sqlx.Tx) error {
+func (tr *TicketRepo) Create(ticket *model.Ticket, tx ...*sqlx.Tx) error {
 	_, ok := ticketsTable[ticket.ID]
 	if ok {
 		errors.New("duplicate key violates unique constraint")
@@ -79,7 +79,7 @@ func (ur *TicketRepo) Create(ticket *model.Ticket, tx ...*sqlx.Tx) error {
 	return nil
 }
 
-func (ur *TicketRepo) GetAll() (tickets []model.Ticket, err error) {
+func (tr *TicketRepo) GetAll() (tickets []model.Ticket, err error) {
 	size := len(ticketsTable)
 	out := make([]model.Ticket, size)
 	for _, row := range ticketsTable {
@@ -88,7 +88,7 @@ func (ur *TicketRepo) GetAll() (tickets []model.Ticket, err error) {
 	return out, nil
 }
 
-func (ur *TicketRepo) Get(id uuid.UUID) (ticket model.Ticket, err error) {
+func (tr *TicketRepo) Get(id uuid.UUID) (ticket model.Ticket, err error) {
 	for _, row := range ticketsTable {
 		if id == row.model.ID {
 			return row.model, nil
@@ -97,7 +97,7 @@ func (ur *TicketRepo) Get(id uuid.UUID) (ticket model.Ticket, err error) {
 	return model.Ticket{}, nil
 }
 
-func (ur *TicketRepo) GetBySlug(slug string) (ticket model.Ticket, err error) {
+func (tr *TicketRepo) GetBySlug(slug string) (ticket model.Ticket, err error) {
 	for _, row := range ticketsTable {
 		if slug == row.model.Slug.String {
 			return row.model, nil
@@ -106,7 +106,7 @@ func (ur *TicketRepo) GetBySlug(slug string) (ticket model.Ticket, err error) {
 	return model.Ticket{}, nil
 }
 
-func (ur *TicketRepo) GetByEventID(eventID uuid.UUID) (ticket model.Ticket, err error) {
+func (tr *TicketRepo) GetByEventID(eventID uuid.UUID) (ticket model.Ticket, err error) {
 	out := make([]model.Ticket, 1000)
 	for _, row := range ticketsTable {
 		if eventID == row.model.ID {
@@ -117,7 +117,7 @@ func (ur *TicketRepo) GetByEventID(eventID uuid.UUID) (ticket model.Ticket, err 
 	return model.Ticket{}, nil
 }
 
-func (ur *TicketRepo) Update(ticket *model.Ticket, tx ...*sqlx.Tx) error {
+func (tr *TicketRepo) Update(ticket *model.Ticket, tx ...*sqlx.Tx) error {
 	for _, row := range ticketsTable {
 		if ticket.ID == row.model.ID {
 			if !row.mutable {
@@ -134,7 +134,7 @@ func (ur *TicketRepo) Update(ticket *model.Ticket, tx ...*sqlx.Tx) error {
 	return errors.New("no records updated")
 }
 
-func (ur *TicketRepo) Delete(id uuid.UUID, tx ...*sqlx.Tx) error {
+func (tr *TicketRepo) Delete(id uuid.UUID, tx ...*sqlx.Tx) error {
 	for _, row := range ticketsTable {
 		if id == row.model.ID {
 			if !row.mutable {
@@ -148,7 +148,7 @@ func (ur *TicketRepo) Delete(id uuid.UUID, tx ...*sqlx.Tx) error {
 	return errors.New("no records deleted")
 }
 
-func (ur *TicketRepo) DeleteySlug(slug string, tx ...*sqlx.Tx) error {
+func (tr *TicketRepo) DeleteySlug(slug string, tx ...*sqlx.Tx) error {
 	for _, row := range ticketsTable {
 		if slug == row.model.Slug.String {
 			if !row.mutable {
@@ -162,18 +162,23 @@ func (ur *TicketRepo) DeleteySlug(slug string, tx ...*sqlx.Tx) error {
 	return errors.New("no records deleted")
 }
 
-func (ur *TicketRepo) TicketSummary(eventSlug string) (ts []model.TicketSummary, err error) {
+func (tr *TicketRepo) TicketSummary(eventSlug string) (ts []model.TicketSummary, err error) {
 	panic("not implemented")
 }
 
-func (ur *TicketRepo) Available(eventSlug, ticketType string) (ts model.TicketSummary, err error) {
+func (tr *TicketRepo) Available(eventSlug, ticketType string) (ts model.TicketSummary, err error) {
 	panic("not implemented")
 }
 
-func (ur *TicketRepo) PreBook(eventSlug, ticketType string, qty int, reservationID, userSlug string, tx ...*sqlx.Tx) (ts []model.Ticket, err error) {
+func (tr *TicketRepo) PreBook(eventSlug, ticketType string, qty int, reservationID, userSlug string, tx ...*sqlx.Tx) (ts []model.Ticket, err error) {
 	panic("not implemented")
 }
 
-func (ur *TicketRepo) ExpireReservations(expMins int) (err error) {
+func (tr *TicketRepo) ExpireReservations(expMins int) (err error) {
 	panic("not implemented")
+}
+
+func (tr *TicketRepo) ConfirmReservation(eventSlug, reservationID, userSlug string, tx ...*sqlx.Tx) (ts []model.Ticket, err error) {
+	panic("not implemented")
+	return ts, nil
 }
