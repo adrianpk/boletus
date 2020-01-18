@@ -12,14 +12,23 @@ import (
 )
 
 var (
+
 	// TODO: Create a builder for users that reads values from somewere: json, csv, xml, etc...
+	// NOTE: ID and slug for base users are hardcoded to simplify manual and automatic tests in development environment (genUUID and genSlug(name) helpers)
+
+	//id   = genUUID().String()
+	//slug = genSlug("lauriem")
+
+	// It is recommended that they be generated randomly like any other user in production environment.
 	users = []map[string]interface{}{
 
-		newUserMap("superadmin", "superadmin", "greenhurley", "superadmin@boletus.club", "", "", ""),
+		newUserMap("00000000-0000-0000-0000-000000000001", "system-000000000001", "system", "system", "bluejaycypress", "system@boletus.club", "", "", ""),
 
-		newUserMap("admin", "admin", "tallkristine", "admin@bloetus.club", "", "", ""),
+		newUserMap("00000000-0000-0000-0000-000000000002", "superadmin-000000000002", "superadmin", "superadmin", "greenhurley", "superadmin@boletus.club", "", "", ""),
 
-		newUserMap("user", "lauriem", "openmontana", "lauriem@username.club", "Laurie", "Anne", "Miles"),
+		newUserMap("00000000-0000-0000-0000-000000000003", "admin-000000000003", "admin", "admin", "tallkristine", "admin@bloetus.club", "", "", ""),
+
+		newUserMap("00000000-0000-0000-0000-000000000004", "lauriem-000000000004", "lauriem", "user", "openmontana", "lauriem@username.club", "Laurie", "Anne", "Miles"),
 	}
 )
 
@@ -42,11 +51,11 @@ VALUES (:id, :slug, :role, :username, :password_digest, :email, :given_name, :mi
 	return nil
 }
 
-func newUserMap(role, username, password, email, givenName, middleNames, familyName string) map[string]interface{} {
+func newUserMap(id, slug, role, username, password, email, givenName, middleNames, familyName string) map[string]interface{} {
 
 	return map[string]interface{}{
-		"id":                 genUUID(),
-		"slug":               genSlug(username),
+		"id":                 id,   //genUUID()
+		"slug":               slug, //genSlug(username),
 		"role":               role,
 		"username":           username,
 		"password_digest":    genPassDigest(password),
