@@ -17,12 +17,10 @@ message EventRes {
   string timezone = 8;
 }
 
-
 message IndexEventsRes {
   string api = 1;
   repeated EventRes events = 2;
 }
-
 
 message TicketSummaryListRes {
   string api = 1;
@@ -37,6 +35,13 @@ message TicketSummaryRes {
   int32  qty = 5;
   float  price = 6;
   string currency = 7;
+  //repeated Price prices = 8;
+  map<string, float> prices = 8;
+}
+
+message Price {
+  string currency = 1;
+  float value = 2;
 }
 
 message PreBookReq {
