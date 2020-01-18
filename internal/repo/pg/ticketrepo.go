@@ -396,15 +396,25 @@ func (tr *TicketRepo) ExpireReservations(expMins int) (err error) {
 						updated_by_id = '00000000-0000-0000-0000-000000000001',
 						updated_at = now()
 					WHERE tickets.id IN (
-						SELECT tickets.id FROM tickets WHERE (tickets.is_deleted IS NULL OR NOT tickets.is_deleted) AND (reserved_by_id IS NOT NULL AND NOT reserved_by_id::text='00000000-0000-0000-0000-000000000000') AND (bought_by_id IS NULL OR bought_by_id::text='00000000-0000-0000-0000-000000000000') AND (status='reserved') AND (gateway_op_id IS NULL or gateway_op_id='') AND ((DATE_PART('hour', NOW() - tickets.reserved_at) * 60 + DATE_PART('minute', NOW() - reserved_at) > %d)));`
+						SELECT tickets.id FROM tickets WHERE (tickets.is_deleted IS NULL OR NOT tickets.is_deleted) AND (reserved_by_id IS NOT NULL AND NOT reserved_by_id::text='00000000-0000-0000-0000-000000000000') AND (bought_by_id IS NULL OR bought_by_id::text='00000000-0000-0000-0000-000000000000') AND (status='reserved') AND (gateway_op_id IS NULL or gateway_op_id='') AND ((DATE_PART('hour', NOW() - tickets.reserved_at) * 60 + DATE_PART('minute', NOW() - reserved_at) > %d))) RETURNING tickets.id as expired;`
 
 	st = fmt.Sprintf(st, expMins)
 
 	// Update
-	_, err = tr.DB.Query(st)
+	rows, err := tr.DB.Query(st)
 	if err != nil {
 		return err
 	}
+
+	// Little to none overhead
+	// to know how many reservations have expired.
+	// Comment block if this info does not need to be logged.
+	var count int
+	for rows.Next() {
+		count++
+	}
+
+	tr.Log.Info("Ticket reservation expired", "count", count)
 
 	return nil
 }
