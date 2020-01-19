@@ -47,8 +47,8 @@ func NewSeeder(cfg *Config, log Logger, name string, db *sqlx.DB) *Seeder {
 	m := &Seeder{
 		Worker: NewWorker(cfg, log, name),
 		DB:     db,
-		schema: cfg.ValOrDef("pg.schema", "public"),
-		dbName: cfg.ValOrDef("pg.database", "granica_test"),
+		schema: cfg.ValOrDef("pg.schema", ""),
+		dbName: cfg.ValOrDef("pg.database", ""),
 	}
 
 	return m
@@ -97,9 +97,9 @@ func (s *Seeder) Seed() error {
 		return err
 	}
 
-	if applied || force {
+	if applied && !force {
 		s.Log.Info("Seeding was already executed")
-		return errors.New("seeding already applied")
+		return nil
 	}
 
 	for _, mg := range s.seeds {
