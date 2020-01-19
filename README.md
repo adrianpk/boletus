@@ -165,6 +165,10 @@ Build a staging Docker image of this application and pushes it to Docker Hub.
 
 Same as `make build-stage` but for production images.
 
+**build-client**
+
+Build the gRPC client. Source files location is `cmd/client/client.go` and compiled target is `bin/client`.
+
 **install-stg**
 
 Deploys app to Googke GKE usando [HELM](https://helm.sh/).
@@ -178,6 +182,11 @@ Same as `make install-stage` but for production images.
 
 Updates go files with changes in API made in the pprotocol buffers definition file at `pkg/grpc/api/v1`.
 
+**make client**
+
+Compiles the client and launches it through a shell script `scripts/client.sh` who sets some environment values required to use it. Now it is mostly used for manual testin but some flag based configuration will be implemented to make it more ergonomic to use it.
+
+## Client
 
 ## Notes
 
