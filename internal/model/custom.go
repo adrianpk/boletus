@@ -4,56 +4,86 @@ import (
 	"database/sql"
 )
 
+type (
+	SellingOption string
+)
+
 var (
+	// TicketType
 	TicketTypes = ticketTypesReg()
+
+	// SelingOptions
+	NoneSO        SellingOption = "none"
+	AllTogetherSO SellingOption = "all-together"
+	EvenSO        SellingOption = "even"
+	PreemptiveSO  SellingOption = "preemptive"
 )
 
 var (
 	normalTT = TicketType{
-		SellingOptions: []string{"none"},
+		Name:          "normal",
+		SellingOption: NoneSO,
 	}
 
 	goldenTT = TicketType{
-		SellingOptions: []string{"all-together"},
-	}
-
-	silverTT = TicketType{
-		SellingOptions: []string{"even", "all-together"},
-	}
-
-	bronzeTT = TicketType{
-		SellingOptions: []string{"none", "even", "all-together"},
+		Name:          "golden-circle",
+		SellingOption: AllTogetherSO,
 	}
 
 	couplesTT = TicketType{
-		SellingOptions: []string{"even"},
+		Name:          "couples",
+		SellingOption: EvenSO,
+	}
+
+	preemptiveTT = TicketType{
+		Name:          "preemptive",
+		SellingOption: PreemptiveSO,
 	}
 )
 
-// Ticket kind
+// Ticket types
 type (
 	// Ticket
 	TicketType struct {
-		SellingOptions []string
+		Name          string
+		SellingOption SellingOption
 	}
 
 	ticketTypes struct {
-		Normal  TicketType
-		Golden  TicketType
-		Silver  TicketType
-		Bronze  TicketType
-		Couples TicketType
+		Normal     TicketType
+		Golden     TicketType
+		Couples    TicketType
+		Preemptive TicketType
 	}
 )
 
 // Ticket kinds
 func ticketTypesReg() *ticketTypes {
 	return &ticketTypes{
-		Normal:  normalTT,
-		Golden:  goldenTT,
-		Silver:  silverTT,
-		Bronze:  bronzeTT,
-		Couples: couplesTT,
+		Normal:     normalTT,
+		Golden:     goldenTT,
+		Couples:    couplesTT,
+		Preemptive: preemptiveTT,
+	}
+}
+
+func TicketTypeByName(name string) TicketType {
+	switch name {
+
+	case "normal":
+		return TicketTypes.Normal
+
+	case "golden-circle":
+		return TicketTypes.Golden
+
+	case "couples":
+		return TicketTypes.Couples
+
+	case "preemptive":
+		return TicketTypes.Preemptive
+
+	default:
+		return TicketTypes.Normal
 	}
 }
 
