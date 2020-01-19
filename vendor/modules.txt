@@ -1,10 +1,10 @@
-# github.com/adrianpk/foundation v0.0.0-00010101000000-000000000000 => ../foundation
+# github.com/adrianpk/foundation v0.0.0-20200119171248-68755498fe02
 github.com/adrianpk/foundation
-# github.com/adrianpk/foundation/db v0.0.0-20200111024303-1eea754ea2f3 => ../foundation/db
+# github.com/adrianpk/foundation/db v0.0.0-20200119171248-68755498fe02
 github.com/adrianpk/foundation/db
-# github.com/adrianpk/foundation/db/pg v0.0.0-00010101000000-000000000000 => ../foundation/db/pg
+# github.com/adrianpk/foundation/db/pg v0.0.0-20200119171248-68755498fe02
 github.com/adrianpk/foundation/db/pg
-# github.com/aws/aws-sdk-go v1.26.8
+# github.com/aws/aws-sdk-go v1.28.5
 github.com/aws/aws-sdk-go/aws
 github.com/aws/aws-sdk-go/aws/awserr
 github.com/aws/aws-sdk-go/aws/awsutil
@@ -29,6 +29,7 @@ github.com/aws/aws-sdk-go/internal/sdkmath
 github.com/aws/aws-sdk-go/internal/sdkrand
 github.com/aws/aws-sdk-go/internal/sdkuri
 github.com/aws/aws-sdk-go/internal/shareddefaults
+github.com/aws/aws-sdk-go/internal/strings
 github.com/aws/aws-sdk-go/private/protocol
 github.com/aws/aws-sdk-go/private/protocol/json/jsonutil
 github.com/aws/aws-sdk-go/private/protocol/query
@@ -40,6 +41,8 @@ github.com/aws/aws-sdk-go/service/sts
 github.com/aws/aws-sdk-go/service/sts/stsiface
 # github.com/cenkalti/backoff v2.2.1+incompatible
 github.com/cenkalti/backoff
+# github.com/davecgh/go-spew v1.1.1
+github.com/davecgh/go-spew/spew
 # github.com/go-chi/chi v4.0.3+incompatible
 github.com/go-chi/chi
 github.com/go-chi/chi/middleware
@@ -83,6 +86,8 @@ github.com/nicksnyder/go-i18n/v2/internal
 github.com/nicksnyder/go-i18n/v2/internal/plural
 # github.com/pkg/errors v0.8.1
 github.com/pkg/errors
+# github.com/robfig/cron/v3 v3.0.1
+github.com/robfig/cron/v3
 # github.com/rs/zerolog v1.17.2
 github.com/rs/zerolog
 github.com/rs/zerolog/internal/cbor
@@ -90,17 +95,17 @@ github.com/rs/zerolog/internal/json
 github.com/rs/zerolog/log
 # github.com/satori/go.uuid v1.2.0
 github.com/satori/go.uuid
-# golang.org/x/crypto v0.0.0-20200109152110-61a87790db17
+# golang.org/x/crypto v0.0.0-20200117160349-530e935923ad
 golang.org/x/crypto/bcrypt
 golang.org/x/crypto/blowfish
-# golang.org/x/net v0.0.0-20200114155413-6afb5195e5aa
+# golang.org/x/net v0.0.0-20190620200207-3b0461eec859
 golang.org/x/net/http/httpguts
 golang.org/x/net/http2
 golang.org/x/net/http2/hpack
 golang.org/x/net/idna
 golang.org/x/net/internal/timeseries
 golang.org/x/net/trace
-# golang.org/x/sys v0.0.0-20200113162924-86b910548bc1
+# golang.org/x/sys v0.0.0-20190507160741-ecd444e8653b
 golang.org/x/sys/unix
 # golang.org/x/text v0.3.2
 golang.org/x/text/feature/plural
@@ -119,7 +124,7 @@ golang.org/x/text/secure/bidirule
 golang.org/x/text/transform
 golang.org/x/text/unicode/bidi
 golang.org/x/text/unicode/norm
-# google.golang.org/genproto v0.0.0-20200113173426-e1de0a7b01eb
+# google.golang.org/genproto v0.0.0-20190819201941-24fa4b261c55
 google.golang.org/genproto/googleapis/rpc/status
 # google.golang.org/grpc v1.26.0
 google.golang.org/grpc

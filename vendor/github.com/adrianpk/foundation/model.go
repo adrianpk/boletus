@@ -63,7 +63,7 @@ func (i *Identification) genSlug(prefix string) (slug string, err error) {
 	}
 
 	prefix = strings.Replace(prefix, "-", "", -1)
-	prefix = strings.Replace(prefix, "_", "", -1)
+	prefix = strings.Replace(prefix, " ", "", -1)
 
 	if !utf8.ValidString(prefix) {
 		v := make([]rune, 0, len(prefix))
