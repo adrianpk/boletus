@@ -174,6 +174,10 @@ func (tr *TicketRepo) PreBook(eventSlug, ticketType string, qty int, reservation
 	panic("not implemented")
 }
 
+func (tr *TicketRepo) PreBookType(eventSlug, ticketType string, reservationID, userSlug string, tx ...*sqlx.Tx) (ts []model.Ticket, err error) {
+	panic("not implemented")
+}
+
 func (tr *TicketRepo) ExpireReservations(expMins int) (err error) {
 	panic("not implemented")
 }

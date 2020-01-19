@@ -186,9 +186,37 @@ func (s *Service) PreBookTickets(eventSlug, ticketType string, qty int, userSlug
 		return tickets, errors.New(msg)
 	}
 
-	// Pre book tickets
+	// Gen reservationID
 	reservationID := fnd.GenShortID()
-	tickets, err = repo.PreBook(eventSlug, ticketType, qty, reservationID, userSlug, tx)
+
+	// Ticket type conditions
+	tt := model.TicketTypeByName(ticketType)
+
+	switch tt.SellingOption {
+
+	case model.AllTogetherSO:
+		tickets, err = repo.PreBookType(eventSlug, ticketType, reservationID, userSlug, tx)
+
+	case model.EvenSO:
+		if !(qty%2 == 0) {
+			qty = qty + 1
+		}
+		tickets, err = repo.PreBook(eventSlug, ticketType, qty, reservationID, userSlug, tx)
+
+	case model.PreemptiveSO:
+		if qty <= (avail - 1) {
+			tickets, err = repo.PreBook(eventSlug, ticketType, qty, reservationID, userSlug, tx)
+		} else {
+			err = errors.New("not enough tickets to sell")
+		}
+
+	case model.NoneSO:
+		tickets, err = repo.PreBook(eventSlug, ticketType, qty, reservationID, userSlug, tx)
+
+	default:
+		err = errors.New("not a valid ticket selling option")
+	}
+
 	if err != nil {
 		tx.Rollback()
 		return tickets, err

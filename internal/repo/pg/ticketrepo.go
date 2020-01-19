@@ -385,6 +385,64 @@ func (tr *TicketRepo) PreBook(eventSlug, ticketType string, qty int, reservation
 	return tickets, nil
 }
 
+// PreBookType mark as reserved all  tickets of a certain type associated to an event.
+func (tr *TicketRepo) PreBookType(eventSlug, ticketType string, reservationID, userSlug string, tx ...*sqlx.Tx) (tickets []model.Ticket, err error) {
+	// Create a local transaction if it is not passed as argument.
+	t, local, err := tr.getTx(tx)
+	if err != nil {
+		return tickets, err
+	}
+
+	// TODO: Replace this extra query making another join
+	// in update statement.
+	st := `select ID from users where slug = '%s';`
+	st = fmt.Sprintf(st, userSlug)
+
+	var userID string
+	row := t.QueryRow(st)
+	err = row.Scan(&userID)
+	if err != nil {
+		tr.Log.Error(err)
+		return tickets, err
+	}
+
+	st = `UPDATE tickets
+					SET
+						reservation_id = '%s',
+						reserved_by_id = '%s',
+						reserved_at = now(),
+						status = 'reserved',
+						updated_by_id = '%s',
+						updated_at = now()
+					WHERE tickets.id IN (
+						SELECT tickets.id FROM tickets INNER JOIN events ON tickets.event_id = events.id WHERE events.slug = '%s' AND tickets.type = '%s' AND (tickets.is_deleted IS NULL OR NOT tickets.is_deleted) AND (events.is_deleted IS NULL OR NOT events.is_deleted) AND (reserved_by_id IS NULL OR reserved_by_id::text='00000000-0000-0000-0000-000000000000') AND (bought_by_id IS NULL OR NOT bought_by_id::text='00000000-0000-0000-0000-00000000') AND (status IS NULL OR status='') AND (gateway_op_id IS NULL or gateway_op_id='') ORDER BY tickets.price ASC);`
+
+	st = fmt.Sprintf(st, reservationID, userID, userID, eventSlug, ticketType)
+
+	// Update
+	_, err = t.Query(st)
+	if err != nil {
+		return tickets, err
+	}
+
+	// Select all updated
+	st = `SELECT tickets.* FROM tickets INNER JOIN events ON tickets.event_id = events.id WHERE events.slug = '%s' AND tickets.type = '%s' AND (tickets.is_deleted IS NULL OR NOT tickets.is_deleted) AND (events.is_deleted IS NULL OR NOT events.is_deleted) AND reservation_id = '%s' AND reserved_by_id::text='%s' AND (bought_by_id IS NULL OR bought_by_id::text='00000000-0000-0000-0000-000000000000') AND status='reserved' AND (gateway_op_id IS NULL or gateway_op_id='') ORDER BY tickets.updated_at ASC;`
+
+	st = fmt.Sprintf(st, eventSlug, ticketType, reservationID, userID)
+
+	err = t.Select(&tickets, st)
+	if err != nil {
+		return tickets, err
+	}
+
+	// Commit on local transactions
+	if local {
+		return tickets, t.Commit()
+	}
+
+	return tickets, nil
+}
+
 // ExpireReservations removes reservation marks from tickets if they are not confirmed after some expTimeMins minutes.
 func (tr *TicketRepo) ExpireReservations(expMins int) (err error) {
 	st := `UPDATE tickets
