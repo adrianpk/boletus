@@ -20,7 +20,6 @@ import (
 type contextKey string
 
 const (
-	// Replace by prefered
 	appName = "boletus"
 )
 
@@ -29,7 +28,6 @@ var (
 )
 
 func main() {
-	// Replace by custom envar prefix
 	cfg := fnd.LoadConfig("blt")
 	log := fnd.NewLogger(cfg)
 
