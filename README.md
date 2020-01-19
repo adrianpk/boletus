@@ -41,7 +41,7 @@ Noun
 $ git clone https://gitlab.com/adrianpk/boletus
 ```
 
-## Create database user
+### Create database user
 
 If it does not exist yet.
 
@@ -139,6 +139,45 @@ $ make clean-and-run
 2:57PM INF Expire tickets process init.
 2:57PM INF Ticket reservation expired count=0
 ```
+
+## Make commands
+
+A brief summary of the most used commands
+
+**make build**
+
+Builds the application
+
+**make run**
+
+Run the application hrough a shell script that previously sets the environment variables with required values.
+The shell script can be found in `scripts/run.sh`.
+
+**package-resources**
+
+It generates a binary representation html templates, translations and other resources that allows to embedd them within the compiled file. `clean-and-run` runs this make task as subtask before starting the applicacion.
+
+**build-stg**
+
+Build a staging Docker image of this application and pushes it to Docker Hub.
+
+**build-prod**
+
+Same as `make build-stage` but for production images.
+
+**install-stg**
+
+Deploys app to Googke GKE usando [HELM](https://helm.sh/).
+I haven't created helm .yaml files yet, so this command is not functional yet.
+
+**install-prod**
+
+Same as `make install-stage` but for production images.
+
+**gen-proto**
+
+Updates go files with changes in API made in the pprotocol buffers definition file at `pkg/grpc/api/v1`.
+
 
 ## Notes
 
