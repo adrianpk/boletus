@@ -1,9 +1,8 @@
 package v1
 
 import (
-	"time"
-
 	"github.com/adrianpk/boletus/internal/model"
+	"time"
 )
 
 func toEventResList(events []model.Event) (ers []*EventRes) {
@@ -20,7 +19,6 @@ func toEventRes(event model.Event) *EventRes {
 		Description: event.Description.String,
 		Place:       event.Place.String,
 		ScheduledAt: event.ScheduledAt.Time.Format(time.RFC3339),
-		IsNew:       event.IsNew(),
 	}
 }
 
@@ -39,23 +37,25 @@ func toTicketSummaryRes(ts model.TicketSummary) *TicketSummaryRes {
 		Type:      ts.Type.String,
 		Price:     ts.PriceFloat32(),
 		Currency:  ts.Currency.String,
+		Prices:    ts.Prices,
 	}
 }
 
-func toTicketResList(tickets []model.Ticket) (trs []*TicketRes, total float32, currency string) {
+func toTicketResList(tickets []model.Ticket) (trs []*TicketRes, total float32, currency, reservationID string) {
 	for _, t := range tickets {
-		trs = append(trs, toTicketRes(t))
+		trs = append(trs, toTicketRes(&t))
 		total = total + float32(t.Price.Int32/1000)
 	}
 
 	if len(tickets) > 0 {
 		currency = tickets[0].Currency.String
+		reservationID = tickets[0].ReservationID.String
 	}
 
-	return trs, total, currency
+	return trs, total, currency, reservationID
 }
 
-func toTicketRes(ticket model.Ticket) *TicketRes {
+func toTicketRes(ticket *model.Ticket) *TicketRes {
 	return &TicketRes{
 		Api:             "",
 		Name:            ticket.Name.String,
@@ -67,6 +67,7 @@ func toTicketRes(ticket model.Ticket) *TicketRes {
 		Price:           ticket.Price.Int32,
 		Currency:        ticket.Currency.String,
 		Status:          ticket.Status.String,
+		ReservationID:   ticket.ReservationID.String,
 		LocalOrderID:    ticket.LocalOrderID.String,
 		GatewayOpID:     ticket.GatewayOpID.String,
 		GatewayOpStatus: ticket.GatewayOpStatus.String,

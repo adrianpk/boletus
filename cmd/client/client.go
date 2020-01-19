@@ -7,6 +7,7 @@ import (
 
 	v1 "github.com/adrianpk/boletus/pkg/grpc/api/v1"
 	fnd "github.com/adrianpk/foundation"
+	"github.com/davecgh/go-spew/spew"
 	"google.golang.org/grpc"
 )
 
@@ -25,17 +26,24 @@ const (
 	// To test replace by valid user and event slugs
 
 	// select slug from users;
-	userSlug = "lauriem-e15edded5b76"
+	userSlug = "lauriem-000000000004"
 
 	// select slug from events;
-	eventSlug = "rockpartyinwrocław-b36806a5d9a8"
+	eventSlug = "rockpartyinwrocław-000000000001"
 
 	// PreBook ticket type [normal, golden-circle, silver-circle, bronce-circle, couple]
-	ticketType = "normal"
+	//ticketType = "standard"
+	//ticketType = "golden-circle"
+	//ticketType = "couples"
+	ticketType = "preemptive"
+
+	// replace by a a valid reservation ID
+	reservationID = "cab86283242c"
 )
 
 // This is simple client that can be used to
 // manually test ticketer gRPC server exposed functions
+// TODO: Accept commands and IDs as flags to avoid harcoding arguments.
 func main() {
 	// Replace by custom envar prefix
 	cfg := fnd.LoadConfig("blt")
@@ -51,17 +59,22 @@ func main() {
 	// IndexEvents
 	//log.Info("IndexEvents begin")
 	//clt.IndexEvents()
-	//log.Info("IndexEvents end/n")
+	//log.Info("IndexEvents end\n")
 
 	// Ticket summary
 	//log.Info("TicketSummary begin")
 	//clt.EventTicketSummary()
-	//log.Info("TicketSummary end/n")
+	//log.Info("TicketSummary end\n")
 
-	// Ticket summary
+	// PreBook
 	log.Info("PreBook begin")
 	clt.PreBook()
-	log.Info("PreBook end/n")
+	log.Info("PreBook end\n")
+
+	// ConfirmBooking
+	//log.Info("ConfirmBooking begin")
+	//clt.ConfirmBooking()
+	//log.Info("ConfirmBooking end\n")
 }
 
 // NewClient for Ticketer gRPC server
@@ -105,8 +118,8 @@ func (c *client) IndexEvents() error {
 	}
 
 	// Dump result
-	c.Log.Info("IndexEvents result:")
-	c.Log.Info(fmt.Sprintf("%+v", res))
+	c.Log.Info("Result:")
+	c.Log.Info(spew.Sdump(res))
 	return nil
 }
 
@@ -129,12 +142,12 @@ func (c *client) EventTicketSummary() error {
 	}
 
 	// Dump result
-	c.Log.Info("IndexEvents result:")
-	c.Log.Info(fmt.Sprintf("%+v", res))
+	c.Log.Info("Result:")
+	c.Log.Info(spew.Sdump(res))
 	return nil
 }
 
-// EventTicketSummary
+// PreBook
 func (c *client) PreBook() error {
 	// EventID request
 	req := v1.PreBookReq{
@@ -142,7 +155,7 @@ func (c *client) PreBook() error {
 		UserSlug:   userSlug,
 		EventSlug:  eventSlug,
 		TicketType: ticketType,
-		Qty:        4,
+		Qty:        499,
 	}
 
 	// Context timeout
@@ -156,7 +169,33 @@ func (c *client) PreBook() error {
 	}
 
 	// Dump result
-	c.Log.Info("PreBook result:")
-	c.Log.Info(fmt.Sprintf("%+v", res))
+	c.Log.Info("Result:")
+	c.Log.Info(spew.Sdump(res))
+	return nil
+}
+
+// ConfirmBooking
+func (c *client) ConfirmBooking() error {
+	// EventID request
+	req := v1.ConfirmBookingReq{
+		Api:           apiVer,
+		EventSlug:     eventSlug,
+		UserSlug:      userSlug,
+		ReservationID: reservationID,
+	}
+
+	// Context timeout
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+
+	res, err := c.Ticketer.ConfirmBooking(ctx, &req)
+	if err != nil {
+		c.Log.Error(err)
+		return err
+	}
+
+	// Dump result
+	c.Log.Info("Result:")
+	c.Log.Info(spew.Sdump(res))
 	return nil
 }

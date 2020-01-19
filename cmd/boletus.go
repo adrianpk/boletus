@@ -83,14 +83,19 @@ func main() {
 	// App dependencies
 	a.Migrator = mg
 	a.Seeder = sd
-	a.WebEP.Service = svc
-	a.GRPCAPIV1.Service = svc
+	a.SetService(svc)
 
 	// Init service
-	a.Init()
+	err = a.Init()
+	if err != nil {
+		exit(log, err)
+	}
 
 	// Start service
-	a.Start()
+	err = a.Start()
+	if err != nil {
+		exit(log, err)
+	}
 
 	log.Error(err, fmt.Sprintf("%s service stoped", appName))
 }

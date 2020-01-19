@@ -60,7 +60,7 @@ var (
 	}
 )
 
-func (ur *EventRepo) Create(event *model.Event, tx ...*sqlx.Tx) error {
+func (tr *EventRepo) Create(event *model.Event, tx ...*sqlx.Tx) error {
 	_, ok := eventsTable[event.ID]
 	if ok {
 		errors.New("duplicate key violates unique constraint")
@@ -78,7 +78,7 @@ func (ur *EventRepo) Create(event *model.Event, tx ...*sqlx.Tx) error {
 	return nil
 }
 
-func (ur *EventRepo) GetAll() (events []model.Event, err error) {
+func (tr *EventRepo) GetAll() (events []model.Event, err error) {
 	size := len(eventsTable)
 	out := make([]model.Event, size)
 	for _, row := range eventsTable {
@@ -87,7 +87,7 @@ func (ur *EventRepo) GetAll() (events []model.Event, err error) {
 	return out, nil
 }
 
-func (ur *EventRepo) Get(id uuid.UUID) (event model.Event, err error) {
+func (tr *EventRepo) Get(id uuid.UUID) (event model.Event, err error) {
 	for _, row := range eventsTable {
 		if id == row.model.ID {
 			return row.model, nil
@@ -96,7 +96,7 @@ func (ur *EventRepo) Get(id uuid.UUID) (event model.Event, err error) {
 	return model.Event{}, nil
 }
 
-func (ur *EventRepo) GetBySlug(slug string) (event model.Event, err error) {
+func (tr *EventRepo) GetBySlug(slug string) (event model.Event, err error) {
 	for _, row := range eventsTable {
 		if slug == row.model.Slug.String {
 			return row.model, nil
@@ -105,7 +105,7 @@ func (ur *EventRepo) GetBySlug(slug string) (event model.Event, err error) {
 	return model.Event{}, nil
 }
 
-func (ur *EventRepo) GetByName(name string) (model.Event, error) {
+func (tr *EventRepo) GetByName(name string) (model.Event, error) {
 	for _, row := range eventsTable {
 		if name == row.model.Name.String {
 			return row.model, nil
@@ -114,7 +114,7 @@ func (ur *EventRepo) GetByName(name string) (model.Event, error) {
 	return model.Event{}, nil
 }
 
-func (ur *EventRepo) Update(event *model.Event, tx ...*sqlx.Tx) error {
+func (tr *EventRepo) Update(event *model.Event, tx ...*sqlx.Tx) error {
 	for _, row := range eventsTable {
 		if event.ID == row.model.ID {
 			if !row.mutable {
@@ -131,7 +131,7 @@ func (ur *EventRepo) Update(event *model.Event, tx ...*sqlx.Tx) error {
 	return errors.New("no records updated")
 }
 
-func (ur *EventRepo) Delete(id uuid.UUID, tx ...*sqlx.Tx) error {
+func (tr *EventRepo) Delete(id uuid.UUID, tx ...*sqlx.Tx) error {
 	for _, row := range eventsTable {
 		if id == row.model.ID {
 			if !row.mutable {
@@ -145,7 +145,7 @@ func (ur *EventRepo) Delete(id uuid.UUID, tx ...*sqlx.Tx) error {
 	return errors.New("no records deleted")
 }
 
-func (ur *EventRepo) DeleteySlug(slug string, tx ...*sqlx.Tx) error {
+func (tr *EventRepo) DeleteySlug(slug string, tx ...*sqlx.Tx) error {
 	for _, row := range eventsTable {
 		if slug == row.model.Slug.String {
 			if !row.mutable {

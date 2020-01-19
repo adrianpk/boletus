@@ -21,5 +21,8 @@ type (
 		Available(eventSlug, ticketType string) (ts model.TicketSummary, err error)
 		GetAvailable(eventSlug, ticketType string, qty int) (tickets []model.Ticket, err error)
 		PreBook(eventSlug, ticketType string, qty int, reservationID, userSlug string, tx ...*sqlx.Tx) (ts []model.Ticket, err error)
+		PreBookType(eventSlug, ticketType string, reservationID, userSlug string, tx ...*sqlx.Tx) (ts []model.Ticket, err error)
+		ExpireReservations(expMins int) (err error)
+		ConfirmReservation(eventSlug, reservationID, userSlug string, tx ...*sqlx.Tx) (ts []model.Ticket, err error)
 	}
 )

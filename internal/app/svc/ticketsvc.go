@@ -125,17 +125,51 @@ func (s *Service) DeleteTicket(slug string) error {
 
 // Custom queries and process
 // TicketSummary returns a list including availability and price for each ticket type od an event.
-func (s *Service) TicketSummary(eventSlug string) (users []model.TicketSummary, err error) {
+func (s *Service) TicketSummary(eventSlug string) (tss []model.TicketSummary, err error) {
 	repo := s.TicketRepo
 	if repo == nil {
-		return users, NoRepoErr
+		return tss, NoRepoErr
 	}
 
-	return repo.TicketSummary(eventSlug)
+	tss, err = repo.TicketSummary(eventSlug)
+	if err != nil {
+		return tss, err
+	}
+
+	// Set price in other currencies
+	cc := NewCurrencyConversor(s.Rates.Rates)
+
+	for i, ts := range tss {
+
+		cc.SetAmount(ts.Price.Float64, ts.Currency.String)
+		prices, err := cc.CalculateF32()
+		if err != nil {
+			// Not severe, just log the issue
+			// Base price and currency will be shown anyway
+			s.Log.Warn("Cannot make currency conversion",
+				"event-slug", ts.EventSlug.String,
+				"type", ts.Type.String,
+				"price", ts.Price.Float64,
+				"currency", ts.Currency.String)
+		}
+
+		ts.Prices = prices
+		tss[i] = ts
+	}
+
+	return tss, nil
 }
 
 // PreBookTickets
 func (s *Service) PreBookTickets(eventSlug, ticketType string, qty int, userSlug string) (tickets []model.Ticket, err error) {
+	// Ticket type conditions
+	tt := model.TicketTypeByName(ticketType)
+	if tt.SellingOption == model.EvenSO {
+		if !(qty%2 == 0) {
+			qty = qty + 1
+		}
+	}
+
 	repo := s.TicketRepo
 	if repo == nil {
 		return tickets, NoRepoErr
@@ -160,11 +194,81 @@ func (s *Service) PreBookTickets(eventSlug, ticketType string, qty int, userSlug
 		return tickets, errors.New(msg)
 	}
 
-	// Pre book tickets
+	// Gen reservationID
 	reservationID := fnd.GenShortID()
-	tickets, err = repo.PreBook(eventSlug, ticketType, qty, reservationID, userSlug, tx)
+
+	switch tt.SellingOption {
+
+	case model.AllTogetherSO:
+		tickets, err = repo.PreBookType(eventSlug, ticketType, reservationID, userSlug, tx)
+
+	case model.EvenSO:
+		if !(qty%2 == 0) {
+			qty = qty + 1
+		}
+		tickets, err = repo.PreBook(eventSlug, ticketType, qty, reservationID, userSlug, tx)
+
+	case model.PreemptiveSO:
+		if qty <= (avail - 1) {
+			tickets, err = repo.PreBook(eventSlug, ticketType, qty, reservationID, userSlug, tx)
+		} else {
+			err = errors.New("not enough tickets to sell")
+		}
+
+	case model.NoneSO:
+		tickets, err = repo.PreBook(eventSlug, ticketType, qty, reservationID, userSlug, tx)
+
+	default:
+		err = errors.New("not a valid ticket selling option")
+	}
+
 	if err != nil {
 		tx.Rollback()
+		return tickets, err
+	}
+
+	// Commit on local transactions
+	err = tx.Commit()
+	if err != nil {
+		return tickets, err
+	}
+
+	return tickets, nil
+}
+
+// ExpireTicketReservations
+func (s *Service) ExpireTicketReservations() {
+	s.Log.Info("Expire tickets process init.")
+	repo := s.TicketRepo
+	if repo == nil {
+		s.Log.Error(NoRepoErr)
+	}
+
+	mins := int(s.Cfg.ValAsInt("reservation.expire.minutes", 15))
+
+	err := repo.ExpireReservations(mins)
+	if err != nil {
+		s.Log.Error(err)
+	}
+}
+
+// ConfirmTicketsReservation
+func (s *Service) ConfirmTicketsReservation(eventSlug, reservationID, userSlug string) (tickets []model.Ticket, err error) {
+	repo := s.TicketRepo
+	if repo == nil {
+		return tickets, NoRepoErr
+	}
+
+	// Get a new transaction
+	tx, err := s.getTx()
+	if err != nil {
+		return tickets, err
+	}
+
+	// Confirm reservation
+	tickets, err = repo.ConfirmReservation(eventSlug, reservationID, userSlug)
+	if err != nil {
+		tx.Commit()
 		return tickets, err
 	}
 

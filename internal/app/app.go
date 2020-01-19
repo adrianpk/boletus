@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"sync"
 
+	svc "github.com/adrianpk/boletus/internal/app/svc"
 	v1 "github.com/adrianpk/boletus/pkg/grpc/api/v1"
 	"github.com/adrianpk/boletus/pkg/web"
 	fnd "github.com/adrianpk/foundation"
@@ -19,6 +20,7 @@ type (
 		*fnd.App
 		WebEP     *web.Endpoint
 		GRPCAPIV1 *v1.GRPCService
+		Scheduler *scheduler
 	}
 )
 
@@ -42,6 +44,9 @@ func NewApp(cfg *fnd.Config, log fnd.Logger, name string) (*App, error) {
 	gsv1 := v1.NewGRPCService(cfg, log, "grpc-service-v1")
 	app.GRPCAPIV1 = gsv1
 
+	// Scheduler
+	app.Scheduler = NewScheduler(cfg, log, "scheduler")
+
 	return &app, nil
 }
 
@@ -53,11 +58,24 @@ func (app *App) Init() error {
 		return err
 	}
 
-	return app.Seeder.Seed()
+	err = app.Seeder.Seed()
+	if err != nil {
+		return err
+	}
+
+	app.GRPCAPIV1.Service.Init()
+
+	return nil
 }
 
 func (app *App) Start() error {
 	var wg sync.WaitGroup
+
+	err := app.Scheduler.Start()
+	if err != nil {
+		return err
+	}
+	app.Log.Info("Scheduler started")
 
 	wg.Add(1)
 	go func() {
@@ -85,6 +103,20 @@ func (app *App) Start() error {
 
 func (app *App) Stop() {
 	// TODO: Gracefully stop all workers
+}
+
+func (app *App) SetService(svc *svc.Service) {
+	if app.WebEP != nil {
+		app.WebEP.Service = svc
+	}
+
+	if app.GRPCAPIV1 != nil {
+		app.GRPCAPIV1.Service = svc
+	}
+
+	if app.Scheduler != nil {
+		app.Scheduler.Service = svc
+	}
 }
 
 // StartGRPC starts a web server to publish ticketer service.
