@@ -32,7 +32,10 @@ const (
 	eventSlug = "rockpartyinwrocław-000000000001"
 
 	// PreBook ticket type [normal, golden-circle, silver-circle, bronce-circle, couple]
-	ticketType = "normal"
+	//ticketType = "standard"
+	//ticketType = "golden-circle"
+	//ticketType = "couples"
+	ticketType = "preemptive"
 
 	// replace by a a valid reservation ID
 	reservationID = "cab86283242c"
@@ -59,14 +62,14 @@ func main() {
 	//log.Info("IndexEvents end\n")
 
 	// Ticket summary
-	log.Info("TicketSummary begin")
-	clt.EventTicketSummary()
-	log.Info("TicketSummary end\n")
+	//log.Info("TicketSummary begin")
+	//clt.EventTicketSummary()
+	//log.Info("TicketSummary end\n")
 
 	// PreBook
-	//log.Info("PreBook begin")
-	//clt.PreBook()
-	//log.Info("PreBook end\n")
+	log.Info("PreBook begin")
+	clt.PreBook()
+	log.Info("PreBook end\n")
 
 	// ConfirmBooking
 	//log.Info("ConfirmBooking begin")
@@ -152,7 +155,7 @@ func (c *client) PreBook() error {
 		UserSlug:   userSlug,
 		EventSlug:  eventSlug,
 		TicketType: ticketType,
-		Qty:        4,
+		Qty:        499,
 	}
 
 	// Context timeout
