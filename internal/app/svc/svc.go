@@ -14,6 +14,7 @@ type (
 		UserRepo   repo.UserRepo
 		EventRepo  repo.EventRepo
 		TicketRepo repo.TicketRepo
+		Rates      CurrencyRates
 	}
 )
 
@@ -21,7 +22,12 @@ func NewService(cfg *fnd.Config, log fnd.Logger, name string, db *sqlx.DB) *Serv
 	return &Service{
 		Service: fnd.NewService(cfg, log, name),
 		DB:      db,
+		Rates:   CurrencyRates{},
 	}
+}
+
+func (s *Service) Init() {
+	s.UpdateRates()
 }
 
 func (s *Service) getTx() (tx *sqlx.Tx, err error) {

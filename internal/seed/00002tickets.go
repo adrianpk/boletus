@@ -9,9 +9,11 @@ import (
 )
 
 var (
+	eventSlug = "rockpartyinwrocław-000000000001"
+
 	t1, _ = time.Parse(time.RFC3339, "2020-01-02T19:00:00Z00:00")
 
-	event = newEventMap("Rock Party in Wrocław", "Make some noise!", "Wrocław Stadion Miejski", t1)
+	event = newEventMap(eventSlug, "Rock Party in Wrocław", "Make some noise!", "Wrocław Stadion Miejski", t1)
 )
 
 // EventsAndTickets seeding
@@ -48,7 +50,7 @@ func (s *step) Tickets() error {
 VALUES (:id, :slug, :name, :event_id, :type, :serie, :number, :seat, :price, :currency, :reservation_id, :reserved_by_id, :reserved_at, :bought_by_id, :bought_at, :local_order_id, :gateway_order_id, :gateway_op_status, :base_tz, :is_active, :is_deleted, :created_by_id, :updated_by_id, :created_at, :updated_at);`
 
 	// eventMap, serie, qty, priceInMillis
-	tickets := newTicketSerie(event, "normal", "A", 500, 30000)
+	tickets := newTicketSerie(event, "standard", "A", 500, 30000)
 
 	for _, t := range tickets {
 		_, err := tx.NamedExec(st, t)
@@ -68,7 +70,7 @@ VALUES (:id, :slug, :name, :event_id, :type, :serie, :number, :seat, :price, :cu
 		}
 	}
 
-	tickets = newTicketSerie(event, "silver-circle", "A", 40, 50000)
+	tickets = newTicketSerie(event, "couples", "A", 39, 20000)
 
 	for _, t := range tickets {
 		_, err := tx.NamedExec(st, t)
@@ -78,19 +80,7 @@ VALUES (:id, :slug, :name, :event_id, :type, :serie, :number, :seat, :price, :cu
 		}
 	}
 
-	tickets = newTicketSerie(event, "bronze-circle", "A", 40, 40000)
-
-	for _, t := range tickets {
-		_, err := tx.NamedExec(st, t)
-		if err != nil {
-			log.Println(err)
-			log.Fatal(err)
-		}
-	}
-
-	return nil
-
-	tickets = newTicketSerie(event, "promo-couples", "A", 40, 20000)
+	tickets = newTicketSerie(event, "preemptive", "A", 40, 30000)
 
 	for _, t := range tickets {
 		_, err := tx.NamedExec(st, t)
@@ -103,11 +93,11 @@ VALUES (:id, :slug, :name, :event_id, :type, :serie, :number, :seat, :price, :cu
 	return nil
 }
 
-func newEventMap(name, description, place string, scheduledAt time.Time) map[string]interface{} {
+func newEventMap(slug, name, description, place string, scheduledAt time.Time) map[string]interface{} {
 
 	return map[string]interface{}{
 		"id":            genUUID(),
-		"slug":          genSlug(name),
+		"slug":          slug, //genSlug(name)
 		"name":          name,
 		"description":   description,
 		"place":         place,
@@ -184,7 +174,7 @@ func newTicketMap(eventID uuid.UUID, name string, ticketType string, scheduledAt
 		"number":            number,
 		"seat":              scheduledAt,
 		"price":             priceInMillis,
-		"currency":          "PLN",
+		"currency":          "EUR",
 		"reservation_id":    fnd.GenShortID(),
 		"reserved_by_id":    uuid.Nil,
 		"reserved_at":       time.Time{},

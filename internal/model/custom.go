@@ -4,56 +4,84 @@ import (
 	"database/sql"
 )
 
+type (
+	// SellingOption
+	SellingOption string
+
+	// Ticket
+	TicketType struct {
+		Name          string
+		SellingOption SellingOption
+	}
+
+	ticketTypes struct {
+		Normal     TicketType
+		Golden     TicketType
+		Couples    TicketType
+		Preemptive TicketType
+	}
+)
+
 var (
+	// TicketType
 	TicketTypes = ticketTypesReg()
+
+	// SelingOptions
+	NoneSO        SellingOption = "none"
+	AllTogetherSO SellingOption = "all-together"
+	EvenSO        SellingOption = "even"
+	PreemptiveSO  SellingOption = "preemptive"
 )
 
 var (
 	normalTT = TicketType{
-		SellingOptions: []string{"none"},
+		Name:          "standard",
+		SellingOption: NoneSO,
 	}
 
 	goldenTT = TicketType{
-		SellingOptions: []string{"all-together"},
-	}
-
-	silverTT = TicketType{
-		SellingOptions: []string{"even", "all-together"},
-	}
-
-	bronzeTT = TicketType{
-		SellingOptions: []string{"none", "even", "all-together"},
+		Name:          "golden-circle",
+		SellingOption: AllTogetherSO,
 	}
 
 	couplesTT = TicketType{
-		SellingOptions: []string{"even"},
-	}
-)
-
-// Ticket kind
-type (
-	// Ticket
-	TicketType struct {
-		SellingOptions []string
+		Name:          "couples",
+		SellingOption: EvenSO,
 	}
 
-	ticketTypes struct {
-		Normal  TicketType
-		Golden  TicketType
-		Silver  TicketType
-		Bronze  TicketType
-		Couples TicketType
+	preemptiveTT = TicketType{
+		Name:          "preemptive",
+		SellingOption: PreemptiveSO,
 	}
 )
 
 // Ticket kinds
 func ticketTypesReg() *ticketTypes {
 	return &ticketTypes{
-		Normal:  normalTT,
-		Golden:  goldenTT,
-		Silver:  silverTT,
-		Bronze:  bronzeTT,
-		Couples: couplesTT,
+		Normal:     normalTT,
+		Golden:     goldenTT,
+		Couples:    couplesTT,
+		Preemptive: preemptiveTT,
+	}
+}
+
+func TicketTypeByName(name string) TicketType {
+	switch name {
+
+	case "normal":
+		return TicketTypes.Normal
+
+	case "golden-circle":
+		return TicketTypes.Golden
+
+	case "couples":
+		return TicketTypes.Couples
+
+	case "preemptive":
+		return TicketTypes.Preemptive
+
+	default:
+		return TicketTypes.Normal
 	}
 }
 
@@ -61,13 +89,14 @@ func ticketTypesReg() *ticketTypes {
 type (
 	// TicketSummary model
 	TicketSummary struct {
-		Qty       sql.NullInt32   `db:"qty"`
-		Name      sql.NullString  `db:"name"`
-		EventID   sql.NullString  `db:"event_id""`
-		EventSlug sql.NullString  `db:"event_slug""`
-		Type      sql.NullString  `db:"type"`
-		Price     sql.NullFloat64 `db:"price"`
-		Currency  sql.NullString  `db:"currency"`
+		Qty       sql.NullInt32      `db:"qty"`
+		Name      sql.NullString     `db:"name"`
+		EventID   sql.NullString     `db:"event_id""`
+		EventSlug sql.NullString     `db:"event_slug""`
+		Type      sql.NullString     `db:"type"`
+		Price     sql.NullFloat64    `db:"price"`
+		Currency  sql.NullString     `db:"currency"`
+		Prices    map[string]float32 `db:"-"`
 	}
 )
 

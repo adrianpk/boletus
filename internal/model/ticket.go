@@ -163,9 +163,9 @@ func (ticketForm *TicketForm) ToModel() Ticket {
 		EventID:         db.ToNullString(ticketForm.EventID),
 		Type:            db.ToNullString(ticketForm.Type),
 		Serie:           db.ToNullString(ticketForm.Serie),
-		Number:          db.ToNullInt32(toInt32(ticketForm.Number)),
+		Number:          db.ToNullInt32(ticketForm.Number),
 		Seat:            db.ToNullString(ticketForm.Seat),
-		Price:           db.ToNullInt32(toMillisFromStr(ticketForm.Price)),
+		Price:           db.ToNullInt32(ticketForm.Price),
 		Currency:        db.ToNullString(ticketForm.Currency),
 		ReservationID:   db.ToNullString(ticketForm.ReservationID),
 		ReservedBy:      db.ToNullString(ticketForm.ReservedBy),
@@ -230,4 +230,8 @@ func parseFloat(price string) float32 {
 		return float32(0)
 	}
 	return float32(val)
+}
+
+func (ticket *Ticket) GetType() TicketType {
+	return TicketTypeByName(ticket.Type.String)
 }
