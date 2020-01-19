@@ -307,7 +307,7 @@ func (tr *TicketRepo) TicketSummary(eventSlug string) (ts []model.TicketSummary,
 
 // Available returns a report of number of available tickets for a specific ticket type in an event.
 func (tr *TicketRepo) Available(eventSlug, ticketType string) (ts model.TicketSummary, err error) {
-	st := `SELECT count(tickets.id) as qty, event_id, events.slug as event_slug, type, (tickets.price/1000) as price, currency FROM tickets INNER JOIN events ON tickets.event_id = events.id WHERE events.slug = '%s' AND tickets.type = '%s' AND (tickets.is_deleted IS NULL OR NOT tickets.is_deleted) AND (events.is_deleted IS NULL OR NOT events.is_deleted) AND (reserved_by_id IS NULL OR reserved_by_id::text='00000000-0000-0000-0000-000000000000') AND (bought_by_id IS NULL OR NOT bought_by_id::text='00000000-0000-0000-0000-00000000') AND (status IS NULL OR status='') AND (gateway_op_id IS NULL or gateway_op_id='') GROUP BY event_id, event_slug, type, price, currency ORDER BY tickets.price ASC LIMIT 1;`
+	st := `SELECT count(tickets.id) as qty, event_id, events.slug as event_slug, type, (tickets.price/1000) as price, currency FROM tickets INNER JOIN events ON tickets.event_id = events.id WHERE events.slug = '%s' AND tickets.type = '%s' AND (tickets.is_deleted IS NULL OR NOT tickets.is_deleted) AND (events.is_deleted IS NULL OR NOT events.is_deleted) AND (reserved_by_id IS NULL OR reserved_by_id::text='00000000-0000-0000-0000-000000000000') AND (bought_by_id IS NULL OR NOT bought_by_id::text='00000000-0000-0000-0000-00000000') AND (status IS NULL OR status='') AND (gateway_op_id IS NULL or gateway_op_id='') GROUP BY event_id, event_slug, type, price, currency LIMIT 1;`
 
 	st = fmt.Sprintf(st, eventSlug, ticketType)
 

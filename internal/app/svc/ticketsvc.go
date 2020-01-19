@@ -162,6 +162,14 @@ func (s *Service) TicketSummary(eventSlug string) (tss []model.TicketSummary, er
 
 // PreBookTickets
 func (s *Service) PreBookTickets(eventSlug, ticketType string, qty int, userSlug string) (tickets []model.Ticket, err error) {
+	// Ticket type conditions
+	tt := model.TicketTypeByName(ticketType)
+	if tt.SellingOption == model.EvenSO {
+		if !(qty%2 == 0) {
+			qty = qty + 1
+		}
+	}
+
 	repo := s.TicketRepo
 	if repo == nil {
 		return tickets, NoRepoErr
@@ -188,9 +196,6 @@ func (s *Service) PreBookTickets(eventSlug, ticketType string, qty int, userSlug
 
 	// Gen reservationID
 	reservationID := fnd.GenShortID()
-
-	// Ticket type conditions
-	tt := model.TicketTypeByName(ticketType)
 
 	switch tt.SellingOption {
 

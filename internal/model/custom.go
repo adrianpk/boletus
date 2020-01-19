@@ -5,7 +5,21 @@ import (
 )
 
 type (
+	// SellingOption
 	SellingOption string
+
+	// Ticket
+	TicketType struct {
+		Name          string
+		SellingOption SellingOption
+	}
+
+	ticketTypes struct {
+		Normal     TicketType
+		Golden     TicketType
+		Couples    TicketType
+		Preemptive TicketType
+	}
 )
 
 var (
@@ -21,7 +35,7 @@ var (
 
 var (
 	normalTT = TicketType{
-		Name:          "normal",
+		Name:          "standard",
 		SellingOption: NoneSO,
 	}
 
@@ -38,22 +52,6 @@ var (
 	preemptiveTT = TicketType{
 		Name:          "preemptive",
 		SellingOption: PreemptiveSO,
-	}
-)
-
-// Ticket types
-type (
-	// Ticket
-	TicketType struct {
-		Name          string
-		SellingOption SellingOption
-	}
-
-	ticketTypes struct {
-		Normal     TicketType
-		Golden     TicketType
-		Couples    TicketType
-		Preemptive TicketType
 	}
 )
 
