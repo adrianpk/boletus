@@ -231,3 +231,7 @@ func parseFloat(price string) float32 {
 	}
 	return float32(val)
 }
+
+func (ticket *Ticket) GetType() TicketType {
+	return TicketTypeByName(ticket.Type.String)
+}
