@@ -33,6 +33,10 @@ Noun
 [More](docs/screenshots.md)
 
 
+## App Description
+
+  [More info](docs/description.md)
+
 ## Dev. Env. Setup
 
 ### Clone app
@@ -157,7 +161,7 @@ The shell script can be found in `scripts/run.sh`.
 
 **package-resources**
 
-It generates a binary representation html templates, translations and other resources that allows to embedd them within the compiled file. `clean-and-run` runs this make task as subtask before starting the applicacion.
+It generates a binary representation for html templates, translations and other resources that allows it to embed them within the compiled file. `clean-and-run` runs this make task as subtask before starting the applicacion.
 
 **build-stg**
 
