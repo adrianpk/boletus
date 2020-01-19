@@ -32,13 +32,13 @@ const (
 	eventSlug = "rockpartyinwrocław-000000000001"
 
 	// PreBook ticket type [normal, golden-circle, silver-circle, bronce-circle, couple]
-	//ticketType = "standard"
+	ticketType = "standard"
 	//ticketType = "golden-circle"
 	//ticketType = "couples"
-	ticketType = "preemptive"
+	//ticketType = "preemptive"
 
 	// replace by a a valid reservation ID
-	reservationID = "cab86283242c"
+	reservationID = "2f28927a4d71"
 )
 
 // This is simple client that can be used to
@@ -57,14 +57,15 @@ func main() {
 	defer clt.Conn.Close()
 
 	// IndexEvents
-	//log.Info("IndexEvents begin")
-	//clt.IndexEvents()
-	//log.Info("IndexEvents end\n")
+	log.Info("\n")
+	log.Info("IndexEvents begin")
+	clt.IndexEvents()
+	log.Info("IndexEvents end\n")
 
 	// Ticket summary
-	//log.Info("TicketSummary begin")
-	//clt.EventTicketSummary()
-	//log.Info("TicketSummary end\n")
+	log.Info("TicketSummary begin")
+	clt.EventTicketSummary()
+	log.Info("TicketSummary end\n")
 
 	// PreBook
 	log.Info("PreBook begin")
@@ -72,9 +73,9 @@ func main() {
 	log.Info("PreBook end\n")
 
 	// ConfirmBooking
-	//log.Info("ConfirmBooking begin")
-	//clt.ConfirmBooking()
-	//log.Info("ConfirmBooking end\n")
+	log.Info("ConfirmBooking begin")
+	clt.ConfirmBooking()
+	log.Info("ConfirmBooking end\n")
 }
 
 // NewClient for Ticketer gRPC server
@@ -118,7 +119,6 @@ func (c *client) IndexEvents() error {
 	}
 
 	// Dump result
-	c.Log.Info("Result:")
 	c.Log.Info(spew.Sdump(res))
 	return nil
 }
@@ -142,7 +142,6 @@ func (c *client) EventTicketSummary() error {
 	}
 
 	// Dump result
-	c.Log.Info("Result:")
 	c.Log.Info(spew.Sdump(res))
 	return nil
 }
@@ -155,7 +154,7 @@ func (c *client) PreBook() error {
 		UserSlug:   userSlug,
 		EventSlug:  eventSlug,
 		TicketType: ticketType,
-		Qty:        499,
+		Qty:        4,
 	}
 
 	// Context timeout
@@ -169,7 +168,6 @@ func (c *client) PreBook() error {
 	}
 
 	// Dump result
-	c.Log.Info("Result:")
 	c.Log.Info(spew.Sdump(res))
 	return nil
 }
@@ -195,7 +193,6 @@ func (c *client) ConfirmBooking() error {
 	}
 
 	// Dump result
-	c.Log.Info("Result:")
 	c.Log.Info(spew.Sdump(res))
 	return nil
 }
