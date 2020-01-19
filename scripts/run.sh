@@ -39,7 +39,7 @@ export BLT_SCHEDULER_CRON_ONE_STR="* * * * *"
 export BLT_SCHEDULER_CRON_TWO_STR="0 * * * *"
 
 # Scheduler
-export BLT_RESERVATION_EXPIRE_MINUTES="5"
+export BLT_RESERVATION_EXPIRE_MINUTES="0"
 
 # Confirmation
 # users/{slug}/{token}/confirm
