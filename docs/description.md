@@ -166,6 +166,4 @@ In the current implementation these interfaces have been implemented to interact
 
 ## Finally
 
-Unit and integration tests will be implemented to verify app correct operation.
-
 Client will also allow to accept arguments (flags) that will act as commands and invocation parameters to gRPC server.
