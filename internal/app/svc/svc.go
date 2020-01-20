@@ -27,7 +27,7 @@ func NewService(cfg *fnd.Config, log fnd.Logger, name string, db *sqlx.DB) *Serv
 }
 
 func (s *Service) Init() {
-	s.UpdateRates()
+	s.DoUpdateRates()
 }
 
 func (s *Service) getTx() (tx *sqlx.Tx, err error) {
