@@ -7,8 +7,10 @@ import (
 
 	svc "github.com/adrianpk/boletus/internal/app/svc"
 	"github.com/adrianpk/boletus/internal/mig"
+	"github.com/adrianpk/boletus/internal/repo/pg"
 	"github.com/adrianpk/boletus/internal/seed"
 	fnd "github.com/adrianpk/foundation"
+	//"github.com/davecgh/go-spew/spew"
 	"github.com/jmoiron/sqlx"
 )
 
@@ -16,7 +18,10 @@ var (
 	cfg *fnd.Config
 	log fnd.Logger
 	db  *sqlx.DB
-	mg  *mig.Migrator
+)
+
+var (
+	mg *mig.Migrator
 )
 
 const (
@@ -40,7 +45,9 @@ func TestMain(m *testing.M) {
 	if err != nil {
 		os.Exit(1)
 	}
+
 	code := m.Run()
+
 	teardown()
 	os.Exit(code)
 }
@@ -48,28 +55,54 @@ func TestMain(m *testing.M) {
 // TestTicketSummary verifies Test.
 // Signature: TicketSummary(eventSlug string) (tss []model.TicketSummary, err error)
 func TestTicketSummary(t *testing.T) {
-	// Create Service instance
-	s := svc.NewService(cfg, log, "service-test-instance", db)
-	s.Init()
+	// Create Service
+	s := newService()
 
 	// Invoke function to be tested
-	s.IndexTickets()
+	tss, err := s.TicketSummary(eventSlug)
+	if err != nil {
+		t.Error(err)
+		t.Error("Error calling TicketSummary")
+	}
 
-	if true {
-		t.Error("TestTicketSummary not implemented")
+	//t.Log(spew.Sdump(tss))
+
+	if len(tss) < 1 {
+		t.Error("Empty result")
+	}
+
+	for _, ts := range tss {
+		tp := ts.Type.String
+		cy := ts.Currency.String
+
+		ok0 := ts.EventSlug.String == "rockpartyinwrocław-000000000001"
+		ok1 := tp == "standard" || tp == "golden-circle" || tp == "couples" || tp == "preemptive"
+		ok2 := cy == "EUR" || cy == "USD" || cy == "PLN" || cy == "CZK" || cy == "RUB"
+
+		if !(ok0 && ok1 && ok2) {
+			t.Error("Does not match expected result")
+			return
+		}
+
+		ok3 := len(ts.Prices) > 0
+
+		if !ok3 {
+			t.Error("Cannot do currency conversion")
+			return
+		}
 	}
 }
 
 func setup() (err error) {
 	cfg = testConfig()
 	log = testLogger()
-	db, err := testDB(cfg)
+	db, err = testDB(cfg)
 	if err != nil {
 		return err
 	}
 
 	// Prepare database
-	mg, err = mig.NewMigrator(cfg, log, "test-migrator", db)
+	mg, err = mig.NewMigrator(cfg, log, "migrator", db)
 	if err != nil {
 		return err
 	}
@@ -77,13 +110,28 @@ func setup() (err error) {
 	mg.Migrate()
 
 	// Seed data
-	sd, err := seed.NewSeeder(cfg, log, "test-seeder", db)
+	sd, err := seed.NewSeeder(cfg, log, "seeder", db)
 	if err != nil {
 		return err
 	}
 
 	sd.Seed()
+
 	return nil
+}
+
+func newService() *svc.Service {
+	// Create ticket repo
+	r := pg.NewTicketRepo(cfg, log, "ticket-repo", db)
+
+	// Create Service instance
+	s := svc.NewService(cfg, log, "service-instance", db)
+
+	s.Init()
+
+	s.TicketRepo = r
+
+	return s
 }
 
 func teardown() {
@@ -123,7 +171,9 @@ func testDB(cfg *fnd.Config) (*sqlx.DB, error) {
 		return nil, err
 	}
 
-	return conn, nil
+	db := conn
+
+	return db, nil
 }
 
 // dbURL returns a Postgres connection string.
