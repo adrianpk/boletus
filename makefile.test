@@ -8,6 +8,8 @@ test-selected:
 	make -f makefile.test test-prebook-standard-tickets
 	@make spacer
 	make -f makefile.test test-prebook-golden-circle-tickets
+	@make spacer
+	make -f makefile.test test-prebook-couples-tickets
 
 ## Ticket
 
@@ -19,3 +21,6 @@ test-prebook-standard-tickets:
 
 test-prebook-golden-circle-tickets:
 	go test -v -run TestPreBookGoldenCircleTickets -count=1 -timeout=5s  ./internal/app/svc/ticketsvc_test.go
+
+test-prebook-couples-tickets:
+	go test -v -run TestPreBookCouplesTickets -count=1 -timeout=5s  ./internal/app/svc/ticketsvc_test.go
