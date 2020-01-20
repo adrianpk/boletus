@@ -3,13 +3,16 @@ package svc_test
 import (
 	"fmt"
 	"os"
+	"strings"
 	"testing"
+	"time"
 
 	svc "github.com/adrianpk/boletus/internal/app/svc"
 	"github.com/adrianpk/boletus/internal/mig"
 	"github.com/adrianpk/boletus/internal/repo/pg"
 	"github.com/adrianpk/boletus/internal/seed"
 	fnd "github.com/adrianpk/foundation"
+
 	//"github.com/davecgh/go-spew/spew"
 	"github.com/jmoiron/sqlx"
 )
@@ -25,19 +28,8 @@ var (
 )
 
 const (
+	userSlug  = "lauriem-000000000004"
 	eventSlug = "rockpartyinwrocław-000000000001"
-)
-
-var (
-	user = map[string]string{
-		"username":          "username",
-		"password":          "password",
-		"email":             "username@mail.com",
-		"emailConfirmation": "username@mail.com",
-		"givenName":         "name",
-		"middleNames":       "middles",
-		"familyName":        "family",
-	}
 )
 
 func TestMain(m *testing.M) {
@@ -53,7 +45,6 @@ func TestMain(m *testing.M) {
 }
 
 // TestTicketSummary verifies Test.
-// Signature: TicketSummary(eventSlug string) (tss []model.TicketSummary, err error)
 func TestTicketSummary(t *testing.T) {
 	// Create Service
 	s := newService()
@@ -92,6 +83,61 @@ func TestTicketSummary(t *testing.T) {
 		}
 	}
 }
+
+// TestPreBookStandardTickets test ticket reservation for standard tickets.
+func TestPreBookStandardTickets(t *testing.T) {
+	// Create Service
+	s := newService()
+
+	// Invoke function to be tested
+	ts, err := s.PreBookTickets(eventSlug, "standard", 4, userSlug)
+	if err != nil {
+		t.Error(err)
+		t.Error("Error calling PreBookTicket")
+	}
+
+	//t.Log(spew.Sdump(ts))
+
+	if len(ts) < 1 {
+		t.Error("Empty result")
+	}
+
+	zeroT := time.Time{}
+
+	for _, tt := range ts {
+		sl := tt.Slug.String          // rockpartyinwrocław-...
+		nm := tt.Name.String          // "Rock Party in Wrocław"
+		tp := tt.Type.String          // "standard"
+		sr := tt.Serie.String         // "A"
+		pr := tt.Price.Int32          // 30000
+		cy := tt.Currency.String      // "EUR"
+		ri := tt.ReservationID.String // != ""
+		rb := tt.ReservedBy.String    // "00000000-0000-0000-0000-000000000004"
+		ra := tt.ReservedAt.Time      // != time.Time{}
+		st := tt.Status.String        // "reserved"
+
+		ok0 := strings.Index(sl, "rockpartyinwrocław-") == 0
+		ok1 := nm == "Rock Party in Wrocław"
+		ok2 := tp == "standard"
+		ok3 := sr == "A"
+		ok4 := pr == 30000
+		ok5 := cy == "EUR"
+		ok6 := ri != ""
+		ok7 := rb == "00000000-0000-0000-0000-000000000004"
+		ok8 := ra != zeroT
+		ok9 := st == "reserved"
+
+		//fmt.Printf("ok0: %t, ok1: %t, ok2: %t, ok3: %t, ok4: %t, ok5: %t, ok6: %t, ok7: %t, ok8: %t, ok9: %t\n\n",
+		//ok0, ok1, ok2, ok3, ok4, ok5, ok6, ok7, ok8, ok9)
+
+		if !(ok0 && ok1 && ok2 && ok3 && ok4 && ok5 && ok6 && ok7 && ok8 && ok9) {
+			t.Error("Does not match expected result")
+			return
+		}
+	}
+}
+
+// Misc
 
 func setup() (err error) {
 	cfg = testConfig()
