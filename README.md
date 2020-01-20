@@ -159,6 +159,14 @@ Builds the application
 Run the application hrough a shell script that previously sets the environment variables with required values.
 The shell script can be found in `scripts/run.sh`.
 
+**make test**
+
+Run tests
+
+**make grc-test**
+
+Run tests with coloured output. [grc](https://github.com/garabik/grc) needs to be available in your system.
+
 **package-resources**
 
 It generates a binary representation for html templates, translations and other resources that allows it to embed them within the compiled file. `clean-and-run` runs this make task as subtask before starting the applicacion.
