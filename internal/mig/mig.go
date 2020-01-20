@@ -32,7 +32,7 @@ func NewMigrator(cfg *fnd.Config, log fnd.Logger, name string, db *sqlx.DB) (*Mi
 	return m, nil
 }
 
-// GetMigrator configured.
+// addSteps to migrator
 func (m *Migrator) addSteps() {
 	// Migrations
 

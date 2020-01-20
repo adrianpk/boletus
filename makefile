@@ -115,7 +115,7 @@ build-client:
 	go build -o ./bin/client ./cmd/client/client.go
 
 client:
-	./scripts/client.sh
+	./scripts/cltent.sh
 
 enable-grpc-logging:
 	export GRPC_GO_LOG_VERBOSITY_LEVEL=99
