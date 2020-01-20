@@ -324,6 +324,75 @@ func TestPreBookPreemptiveTicketsAllLessOne(t *testing.T) {
 	}
 }
 
+// TestConfirmiTicketsReservation test ticket reservation confirmation
+func TestConfirmTicketsReservation(t *testing.T) {
+	// Create Service
+	s := newService()
+
+	// Make a pre-booking
+	ts, err := s.PreBookTickets(eventSlug, "standard", 4, userSlug)
+	if err != nil {
+		t.Error("Error calling PreBookTicket")
+	}
+
+	//t.Log(spew.Sdump(ts))
+
+	if len(ts) != 4 {
+		t.Error("Pre booking failed.")
+	}
+
+	// Read reservation id
+	rID := ts[0].ReservationID.String
+	if strings.Trim(rID, " ") == "" {
+		t.Error("Invalid reservation ID.")
+	}
+
+	// Invoke function to be tested
+	// Make a pre-booking
+	ts, err = s.ConfirmTicketsReservation(eventSlug, rID, userSlug)
+	if err != nil {
+		t.Error("Error calling ConfirmTicketReservation")
+	}
+
+	zeroT := time.Time{}
+
+	for _, tt := range ts {
+		sl := tt.Slug.String          // rockpartyinwrocław-...
+		nm := tt.Name.String          // "Rock Party in Wrocław"
+		tp := tt.Type.String          // "standard"
+		sr := tt.Serie.String         // "A"
+		pr := tt.Price.Int32          // 30000
+		cy := tt.Currency.String      // "EUR"
+		ri := tt.ReservationID.String // != ""
+		rb := tt.ReservedBy.String    // "00000000-0000-0000-0000-000000000004"
+		ra := tt.ReservedAt.Time      // != time.Time{}
+		bb := tt.BoughtBy.String      // "00000000-0000-0000-0000-000000000004"
+		ba := tt.BoughtAt.Time        // != time.Time{}
+		st := tt.Status.String        // "reserved"
+
+		ok0 := strings.Index(sl, "rockpartyinwrocław-") == 0
+		ok1 := nm == "Rock Party in Wrocław"
+		ok2 := tp == "standard"
+		ok3 := sr == "A"
+		ok4 := pr == 30000
+		ok5 := cy == "EUR"
+		ok6 := ri != ""
+		ok7 := rb == "00000000-0000-0000-0000-000000000004"
+		ok8 := ra != zeroT
+		ok9 := bb == "00000000-0000-0000-0000-000000000004"
+		ok10 := ba != zeroT
+		ok11 := st == "paid"
+
+		//fmt.Printf("ok0: %t, ok1: %t, ok2: %t, ok3: %t, ok4: %t, ok5: %t, ok6: %t, ok7: %t, ok8: %t, ok9: %t, ok10: %t, ok11: %t\n\n",
+		//ok0, ok1, ok2, ok3, ok4, ok5, ok6, ok7, ok8, ok9, ok10, ok11)
+
+		if !(ok0 && ok1 && ok2 && ok3 && ok4 && ok5 && ok6 && ok7 && ok8 && ok9 && ok10 && ok11) {
+			t.Error("Does not match expected result")
+			return
+		}
+	}
+}
+
 // Misc
 
 func setup() (err error) {
