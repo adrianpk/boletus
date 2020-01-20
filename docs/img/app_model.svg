@@ -1,0 +1,1116 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="793.70081"
+   height="1122.5197"
+   viewBox="0 0 210 297"
+   version="1.1"
+   id="svg8"
+   inkscape:version="0.92.4 (5da689c313, 2019-01-14)"
+   sodipodi:docname="app_model.svg">
+  <title
+     id="title6044">Boletus App Structure</title>
+  <defs
+     id="defs2" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="1.0507202"
+     inkscape:cx="-50.95403"
+     inkscape:cy="501.25496"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="true"
+     inkscape:window-width="1914"
+     inkscape:window-height="999"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="0"
+     showguides="true"
+     inkscape:guide-bbox="true"
+     units="px"
+     inkscape:snap-bbox="true"
+     inkscape:bbox-paths="true"
+     inkscape:snap-global="false">
+    <inkscape:grid
+       type="xygrid"
+       id="grid4812" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title>Boletus App Structure</dc:title>
+        <dc:creator>
+          <cc:Agent>
+            <dc:title>adrianpk</dc:title>
+          </cc:Agent>
+        </dc:creator>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:groupmode="layer"
+     id="layer2"
+     inkscape:label="Hidden"
+     sodipodi:insensitive="true"
+     style="display:none">
+    <rect
+       style="opacity:1;vector-effect:none;fill:#ffdf8d;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.26458332;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:0.78039216"
+       id="rect4820"
+       width="125.48809"
+       height="103.18751"
+       x="-11.23323"
+       y="351.39597"
+       rx="6.1417727"
+       ry="6.1471968" />
+    <rect
+       style="opacity:1;vector-effect:none;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.26458332;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:0.78039216"
+       id="rect4826-9"
+       width="110.93406"
+       height="86.389526"
+       x="-4.4413443"
+       y="363.3945"
+       rx="6.1417727"
+       ry="6.1471963" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:4.97247314px;line-height:1.25;font-family:Raleway;-inkscape-font-specification:'Raleway, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="42.209232"
+       y="349.14859"
+       id="text4832-9-4-9"
+       transform="scale(0.97130381,1.029544)"><tspan
+         sodipodi:role="line"
+         x="42.209232"
+         y="349.14859"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:4.97247314px;font-family:Raleway;-inkscape-font-specification:'Raleway, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;stroke-width:0.26458332"
+         id="tspan5136">gRPC API</tspan></text>
+    <g
+       id="g4951"
+       transform="translate(-218.87853,181.36467)">
+      <g
+         style="stroke-width:0.84115618"
+         transform="matrix(1.3140651,0,0,1.075548,128.61611,-11.925359)"
+         id="g5166">
+        <rect
+           style="opacity:1;vector-effect:none;fill:#6a9aed;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.22255589;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:0.78039216"
+           id="rect5028"
+           width="58.208332"
+           height="26.458326"
+           x="71.437492"
+           y="218.94791"
+           rx="4.6738725"
+           ry="5.7154098" />
+        <rect
+           style="opacity:1;vector-effect:none;fill:#6a9aed;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.22255589;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:0.78039216"
+           id="rect5028-7"
+           width="58.208328"
+           height="26.458324"
+           x="79.374992"
+           y="224.23958"
+           rx="4.6738725"
+           ry="5.7154098" />
+        <rect
+           style="opacity:1;vector-effect:none;fill:#6a9aed;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.22255589;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:0.78039216"
+           id="rect5028-0"
+           width="58.208328"
+           height="26.458324"
+           x="87.312492"
+           y="229.53123"
+           rx="4.6738725"
+           ry="5.7154098" />
+      </g>
+      <text
+         transform="scale(0.97130381,1.029544)"
+         id="text4832-8"
+         y="244.03006"
+         x="274.23962"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:4.97247314px;line-height:1.25;font-family:Raleway;-inkscape-font-specification:'Raleway, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+         xml:space="preserve"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:4.97247314px;font-family:Raleway;-inkscape-font-specification:'Raleway, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;stroke-width:0.26458332"
+           y="244.03006"
+           x="274.23962"
+           id="tspan4830-1"
+           sodipodi:role="line">Model Repo</tspan></text>
+    </g>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:5.64444447px;line-height:1.25;font-family:Raleway;-inkscape-font-specification:'Raleway, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="35.292435"
+       y="371.27386"
+       id="text4832-9-5-0"
+       inkscape:export-filename="/home/adrian/Projects/kabestank/backend/kabestan/docs/images/app-model.png"
+       inkscape:export-xdpi="108.41"
+       inkscape:export-ydpi="108.41"><tspan
+         sodipodi:role="line"
+         x="35.292435"
+         y="371.27386"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:5.64444447px;font-family:Raleway;-inkscape-font-specification:'Raleway, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;stroke-width:0.26458332"
+         id="tspan4900-7-4">Service Ref.</tspan></text>
+    <g
+       id="g4994"
+       transform="translate(-356.52811,259.54035)">
+      <rect
+         ry="6.1471968"
+         rx="6.1417727"
+         y="114.4375"
+         x="359.83334"
+         height="26.458332"
+         width="95.249985"
+         id="rect4953"
+         style="opacity:1;vector-effect:none;fill:#dc6dd3;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.26458332;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:0.78039216" />
+      <text
+         inkscape:export-ydpi="108.41"
+         inkscape:export-xdpi="108.41"
+         inkscape:export-filename="/home/adrian/Projects/kabestank/backend/kabestan/docs/images/app-model.png"
+         id="text4832-9-5-0-8"
+         y="129.69867"
+         x="398.8436"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:5.64444447px;line-height:1.25;font-family:Raleway;-inkscape-font-specification:'Raleway, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+         xml:space="preserve"><tspan
+           id="tspan4900-7-4-0"
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:5.64444447px;font-family:Raleway;-inkscape-font-specification:'Raleway, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;stroke-width:0.26458332"
+           y="129.69867"
+           x="398.8436"
+           sodipodi:role="line">Mailer</tspan></text>
+    </g>
+    <rect
+       style="opacity:1;vector-effect:none;fill:#ffdf8d;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.26458332;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:0.78039216"
+       id="rect4820-42"
+       width="125.48808"
+       height="103.18751"
+       x="121.05843"
+       y="354.04181"
+       rx="6.1417727"
+       ry="6.1471968" />
+    <rect
+       style="opacity:1;vector-effect:none;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.26458332;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:0.78039216"
+       id="rect4826-9-96"
+       width="110.93406"
+       height="86.389526"
+       x="127.85033"
+       y="366.04034"
+       rx="6.1417727"
+       ry="6.1471963" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:5.10131931px;line-height:1.25;font-family:Raleway;-inkscape-font-specification:'Raleway, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458335"
+       x="176.19118"
+       y="342.77826"
+       id="text4832-9-4-9-1"
+       transform="scale(0.94677119,1.0562214)"><tspan
+         sodipodi:role="line"
+         x="176.19118"
+         y="342.77826"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:5.10131931px;font-family:Raleway;-inkscape-font-specification:'Raleway, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;stroke-width:0.26458335"
+         id="tspan5136-0">JSON REST API</tspan></text>
+    <g
+       id="g4951-4"
+       transform="translate(-86.586849,184.01051)">
+      <g
+         style="stroke-width:0.84115618"
+         transform="matrix(1.3140651,0,0,1.075548,128.61611,-11.925359)"
+         id="g5166-2">
+        <rect
+           style="opacity:1;vector-effect:none;fill:#6a9aed;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.22255589;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:0.78039216"
+           id="rect5028-2"
+           width="58.208332"
+           height="26.458326"
+           x="71.437492"
+           y="218.94791"
+           rx="4.6738725"
+           ry="5.7154098" />
+        <rect
+           style="opacity:1;vector-effect:none;fill:#6a9aed;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.22255589;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:0.78039216"
+           id="rect5028-7-2"
+           width="58.208328"
+           height="26.458324"
+           x="79.374992"
+           y="224.23958"
+           rx="4.6738725"
+           ry="5.7154098" />
+        <rect
+           style="opacity:1;vector-effect:none;fill:#6a9aed;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.22255589;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:0.78039216"
+           id="rect5028-0-0"
+           width="58.208328"
+           height="26.458324"
+           x="87.312492"
+           y="229.53123"
+           rx="4.6738725"
+           ry="5.7154098" />
+      </g>
+      <text
+         transform="scale(0.97130381,1.029544)"
+         id="text4832-8-5"
+         y="244.03006"
+         x="274.23962"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:4.97247314px;line-height:1.25;font-family:Raleway;-inkscape-font-specification:'Raleway, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+         xml:space="preserve"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:4.97247314px;font-family:Raleway;-inkscape-font-specification:'Raleway, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;stroke-width:0.26458332"
+           y="244.03006"
+           x="274.23962"
+           id="tspan4830-1-5"
+           sodipodi:role="line">Model Repo</tspan></text>
+    </g>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:5.64444447px;line-height:1.25;font-family:Raleway;-inkscape-font-specification:'Raleway, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="167.58412"
+       y="373.91971"
+       id="text4832-9-5-0-2"
+       inkscape:export-filename="/home/adrian/Projects/kabestank/backend/kabestan/docs/images/app-model.png"
+       inkscape:export-xdpi="108.41"
+       inkscape:export-ydpi="108.41"><tspan
+         sodipodi:role="line"
+         x="167.58412"
+         y="373.91971"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:5.64444447px;font-family:Raleway;-inkscape-font-specification:'Raleway, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;stroke-width:0.26458332"
+         id="tspan4900-7-4-9">Service Ref.</tspan></text>
+    <g
+       id="g4994-0"
+       transform="translate(-224.23643,262.18618)">
+      <rect
+         ry="6.1471968"
+         rx="6.1417727"
+         y="114.4375"
+         x="359.83334"
+         height="26.458332"
+         width="95.249985"
+         id="rect4953-2"
+         style="opacity:1;vector-effect:none;fill:#dc6dd3;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.26458332;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:0.78039216" />
+      <text
+         inkscape:export-ydpi="108.41"
+         inkscape:export-xdpi="108.41"
+         inkscape:export-filename="/home/adrian/Projects/kabestank/backend/kabestan/docs/images/app-model.png"
+         id="text4832-9-5-0-8-8"
+         y="129.69867"
+         x="398.8436"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:5.64444447px;line-height:1.25;font-family:Raleway;-inkscape-font-specification:'Raleway, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+         xml:space="preserve"><tspan
+           id="tspan4900-7-4-0-3"
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:5.64444447px;font-family:Raleway;-inkscape-font-specification:'Raleway, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;stroke-width:0.26458332"
+           y="129.69867"
+           x="398.8436"
+           sodipodi:role="line">Mailer</tspan></text>
+    </g>
+    <g
+       id="g5317"
+       transform="translate(-224.23645,238.37368)">
+      <rect
+         ry="6.1471968"
+         rx="6.1417727"
+         y="226.79312"
+         x="255.57619"
+         height="103.18751"
+         width="125.48808"
+         id="rect4820-42-8"
+         style="opacity:1;vector-effect:none;fill:#ffdf8d;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.26458332;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:0.78039216" />
+      <rect
+         ry="6.1471963"
+         rx="6.1417727"
+         y="238.79166"
+         x="262.3681"
+         height="86.389526"
+         width="110.93406"
+         id="rect4826-9-96-0"
+         style="opacity:1;vector-effect:none;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.26458332;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:0.78039216" />
+      <text
+         transform="scale(0.9467712,1.0562214)"
+         id="text4832-9-4-9-1-4"
+         y="222.30289"
+         x="313.44427"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:5.10131931px;line-height:1.25;font-family:Raleway;-inkscape-font-specification:'Raleway, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458338"
+         xml:space="preserve"><tspan
+           id="tspan5136-0-0"
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:5.10131931px;font-family:Raleway;-inkscape-font-specification:'Raleway, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;stroke-width:0.26458338"
+           y="222.30289"
+           x="313.44427"
+           sodipodi:role="line">Web SSR Handlers</tspan></text>
+      <g
+         transform="translate(47.930903,56.761824)"
+         id="g4951-4-9">
+        <g
+           id="g5166-2-1"
+           transform="matrix(1.3140651,0,0,1.075548,128.61611,-11.925359)"
+           style="stroke-width:0.84115618">
+          <rect
+             ry="5.7154098"
+             rx="4.6738725"
+             y="218.94791"
+             x="71.437492"
+             height="26.458326"
+             width="58.208332"
+             id="rect5028-2-9"
+             style="opacity:1;vector-effect:none;fill:#6a9aed;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.22255589;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:0.78039216" />
+          <rect
+             ry="5.7154098"
+             rx="4.6738725"
+             y="224.23958"
+             x="79.374992"
+             height="26.458324"
+             width="58.208328"
+             id="rect5028-7-2-6"
+             style="opacity:1;vector-effect:none;fill:#6a9aed;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.22255589;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:0.78039216" />
+          <rect
+             ry="5.7154098"
+             rx="4.6738725"
+             y="229.53123"
+             x="87.312492"
+             height="26.458324"
+             width="58.208328"
+             id="rect5028-0-0-2"
+             style="opacity:1;vector-effect:none;fill:#6a9aed;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.22255589;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:0.78039216" />
+        </g>
+        <text
+           xml:space="preserve"
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:4.97247314px;line-height:1.25;font-family:Raleway;-inkscape-font-specification:'Raleway, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+           x="274.23962"
+           y="244.03006"
+           id="text4832-8-5-5"
+           transform="scale(0.97130381,1.029544)"><tspan
+             sodipodi:role="line"
+             id="tspan4830-1-5-4"
+             x="274.23962"
+             y="244.03006"
+             style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:4.97247314px;font-family:Raleway;-inkscape-font-specification:'Raleway, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;stroke-width:0.26458332">Model Repo</tspan></text>
+      </g>
+      <text
+         inkscape:export-ydpi="108.41"
+         inkscape:export-xdpi="108.41"
+         inkscape:export-filename="/home/adrian/Projects/kabestank/backend/kabestan/docs/images/app-model.png"
+         id="text4832-9-5-0-2-4"
+         y="246.67102"
+         x="302.1019"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:5.64444447px;line-height:1.25;font-family:Raleway;-inkscape-font-specification:'Raleway, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+         xml:space="preserve"><tspan
+           id="tspan4900-7-4-9-9"
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:5.64444447px;font-family:Raleway;-inkscape-font-specification:'Raleway, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;stroke-width:0.26458332"
+           y="246.67102"
+           x="302.1019"
+           sodipodi:role="line">Service Ref.</tspan></text>
+      <g
+         transform="translate(-89.718697,134.93749)"
+         id="g4994-0-9">
+        <rect
+           style="opacity:1;vector-effect:none;fill:#dc6dd3;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.26458332;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:0.78039216"
+           id="rect4953-2-3"
+           width="95.249985"
+           height="26.458332"
+           x="359.83334"
+           y="114.4375"
+           rx="6.1417727"
+           ry="6.1471968" />
+        <text
+           xml:space="preserve"
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:5.64444447px;line-height:1.25;font-family:Raleway;-inkscape-font-specification:'Raleway, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+           x="398.8436"
+           y="129.69867"
+           id="text4832-9-5-0-8-8-6"
+           inkscape:export-filename="/home/adrian/Projects/kabestank/backend/kabestan/docs/images/app-model.png"
+           inkscape:export-xdpi="108.41"
+           inkscape:export-ydpi="108.41"><tspan
+             sodipodi:role="line"
+             x="398.8436"
+             y="129.69867"
+             style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:5.64444447px;font-family:Raleway;-inkscape-font-specification:'Raleway, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;stroke-width:0.26458332"
+             id="tspan4900-7-4-0-3-0">Mailer</tspan></text>
+      </g>
+    </g>
+  </g>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <rect
+       style="opacity:0.7;vector-effect:none;fill:#009bff;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.26499999;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:0.78039216"
+       id="rect4747"
+       width="175.38098"
+       height="255.88983"
+       x="17.309509"
+       y="20.555084"
+       ry="6.1471992"
+       inkscape:export-filename="/home/adrian/Projects/kabestank/backend/kabestan/docs/images/app-model.png"
+       inkscape:export-xdpi="108.41"
+       inkscape:export-ydpi="108.41" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:5.64444447px;line-height:1.25;font-family:Raleway;-inkscape-font-specification:'Raleway, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="99.593636"
+       y="29.205217"
+       id="text4832-9-4-7"
+       inkscape:export-filename="/home/adrian/Projects/kabestank/backend/kabestan/docs/images/app-model.png"
+       inkscape:export-xdpi="108.41"
+       inkscape:export-ydpi="108.41"><tspan
+         sodipodi:role="line"
+         x="99.593636"
+         y="29.205217"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:5.64444447px;font-family:Raleway;-inkscape-font-specification:'Raleway, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;stroke-width:0.26458332"
+         id="tspan5204">App</tspan></text>
+    <g
+       id="g5194"
+       transform="translate(0,-0.75595857)">
+      <rect
+         inkscape:export-ydpi="108.41"
+         inkscape:export-xdpi="108.41"
+         inkscape:export-filename="/home/adrian/Projects/kabestank/backend/kabestan/docs/images/app-model.png"
+         rx="6.1471972"
+         ry="6.1471968"
+         y="93.270828"
+         x="31.750002"
+         height="48.380955"
+         width="47.625"
+         id="rect4768-7-5-4"
+         style="opacity:1;vector-effect:none;fill:#3cffc4;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.26458335;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:0.78039216" />
+      <text
+         inkscape:export-ydpi="108.41"
+         inkscape:export-xdpi="108.41"
+         inkscape:export-filename="/home/adrian/Projects/kabestank/backend/kabestan/docs/images/app-model.png"
+         id="text4832-9"
+         y="118.73735"
+         x="39.538807"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:5.64444447px;line-height:1.25;font-family:Raleway;-inkscape-font-specification:'Raleway, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+         xml:space="preserve"><tspan
+           id="tspan5368"
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:5.64444447px;font-family:Raleway;-inkscape-font-specification:'Raleway, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;stroke-width:0.26458332"
+           y="118.73735"
+           x="39.538807"
+           sodipodi:role="line">Web Router</tspan></text>
+    </g>
+    <rect
+       style="opacity:1;vector-effect:none;fill:#3cffc4;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.26458332;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:0.78039216"
+       id="rect4768-7-5-4-0"
+       width="47.625"
+       height="48.380955"
+       x="82.020836"
+       y="92.288086"
+       ry="6.1471968"
+       rx="6.1471972"
+       inkscape:export-filename="/home/adrian/Projects/kabestank/backend/kabestan/docs/images/app-model.png"
+       inkscape:export-xdpi="108.41"
+       inkscape:export-ydpi="108.41" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:5.64444447px;line-height:1.25;font-family:Raleway;-inkscape-font-specification:'Raleway, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="88.751305"
+       y="118.51057"
+       id="text4832-9-2"
+       inkscape:export-filename="/home/adrian/Projects/kabestank/backend/kabestan/docs/images/app-model.png"
+       inkscape:export-xdpi="108.41"
+       inkscape:export-ydpi="108.41"><tspan
+         sodipodi:role="line"
+         x="88.751305"
+         y="118.51057"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:5.64444447px;font-family:Raleway;-inkscape-font-specification:'Raleway, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;stroke-width:0.26458332"
+         id="tspan5368-9">JSON Router</tspan></text>
+    <g
+       id="g5207">
+      <rect
+         inkscape:export-ydpi="108.41"
+         inkscape:export-xdpi="108.41"
+         inkscape:export-filename="/home/adrian/Projects/kabestank/backend/kabestan/docs/images/app-model.png"
+         rx="6.1471972"
+         ry="6.1471968"
+         y="92.51487"
+         x="132.29167"
+         height="48.380955"
+         width="47.625"
+         id="rect4768-7-5-4-4"
+         style="opacity:1;vector-effect:none;fill:#3cffc4;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.26458332;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:0.78039216" />
+      <text
+         inkscape:export-ydpi="108.41"
+         inkscape:export-xdpi="108.41"
+         inkscape:export-filename="/home/adrian/Projects/kabestank/backend/kabestan/docs/images/app-model.png"
+         id="text4832-9-3"
+         y="118.73735"
+         x="140.08047"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:5.64444447px;line-height:1.25;font-family:Raleway;-inkscape-font-specification:'Raleway, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+         xml:space="preserve"><tspan
+           id="tspan5368-5"
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:5.64444447px;font-family:Raleway;-inkscape-font-specification:'Raleway, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;stroke-width:0.26458332"
+           y="118.73735"
+           x="140.08047"
+           sodipodi:role="line">gRPC Server</tspan></text>
+    </g>
+    <g
+       style="fill:#00fffd;fill-opacity:1"
+       id="g5194-3"
+       transform="translate(-4.6141858e-6,-55.562504)">
+      <rect
+         inkscape:export-ydpi="108.41"
+         inkscape:export-xdpi="108.41"
+         inkscape:export-filename="/home/adrian/Projects/kabestank/backend/kabestan/docs/images/app-model.png"
+         rx="6.1471972"
+         ry="6.1471968"
+         y="93.270828"
+         x="31.750002"
+         height="48.380955"
+         width="47.625"
+         id="rect4768-7-5-4-1"
+         style="opacity:1;vector-effect:none;fill:#00fffd;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.26458335;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:0.78039216" />
+      <text
+         inkscape:export-ydpi="108.41"
+         inkscape:export-xdpi="108.41"
+         inkscape:export-filename="/home/adrian/Projects/kabestank/backend/kabestan/docs/images/app-model.png"
+         id="text4832-9-4"
+         y="118.73735"
+         x="39.538807"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:5.64444447px;line-height:1.25;font-family:Raleway;-inkscape-font-specification:'Raleway, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#00fffd;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+         xml:space="preserve"><tspan
+           id="tspan5368-6"
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:5.64444447px;font-family:Raleway;-inkscape-font-specification:'Raleway, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#00fffd;fill-opacity:1;stroke-width:0.26458332"
+           y="118.73735"
+           x="39.538807"
+           sodipodi:role="line">Web Router</tspan></text>
+    </g>
+    <g
+       style="fill:#00fffd;fill-opacity:1"
+       id="g5189-9"
+       transform="translate(-5.2916787,-55.789288)">
+      <rect
+         inkscape:export-ydpi="108.41"
+         inkscape:export-xdpi="108.41"
+         inkscape:export-filename="/home/adrian/Projects/kabestank/backend/kabestan/docs/images/app-model.png"
+         rx="6.1471972"
+         ry="6.1471968"
+         y="93.270828"
+         x="87.312508"
+         height="48.380955"
+         width="47.625"
+         id="rect4768-7-5-4-0-4"
+         style="opacity:1;vector-effect:none;fill:#00fffd;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.26458332;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:0.78039216" />
+      <text
+         inkscape:export-ydpi="108.41"
+         inkscape:export-xdpi="108.41"
+         inkscape:export-filename="/home/adrian/Projects/kabestank/backend/kabestan/docs/images/app-model.png"
+         id="text4832-9-2-2"
+         y="119.49331"
+         x="95.101311"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:5.64444447px;line-height:1.25;font-family:Raleway;-inkscape-font-specification:'Raleway, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#00fffd;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+         xml:space="preserve"><tspan
+           id="tspan5368-9-2"
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:5.64444447px;font-family:Raleway;-inkscape-font-specification:'Raleway, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#00fffd;fill-opacity:1;stroke-width:0.26458332"
+           y="119.49331"
+           x="95.101311"
+           sodipodi:role="line">gRPC Server</tspan></text>
+    </g>
+    <g
+       style="fill:#00fffd;fill-opacity:1"
+       id="g5207-6"
+       transform="translate(-4.6141858e-6,-54.806545)">
+      <rect
+         inkscape:export-ydpi="108.41"
+         inkscape:export-xdpi="108.41"
+         inkscape:export-filename="/home/adrian/Projects/kabestank/backend/kabestan/docs/images/app-model.png"
+         rx="6.1471972"
+         ry="6.1471968"
+         y="92.51487"
+         x="132.29167"
+         height="48.380955"
+         width="47.625"
+         id="rect4768-7-5-4-4-4"
+         style="opacity:1;vector-effect:none;fill:#00fffd;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.26458332;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:0.78039216" />
+      <text
+         inkscape:export-ydpi="108.41"
+         inkscape:export-xdpi="108.41"
+         inkscape:export-filename="/home/adrian/Projects/kabestank/backend/kabestan/docs/images/app-model.png"
+         id="text4832-9-3-1"
+         y="118.73735"
+         x="140.08047"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:5.64444447px;line-height:1.25;font-family:Raleway;-inkscape-font-specification:'Raleway, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#00fffd;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+         xml:space="preserve"><tspan
+           id="tspan5368-5-2"
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:5.64444447px;font-family:Raleway;-inkscape-font-specification:'Raleway, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#00fffd;fill-opacity:1;stroke-width:0.26458332"
+           y="118.73735"
+           x="140.08047"
+           sodipodi:role="line">Web Router</tspan></text>
+    </g>
+    <g
+       id="g5602"
+       transform="translate(-15.579089,-323.84731)">
+      <g
+         style="stroke-width:1.11353481"
+         id="g5317-6"
+         transform="matrix(0.8980411,0,0,0.8980411,-174.07412,269.77059)">
+        <rect
+           style="opacity:1;vector-effect:none;fill:#ffdf8d;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.29462272;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:0.78039216"
+           id="rect4820-42-8-5"
+           width="125.48808"
+           height="103.18751"
+           x="255.57619"
+           y="226.79312"
+           rx="6.8390775"
+           ry="6.8451176" />
+        <rect
+           style="opacity:1;vector-effect:none;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.29462272;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:0.78039216"
+           id="rect4826-9-96-0-8"
+           width="110.93406"
+           height="86.389526"
+           x="262.3681"
+           y="238.79166"
+           rx="6.8390775"
+           ry="6.8451171" />
+        <text
+           xml:space="preserve"
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:5.10131931px;line-height:1.25;font-family:Raleway;-inkscape-font-specification:'Raleway, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.29462281"
+           x="313.44427"
+           y="222.30289"
+           id="text4832-9-4-9-1-4-7"
+           transform="scale(0.9467712,1.0562214)"><tspan
+             sodipodi:role="line"
+             x="313.44427"
+             y="222.30289"
+             style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:5.10131931px;font-family:Raleway;-inkscape-font-specification:'Raleway, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;stroke-width:0.29462281"
+             id="tspan5136-0-0-9">Web SSR Handlers</tspan></text>
+        <g
+           style="stroke-width:1.11353481"
+           id="g4951-4-9-6"
+           transform="translate(47.930903,56.761824)">
+          <g
+             style="stroke-width:0.93665665"
+             transform="matrix(1.3140651,0,0,1.075548,128.61611,-11.925359)"
+             id="g5166-2-1-0">
+            <rect
+               style="opacity:1;vector-effect:none;fill:#6a9aed;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.24782373;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:0.78039216"
+               id="rect5028-2-9-4"
+               width="58.208332"
+               height="26.458326"
+               x="71.437492"
+               y="218.94791"
+               rx="5.2045197"
+               ry="6.3643074" />
+            <rect
+               style="opacity:1;vector-effect:none;fill:#6a9aed;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.24782373;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:0.78039216"
+               id="rect5028-7-2-6-1"
+               width="58.208328"
+               height="26.458324"
+               x="79.374992"
+               y="224.23958"
+               rx="5.2045197"
+               ry="6.3643074" />
+            <rect
+               style="opacity:1;vector-effect:none;fill:#6a9aed;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.24782373;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:0.78039216"
+               id="rect5028-0-0-2-0"
+               width="58.208328"
+               height="26.458324"
+               x="87.312492"
+               y="229.53123"
+               rx="5.2045197"
+               ry="6.3643074" />
+          </g>
+          <text
+             transform="scale(0.97130381,1.029544)"
+             id="text4832-8-5-5-4"
+             y="244.03006"
+             x="274.23962"
+             style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:4.97247314px;line-height:1.25;font-family:Raleway;-inkscape-font-specification:'Raleway, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.29462272"
+             xml:space="preserve"><tspan
+               style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:4.97247314px;font-family:Raleway;-inkscape-font-specification:'Raleway, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;stroke-width:0.29462272"
+               y="244.03006"
+               x="274.23962"
+               id="tspan4830-1-5-4-8"
+               sodipodi:role="line">Model Repo</tspan></text>
+        </g>
+        <text
+           xml:space="preserve"
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:5.64444447px;line-height:1.25;font-family:Raleway;-inkscape-font-specification:'Raleway, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.29462272"
+           x="302.1019"
+           y="246.67102"
+           id="text4832-9-5-0-2-4-7"
+           inkscape:export-filename="/home/adrian/Projects/kabestank/backend/kabestan/docs/images/app-model.png"
+           inkscape:export-xdpi="108.41"
+           inkscape:export-ydpi="108.41"><tspan
+             sodipodi:role="line"
+             x="302.1019"
+             y="246.67102"
+             style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:5.64444447px;font-family:Raleway;-inkscape-font-specification:'Raleway, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;stroke-width:0.29462272"
+             id="tspan4900-7-4-9-9-0">Service Ref.</tspan></text>
+        <g
+           style="stroke-width:1.11353481"
+           id="g4994-0-9-8"
+           transform="translate(-89.718697,134.93749)">
+          <rect
+             ry="6.8451176"
+             rx="6.8390775"
+             y="114.4375"
+             x="359.83334"
+             height="26.458332"
+             width="95.249985"
+             id="rect4953-2-3-6"
+             style="opacity:1;vector-effect:none;fill:#dc6dd3;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.29462272;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:0.78039216" />
+          <text
+             inkscape:export-ydpi="108.41"
+             inkscape:export-xdpi="108.41"
+             inkscape:export-filename="/home/adrian/Projects/kabestank/backend/kabestan/docs/images/app-model.png"
+             id="text4832-9-5-0-8-8-6-2"
+             y="129.69867"
+             x="398.8436"
+             style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:5.64444447px;line-height:1.25;font-family:Raleway;-inkscape-font-specification:'Raleway, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.29462272"
+             xml:space="preserve"><tspan
+               id="tspan4900-7-4-0-3-0-4"
+               style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:5.64444447px;font-family:Raleway;-inkscape-font-specification:'Raleway, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;stroke-width:0.29462272"
+               y="129.69867"
+               x="398.8436"
+               sodipodi:role="line">Mailer</tspan></text>
+        </g>
+      </g>
+    </g>
+    <rect
+       style="opacity:1;vector-effect:none;fill:#ffdf8d;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.26458332;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:0.78039216"
+       id="rect4820-42-7"
+       width="112.69346"
+       height="92.666626"
+       x="49.404713"
+       y="163.71228"
+       rx="6.1417727"
+       ry="6.1471968" />
+    <rect
+       style="opacity:1;vector-effect:none;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.26458332;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:0.78039216"
+       id="rect4826-9-96-6"
+       width="99.623344"
+       height="77.581345"
+       x="55.504108"
+       y="174.48746"
+       rx="6.1417727"
+       ry="6.1471963" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:4.5811944px;line-height:1.25;font-family:Raleway;-inkscape-font-specification:'Raleway, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458338"
+       x="95.58165"
+       y="161.80675"
+       id="text4832-9-4-9-1-8"
+       transform="scale(0.9467712,1.0562214)"><tspan
+         sodipodi:role="line"
+         x="95.58165"
+         y="161.80675"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:4.5811944px;font-family:Raleway;-inkscape-font-specification:'Raleway, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;stroke-width:0.26458338"
+         id="tspan5136-0-9">JSON REST Handlers</tspan></text>
+    <g
+       id="g4951-4-0"
+       transform="matrix(0.8980411,0,0,0.8980411,-137.06928,11.01719)"
+       style="stroke-width:1.11353481">
+      <g
+         style="stroke-width:0.93665665"
+         transform="matrix(1.3140651,0,0,1.075548,128.61611,-11.925359)"
+         id="g5166-2-6">
+        <rect
+           style="opacity:1;vector-effect:none;fill:#6a9aed;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.24782373;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:0.78039216"
+           id="rect5028-2-8"
+           width="58.208332"
+           height="26.458326"
+           x="71.437492"
+           y="218.94791"
+           rx="5.2045197"
+           ry="6.3643074" />
+        <rect
+           style="opacity:1;vector-effect:none;fill:#6a9aed;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.24782373;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:0.78039216"
+           id="rect5028-7-2-7"
+           width="58.208328"
+           height="26.458324"
+           x="79.374992"
+           y="224.23958"
+           rx="5.2045197"
+           ry="6.3643074" />
+        <rect
+           style="opacity:1;vector-effect:none;fill:#6a9aed;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.24782373;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:0.78039216"
+           id="rect5028-0-0-9"
+           width="58.208328"
+           height="26.458324"
+           x="87.312492"
+           y="229.53123"
+           rx="5.2045197"
+           ry="6.3643074" />
+      </g>
+      <text
+         transform="scale(0.97130381,1.029544)"
+         id="text4832-8-5-0"
+         y="244.03006"
+         x="274.23962"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:4.97247314px;line-height:1.25;font-family:Raleway;-inkscape-font-specification:'Raleway, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.29462272"
+         xml:space="preserve"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:4.97247314px;font-family:Raleway;-inkscape-font-specification:'Raleway, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;stroke-width:0.29462272"
+           y="244.03006"
+           x="274.23962"
+           id="tspan4830-1-5-3"
+           sodipodi:role="line">Model Repo</tspan></text>
+    </g>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:5.06894302px;line-height:1.25;font-family:Raleway;-inkscape-font-specification:'Raleway, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="91.186699"
+       y="181.56345"
+       id="text4832-9-5-0-2-3"
+       inkscape:export-filename="/home/adrian/Projects/kabestank/backend/kabestan/docs/images/app-model.png"
+       inkscape:export-xdpi="108.41"
+       inkscape:export-ydpi="108.41"><tspan
+         sodipodi:role="line"
+         x="91.186699"
+         y="181.56345"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:5.06894302px;font-family:Raleway;-inkscape-font-specification:'Raleway, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;stroke-width:0.26458332"
+         id="tspan4900-7-4-9-3">Service Ref.</tspan></text>
+    <g
+       id="g4994-0-7"
+       transform="matrix(0.8980411,0,0,0.8980411,-260.68427,81.22215)"
+       style="stroke-width:1.11353481">
+      <rect
+         ry="6.8451176"
+         rx="6.8390775"
+         y="114.4375"
+         x="359.83334"
+         height="26.458332"
+         width="95.249985"
+         id="rect4953-2-32"
+         style="opacity:1;vector-effect:none;fill:#dc6dd3;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.29462272;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:0.78039216" />
+      <text
+         inkscape:export-ydpi="108.41"
+         inkscape:export-xdpi="108.41"
+         inkscape:export-filename="/home/adrian/Projects/kabestank/backend/kabestan/docs/images/app-model.png"
+         id="text4832-9-5-0-8-8-65"
+         y="129.69867"
+         x="398.8436"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:5.64444447px;line-height:1.25;font-family:Raleway;-inkscape-font-specification:'Raleway, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.29462272"
+         xml:space="preserve"><tspan
+           id="tspan4900-7-4-0-3-2"
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:5.64444447px;font-family:Raleway;-inkscape-font-specification:'Raleway, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;stroke-width:0.29462272"
+           y="129.69867"
+           x="398.8436"
+           sodipodi:role="line">Mailer</tspan></text>
+    </g>
+    <g
+       transform="translate(42.33608,-193.3455)"
+       id="g5706">
+      <rect
+         ry="6.1471968"
+         rx="6.1417727"
+         y="371.26923"
+         x="17.211535"
+         height="92.666626"
+         width="112.69346"
+         id="rect4820-8"
+         style="opacity:1;vector-effect:none;fill:#ffdf8d;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.26458332;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:0.78039216" />
+      <rect
+         ry="6.1471963"
+         rx="6.1417727"
+         y="382.0444"
+         x="23.310926"
+         height="77.581345"
+         width="99.623344"
+         id="rect4826-9-8"
+         style="opacity:1;vector-effect:none;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.26458332;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:0.78039216" />
+      <text
+         transform="scale(0.97130381,1.029544)"
+         id="text4832-9-4-9-9"
+         y="367.65259"
+         x="66.011604"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:4.46548557px;line-height:1.25;font-family:Raleway;-inkscape-font-specification:'Raleway, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+         xml:space="preserve"><tspan
+           id="tspan5136-2"
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:4.46548557px;font-family:Raleway;-inkscape-font-specification:'Raleway, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;stroke-width:0.26458332"
+           y="367.65259"
+           x="66.011604"
+           sodipodi:role="line">gRPC API</tspan></text>
+      <g
+         style="stroke-width:1.11353481"
+         transform="matrix(0.8980411,0,0,0.8980411,-169.26247,218.57417)"
+         id="g4951-8">
+        <g
+           id="g5166-8"
+           transform="matrix(1.3140651,0,0,1.075548,128.61611,-11.925359)"
+           style="stroke-width:0.93665665">
+          <rect
+             ry="6.3643074"
+             rx="5.2045197"
+             y="218.94791"
+             x="71.437492"
+             height="26.458326"
+             width="58.208332"
+             id="rect5028-8"
+             style="opacity:1;vector-effect:none;fill:#6a9aed;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.24782373;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:0.78039216" />
+          <rect
+             ry="6.3643074"
+             rx="5.2045197"
+             y="224.23958"
+             x="79.374992"
+             height="26.458324"
+             width="58.208328"
+             id="rect5028-7-6"
+             style="opacity:1;vector-effect:none;fill:#6a9aed;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.24782373;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:0.78039216" />
+          <rect
+             ry="6.3643074"
+             rx="5.2045197"
+             y="229.53123"
+             x="87.312492"
+             height="26.458324"
+             width="58.208328"
+             id="rect5028-0-8"
+             style="opacity:1;vector-effect:none;fill:#6a9aed;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.24782373;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:0.78039216" />
+        </g>
+        <text
+           xml:space="preserve"
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:4.97247314px;line-height:1.25;font-family:Raleway;-inkscape-font-specification:'Raleway, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.29462272"
+           x="274.23962"
+           y="244.03006"
+           id="text4832-8-3"
+           transform="scale(0.97130381,1.029544)"><tspan
+             sodipodi:role="line"
+             id="tspan4830-1-8"
+             x="274.23962"
+             y="244.03006"
+             style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:4.97247314px;font-family:Raleway;-inkscape-font-specification:'Raleway, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;stroke-width:0.29462272">Model Repo</tspan></text>
+      </g>
+      <text
+         inkscape:export-ydpi="108.41"
+         inkscape:export-xdpi="108.41"
+         inkscape:export-filename="/home/adrian/Projects/kabestank/backend/kabestan/docs/images/app-model.png"
+         id="text4832-9-5-0-3"
+         y="389.12045"
+         x="58.993511"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:5.06894302px;line-height:1.25;font-family:Raleway;-inkscape-font-specification:'Raleway, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+         xml:space="preserve"><tspan
+           id="tspan4900-7-4-3"
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:5.06894302px;font-family:Raleway;-inkscape-font-specification:'Raleway, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;stroke-width:0.26458332"
+           y="389.12045"
+           x="58.993511"
+           sodipodi:role="line">Service Ref.</tspan></text>
+      <g
+         style="stroke-width:1.11353481"
+         transform="matrix(0.8980411,0,0,0.8980411,-292.87746,288.77913)"
+         id="g4994-3">
+        <rect
+           style="opacity:1;vector-effect:none;fill:#dc6dd3;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.29462272;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:0.78039216"
+           id="rect4953-8"
+           width="95.249985"
+           height="26.458332"
+           x="359.83334"
+           y="114.4375"
+           rx="6.8390775"
+           ry="6.8451176" />
+        <text
+           xml:space="preserve"
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:5.64444447px;line-height:1.25;font-family:Raleway;-inkscape-font-specification:'Raleway, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.29462272"
+           x="398.8436"
+           y="129.69867"
+           id="text4832-9-5-0-8-0"
+           inkscape:export-filename="/home/adrian/Projects/kabestank/backend/kabestan/docs/images/app-model.png"
+           inkscape:export-xdpi="108.41"
+           inkscape:export-ydpi="108.41"><tspan
+             sodipodi:role="line"
+             x="398.8436"
+             y="129.69867"
+             style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:5.64444447px;font-family:Raleway;-inkscape-font-specification:'Raleway, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;stroke-width:0.29462272"
+             id="tspan4900-7-4-0-4">Mailer</tspan></text>
+      </g>
+    </g>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.26458332;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:0.26458333, 0.26458333;stroke-dashoffset:0;stroke-opacity:1"
+       d="m 155.97732,140.90295 c -14.1467,35.71264 -13.35193,13.91131 -39.80401,36.88238"
+       id="path5389"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cc"
+       inkscape:export-filename="/home/adrian/Projects/kabestank/backend/kabestan/docs/images/app-model.png"
+       inkscape:export-xdpi="108.41"
+       inkscape:export-ydpi="108.41" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.26458332;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:0.26458334, 0.26458334;stroke-dashoffset:0;stroke-opacity:1"
+       d="m 51.931236,141.08189 c 15.614663,2.88849 19.698747,2.35884 29.369501,4.49474 4.613099,1.01887 13.609516,3.956 13.609516,3.956"
+       id="path5387-7"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cac"
+       inkscape:export-filename="/home/adrian/Projects/kabestank/backend/kabestan/docs/images/app-model.png"
+       inkscape:export-xdpi="108.41"
+       inkscape:export-ydpi="108.41" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.26458332;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:0.26458334, 0.26458334;stroke-dashoffset:0;stroke-opacity:1"
+       d="m 103.98609,140.77584 c 11.35208,12.12421 19.24537,8.73698 17.8019,16.75759 -0.94697,5.2618 -14.77878,6.23201 -14.77878,6.23201"
+       id="path5387"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cac"
+       inkscape:export-filename="/home/adrian/Projects/kabestank/backend/kabestan/docs/images/app-model.png"
+       inkscape:export-xdpi="108.41"
+       inkscape:export-ydpi="108.41" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:5.64444447px;line-height:1.25;font-family:Raleway;-inkscape-font-specification:'Raleway, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="43.910557"
+       y="63.32967"
+       id="text4832-9-5-0-9"
+       inkscape:export-filename="/home/adrian/Projects/kabestank/backend/kabestan/docs/images/app-model.png"
+       inkscape:export-xdpi="108.41"
+       inkscape:export-ydpi="108.41"><tspan
+         sodipodi:role="line"
+         x="43.910557"
+         y="63.32967"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:5.64444447px;font-family:Raleway;-inkscape-font-specification:'Raleway, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;stroke-width:0.26458332"
+         id="tspan5906">Migrator</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:5.64444447px;line-height:1.25;font-family:Raleway;-inkscape-font-specification:'Raleway, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="96.092033"
+       y="63.704018"
+       id="text4832-9-5-0-9-3"
+       inkscape:export-filename="/home/adrian/Projects/kabestank/backend/kabestan/docs/images/app-model.png"
+       inkscape:export-xdpi="108.41"
+       inkscape:export-ydpi="108.41"><tspan
+         sodipodi:role="line"
+         x="96.092033"
+         y="63.704018"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:5.64444447px;font-family:Raleway;-inkscape-font-specification:'Raleway, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;stroke-width:0.26458332"
+         id="tspan5906-0">Seeder</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:5.64444447px;line-height:1.25;font-family:Raleway;-inkscape-font-specification:'Raleway, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="142.12402"
+       y="54.934959"
+       id="text4832-9-5-0-9-3-1"
+       inkscape:export-filename="/home/adrian/Projects/kabestank/backend/kabestan/docs/images/app-model.png"
+       inkscape:export-xdpi="108.41"
+       inkscape:export-ydpi="108.41"><tspan
+         sodipodi:role="line"
+         x="142.12402"
+         y="54.934959"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:5.64444447px;font-family:Raleway;-inkscape-font-specification:'Raleway, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;stroke-width:0.26458332"
+         id="tspan5906-0-7">Scheduler</tspan></text>
+    <g
+       id="g5989"
+       transform="translate(0,-3.7041668)">
+      <rect
+         ry="6.1471968"
+         rx="6.1417727"
+         y="65.333496"
+         x="135.97816"
+         height="17.374987"
+         width="39.786198"
+         id="rect5946"
+         style="opacity:1;vector-effect:none;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.26458332;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:0.78039216" />
+      <text
+         inkscape:export-ydpi="108.41"
+         inkscape:export-xdpi="108.41"
+         inkscape:export-filename="/home/adrian/Projects/kabestank/backend/kabestan/docs/images/app-model.png"
+         id="text4832-9-5-0-9-3-1-8"
+         y="76.081215"
+         x="140.13803"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:5.64444447px;line-height:1.25;font-family:Raleway;-inkscape-font-specification:'Raleway, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+         xml:space="preserve"><tspan
+           id="tspan5906-0-7-9"
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:5.64444447px;font-family:Raleway;-inkscape-font-specification:'Raleway, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;stroke-width:0.26458332"
+           y="76.081215"
+           x="140.13803"
+           sodipodi:role="line">Service Ref.</tspan></text>
+    </g>
+  </g>
+</svg>
