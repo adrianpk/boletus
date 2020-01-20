@@ -45,10 +45,10 @@ func (s *Service) UpdateRates() {
 	// * Retry after failed requests
 	// * Preserve historical data in order to havei
 	// a reference vale on failed requests after startup.
-	go s.doUpdateRates()
+	go s.DoUpdateRates()
 }
 
-func (s *Service) doUpdateRates() error {
+func (s *Service) DoUpdateRates() error {
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
 	defer cancel()
 
