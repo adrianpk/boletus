@@ -35,9 +35,9 @@ var (
 		Name:     db.ToNullString("Rock Party in Wrocław"),
 		EventID:  db.ToNullString("03bc0622-4612-4490-9818-c50b2fd2340"),
 		Serie:    db.ToNullString("A"),
-		Number:   db.ToNullInt32(125),
+		Number:   db.ToNullInt32("125"),
 		Seat:     db.ToNullString("25/A"),
-		Price:    db.ToNullInt32(50000),
+		Price:    db.ToNullInt32("50000"),
 		Currency: db.ToNullString("EUR"),
 	}
 
@@ -49,9 +49,9 @@ var (
 		Name:     db.ToNullString("Jesse Cook"),
 		EventID:  db.ToNullString("f2553fc3-3c63-4adb-bc92-be8c66aecd19"),
 		Serie:    db.ToNullString("C"),
-		Number:   db.ToNullInt32(12),
+		Number:   db.ToNullInt32("12"),
 		Seat:     db.ToNullString("n/a"),
-		Price:    db.ToNullInt32(38000),
+		Price:    db.ToNullInt32("38000"),
 		Currency: db.ToNullString("EUR"),
 	}
 
