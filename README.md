@@ -270,7 +270,37 @@ $ make client
 6:31PM INF (*v1.TicketOpRes)(0xc0002a4380)(api:"v1" list:<name:"Rock Party in Wroc\305\202aw" eventSlug:"8b4e01c7-5b14-48f8-8537-9936df0446dc" type:"standard" serie:"A" number:32 seat:"0001-01-01 00:00:00Z" price:30000 currency:"EUR" reservationID:"2f28927a4d71" status:"paid" > list:<name:"Rock Party in Wroc\305\202aw" eventSlug:"8b4e01c7-5b14-48f8-8537-9936df0446dc" type:"standard" serie:"A" number:296 seat:"0001-01-01 00:00:00Z" price:30000 currency:"EUR" reservationID:"2f28927a4d71" status:"paid" > list:<name:"Rock Party in Wroc\305\202aw" eventSlug:"8b4e01c7-5b14-48f8-8537-9936df0446dc" type:"standard" serie:"A" number:205 seat:"0001-01-01 00:00:00Z" price:30000 currency:"EUR" reservationID:"2f28927a4d71" status:"paid" > list:<name:"Rock Party in Wroc\305\202aw" eventSlug:"8b4e01c7-5b14-48f8-8537-9936df0446dc" type:"standard" serie:"A" number:45 seat:"0001-01-01 00:00:00Z" price:30000 currency:"EUR" reservationID:"2f28927a4d71" status:"paid" > total:120 currency:"EUR" reservationID:"2f28927a4d71" status:"paid" )
 6:31PM INF ConfirmBooking end
 ```
+
+## Tests
+
+```shell
+$ make test
+
+go test -v -run TestTicketSummary -count=1 -timeout=5s  ./internal/app/svc/ticketsvc_test.go
+=== RUN   TestTicketSummary
+11:33PM INF Currency rates updated base=EUR date=2020-01-20
+--- PASS: TestTicketSummary (0.16s)
+PASS
+ok  	command-line-arguments	0.870s
+
+go test -v -run TestPreBookStandardTickets -count=1 -timeout=5s  ./internal/app/svc/ticketsvc_test.go
+=== RUN   TestPreBookStandardTickets
+11:33PM INF Currency rates updated base=EUR date=2020-01-20
+--- PASS: TestPreBookStandardTickets (0.20s)
+PASS
+ok  	command-line-arguments	0.896s
+
+go test -v -run TestPreBookGoldenCircleTickets -count=1 -timeout=5s  ./internal/app/svc/ticketsvc_test.go
+11:33PM INF New migrator name=migrator
+=== RUN   TestPreBookGoldenCircleTickets
+11:33PM INF Currency rates updated base=EUR date=2020-01-20
+--- PASS: TestPreBookGoldenCircleTickets (0.23s)
+PASS
+ok  	command-line-arguments	0.906s
+
+(...)
+```
+
 ## Notes
 
 * [To do list](docs/gtd/gtd.md)
-
