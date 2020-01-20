@@ -13,7 +13,6 @@ import (
 	"github.com/adrianpk/boletus/internal/seed"
 	fnd "github.com/adrianpk/foundation"
 
-	//"github.com/davecgh/go-spew/spew"
 	"github.com/jmoiron/sqlx"
 )
 
@@ -84,7 +83,8 @@ func TestTicketSummary(t *testing.T) {
 	}
 }
 
-// TestPreBookStandardTickets test ticket reservation for standard tickets.
+// TestPreBookGoldenCircleTickets test ticket reservation
+// for standard tickets.
 func TestPreBookStandardTickets(t *testing.T) {
 	// Create Service
 	s := newService()
@@ -98,8 +98,8 @@ func TestPreBookStandardTickets(t *testing.T) {
 
 	//t.Log(spew.Sdump(ts))
 
-	if len(ts) < 1 {
-		t.Error("Empty result")
+	if len(ts) != 4 {
+		t.Error("Reserved tickets qty. does not match expected.")
 	}
 
 	zeroT := time.Time{}
@@ -132,6 +132,193 @@ func TestPreBookStandardTickets(t *testing.T) {
 
 		if !(ok0 && ok1 && ok2 && ok3 && ok4 && ok5 && ok6 && ok7 && ok8 && ok9) {
 			t.Error("Does not match expected result")
+			return
+		}
+	}
+}
+
+// TestPrBookGoldenCircleiTickets test ticket reservation for golden circle tickets.
+func TestPreBookGoldenCircleTickets(t *testing.T) {
+	// Create Service
+	s := newService()
+
+	// Invoke function to be tested
+	ts, err := s.PreBookTickets(eventSlug, "golden-circle", 4, userSlug)
+	if err != nil {
+		t.Error(err)
+		t.Error("Error calling PreBookTicket")
+	}
+
+	//t.Log(spew.Sdump(ts))
+
+	if len(ts) != 20 {
+		t.Error("Reserved tickets qty. does not match expected.")
+	}
+
+	zeroT := time.Time{}
+
+	for _, tt := range ts {
+		sl := tt.Slug.String          // rockpartyinwrocław-...
+		nm := tt.Name.String          // "Rock Party in Wrocław"
+		tp := tt.Type.String          // "golden-circle"
+		sr := tt.Serie.String         // "A"
+		pr := tt.Price.Int32          // 75000
+		cy := tt.Currency.String      // "EUR"
+		ri := tt.ReservationID.String // != ""
+		rb := tt.ReservedBy.String    // "00000000-0000-0000-0000-000000000004"
+		ra := tt.ReservedAt.Time      // != time.Time{}
+		st := tt.Status.String        // "reserved"
+
+		ok0 := strings.Index(sl, "rockpartyinwrocław-") == 0
+		ok1 := nm == "Rock Party in Wrocław"
+		ok2 := tp == "golden-circle"
+		ok3 := sr == "A"
+		ok4 := pr == 75000
+		ok5 := cy == "EUR"
+		ok6 := ri != ""
+		ok7 := rb == "00000000-0000-0000-0000-000000000004"
+		ok8 := ra != zeroT
+		ok9 := st == "reserved"
+
+		//fmt.Printf("ok0: %t, ok1: %t, ok2: %t, ok3: %t, ok4: %t, ok5: %t, ok6: %t, ok7: %t, ok8: %t, ok9: %t\n\n",
+		//ok0, ok1, ok2, ok3, ok4, ok5, ok6, ok7, ok8, ok9)
+
+		if !(ok0 && ok1 && ok2 && ok3 && ok4 && ok5 && ok6 && ok7 && ok8 && ok9) {
+			t.Error("Does not match expected result")
+			return
+		}
+	}
+}
+
+// TestPreBookCouplesTickets test ticket reservation
+// for couples tickets.
+func TestPreBookCouplesTickets(t *testing.T) {
+	// Create Service
+	s := newService()
+
+	// Invoke function to be tested
+	ts, err := s.PreBookTickets(eventSlug, "couples", 3, userSlug)
+	if err != nil {
+		t.Error(err)
+		t.Error("Error calling PreBookTicket")
+	}
+
+	//t.Log(spew.Sdump(ts))
+
+	if len(ts) != 4 {
+		t.Error("Reserved tickets qty. does not match expected.")
+	}
+
+	zeroT := time.Time{}
+
+	for _, tt := range ts {
+		sl := tt.Slug.String          // rockpartyinwrocław-...
+		nm := tt.Name.String          // "Rock Party in Wrocław"
+		tp := tt.Type.String          // "couples"
+		sr := tt.Serie.String         // "A"
+		pr := tt.Price.Int32          // 30000
+		cy := tt.Currency.String      // "EUR"
+		ri := tt.ReservationID.String // != ""
+		rb := tt.ReservedBy.String    // "00000000-0000-0000-0000-000000000004"
+		ra := tt.ReservedAt.Time      // != time.Time{}
+		st := tt.Status.String        // "reserved"
+
+		ok0 := strings.Index(sl, "rockpartyinwrocław-") == 0
+		ok1 := nm == "Rock Party in Wrocław"
+		ok2 := tp == "couples"
+		ok3 := sr == "A"
+		ok4 := pr == 20000
+		ok5 := cy == "EUR"
+		ok6 := ri != ""
+		ok7 := rb == "00000000-0000-0000-0000-000000000004"
+		ok8 := ra != zeroT
+		ok9 := st == "reserved"
+
+		//fmt.Printf("ok0: %t, ok1: %t, ok2: %t, ok3: %t, ok4: %t, ok5: %t, ok6: %t, ok7: %t, ok8: %t, ok9: %t\n\n",
+		//ok0, ok1, ok2, ok3, ok4, ok5, ok6, ok7, ok8, ok9)
+
+		if !(ok0 && ok1 && ok2 && ok3 && ok4 && ok5 && ok6 && ok7 && ok8 && ok9) {
+			t.Error("Does not match expected result")
+			return
+		}
+	}
+}
+
+// TestPreBookPreemptiveTicketsAll test ticket reservation
+// for preemptive tickets.
+// We try to buy all available tickets but this should
+// raise an error since a ticket must remain available
+// after transaction.
+func TestPreBookPreemptiveTicketsAll(t *testing.T) {
+	// Create Service
+	s := newService()
+
+	// Invoke function to be tested
+	ts, err := s.PreBookTickets(eventSlug, "preemptive", 40, userSlug)
+	if err != nil {
+		t.Error(err)
+		t.Error("Error calling PreBookTicket")
+	}
+
+	//t.Log(spew.Sdump(ts))
+
+	if len(ts) > 0 {
+		t.Error("Expected 0 ticket reservation.")
+	}
+}
+
+// TestPreBookPreemptiveTicketsAllLessOne test ticket reservation
+// for preemptive tickets.
+// We try to buy all available tickets but this should
+// raise an error since a ticket must remain available
+// after transaction.
+func TestPreBookPreemptiveTicketsAllLessOne(t *testing.T) {
+	// Create Service
+	s := newService()
+
+	// Invoke function to be tested
+	ts, err := s.PreBookTickets(eventSlug, "preemptive", 39, userSlug)
+	if err != nil {
+		t.Error(err)
+		t.Error("Error calling PreBookTicket")
+	}
+
+	//t.Log(spew.Sdump(ts))
+
+	if len(ts) != 39 {
+		t.Error("Reserved tickets qty. does not match expected.")
+	}
+
+	zeroT := time.Time{}
+
+	for _, tt := range ts {
+		sl := tt.Slug.String          // rockpartyinwrocław-...
+		nm := tt.Name.String          // "Rock Party in Wrocław"
+		tp := tt.Type.String          // "preemptive"
+		sr := tt.Serie.String         // "A"
+		pr := tt.Price.Int32          // 30000
+		cy := tt.Currency.String      // "EUR"
+		ri := tt.ReservationID.String // != ""
+		rb := tt.ReservedBy.String    // "00000000-0000-0000-0000-000000000004"
+		ra := tt.ReservedAt.Time      // != time.Time{}
+		st := tt.Status.String        // "reserved"
+
+		ok0 := strings.Index(sl, "rockpartyinwrocław-") == 0
+		ok1 := nm == "Rock Party in Wrocław"
+		ok2 := tp == "preemptive"
+		ok3 := sr == "A"
+		ok4 := pr == 30000
+		ok5 := cy == "EUR"
+		ok6 := ri != ""
+		ok7 := rb == "00000000-0000-0000-0000-000000000004"
+		ok8 := ra != zeroT
+		ok9 := st == "reserved"
+
+		//fmt.Printf("ok0: %t, ok1: %t, ok2: %t, ok3: %t, ok4: %t, ok5: %t, ok6: %t, ok7: %t, ok8: %t, ok9: %t\n\n",
+		//ok0, ok1, ok2, ok3, ok4, ok5, ok6, ok7, ok8, ok9)
+
+		if !(ok0 && ok1 && ok2 && ok3 && ok4 && ok5 && ok6 && ok7 && ok8 && ok9) {
+			t.Error("Reserved tickets qty. does not match expected.")
 			return
 		}
 	}
