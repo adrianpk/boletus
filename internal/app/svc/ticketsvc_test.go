@@ -1,19 +1,30 @@
-package svc
+package svc_test
 
 import (
-	"errors"
 	"fmt"
 	"os"
 	"testing"
 
+	svc "github.com/adrianpk/boletus/internal/app/svc"
+	"github.com/adrianpk/boletus/internal/mig"
+	"github.com/adrianpk/boletus/internal/seed"
+	fnd "github.com/adrianpk/foundation"
 	"github.com/jmoiron/sqlx"
-	"gitlab.com/adrianpk/boletus/internal/mig"
-	"gitlab.com/adrianpk/boletus/internal/model"
-	"gitlab.com/adrianpk/boletus/internal/repo"
 )
 
 var (
-	userDataValid = map[string]string{
+	cfg *fnd.Config
+	log fnd.Logger
+	db  *sqlx.DB
+	mg  *mig.Migrator
+)
+
+const (
+	eventSlug = "rockpartyinwrocław-000000000001"
+)
+
+var (
+	user = map[string]string{
 		"username":          "username",
 		"password":          "password",
 		"email":             "username@mail.com",
@@ -25,51 +36,61 @@ var (
 )
 
 func TestMain(m *testing.M) {
-	mgr := setup()
+	err := setup()
+	if err != nil {
+		os.Exit(1)
+	}
 	code := m.Run()
-	teardown(mgr)
+	teardown()
 	os.Exit(code)
 }
 
 // TestTicketSummary verifies Test.
 // Signature: TicketSummary(eventSlug string) (tss []model.TicketSummary, err error)
 func TestTicketSummary(t *testing.T) {
-	cfg := testConfig()
-	log := testLogger()
-	db := testDb()
-
 	// Create Service instance
-	svc := NewService(cfg, log, "service-test-instance", db)
-	svc.Init()
+	s := svc.NewService(cfg, log, "service-test-instance", db)
+	s.Init()
 
 	// Invoke function to be tested
-	//svc.IndexTicket(...)
+	s.IndexTickets()
 
-	notImplementd = true
-	if notImplemented {
+	if true {
 		t.Error("TestTicketSummary not implemented")
 	}
 }
 
-func setup() *fnd.Migrator {
-	// Config for tests
-	cfg := testConfig()
+func setup() (err error) {
+	cfg = testConfig()
+	log = testLogger()
+	db, err := testDB(cfg)
+	if err != nil {
+		return err
+	}
 
 	// Prepare database
-	m := mig.GetMigrator(testConfig())
-	m.Migrate()
+	mg, err = mig.NewMigrator(cfg, log, "test-migrator", db)
+	if err != nil {
+		return err
+	}
+
+	mg.Migrate()
 
 	// Seed data
-	//s := seed.GetSeeder(testConfig())
-	//m.Seed()
-	return m
+	sd, err := seed.NewSeeder(cfg, log, "test-seeder", db)
+	if err != nil {
+		return err
+	}
+
+	sd.Seed()
+	return nil
 }
 
-func teardown(m *fnd.Migrator) {
-	m.RollbackAll()
+func teardown() {
+	mg.RollbackAll()
 }
 
-func testConfig() *Config {
+func testConfig() *fnd.Config {
 	cfg := &fnd.Config{}
 	values := map[string]string{
 		"pg.host":               "localhost",
@@ -86,13 +107,12 @@ func testConfig() *Config {
 	return cfg
 }
 
-func testLogger() *Logger {
+func testLogger() *fnd.Log {
 	return fnd.NewDevLogger(0, "boletus", "n/a")
 }
 
 // getTestDB returns a connection to test DB.
-func testDB() (*sqlx.DB, error) {
-	cfg := testConfig()
+func testDB(cfg *fnd.Config) (*sqlx.DB, error) {
 	conn, err := sqlx.Open("postgres", dbURL(cfg))
 	if err != nil {
 		return nil, err
@@ -107,7 +127,7 @@ func testDB() (*sqlx.DB, error) {
 }
 
 // dbURL returns a Postgres connection string.
-func dbURL(cfg *Config) string {
+func dbURL(cfg *fnd.Config) string {
 	host := cfg.ValOrDef("pg.host", "localhost")
 	port := cfg.ValOrDef("pg.port", "5432")
 	schema := cfg.ValOrDef("pg.schema", "public")
