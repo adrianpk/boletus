@@ -2,14 +2,16 @@
 
 test-selected:
 	clear
-	@make spacer
-	make -f makefile.test test-ticket-summary
-	@make spacer
-	make -f makefile.test test-prebook-standard-tickets
-	@make spacer
-	make -f makefile.test test-prebook-golden-circle-tickets
-	@make spacer
-	make -f makefile.test test-prebook-couples-tickets
+	#@make spacer
+	#make -f makefile.test test-ticket-summary
+	#@make spacer
+	#make -f makefile.test test-prebook-standard-tickets
+	#@make spacer
+	#make -f makefile.test test-prebook-golden-circle-tickets
+	#@make spacer
+	#make -f makefile.test test-prebook-couples-tickets
+	#@make spacer
+	make -f makefile.test test-prebook-preemptive-tickets-all
 
 ## Ticket
 
@@ -24,3 +26,6 @@ test-prebook-golden-circle-tickets:
 
 test-prebook-couples-tickets:
 	go test -v -run TestPreBookCouplesTickets -count=1 -timeout=5s  ./internal/app/svc/ticketsvc_test.go
+
+test-prebook-preemptive-tickets-all:
+	go test -v -run TestPreBookPreemptiveTicketsAllLessOne -count=1 -timeout=5s  ./internal/app/svc/ticketsvc_test.go
