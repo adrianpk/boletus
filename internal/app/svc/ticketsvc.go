@@ -17,16 +17,16 @@ func (s *Service) IndexTickets() (users []model.Ticket, err error) {
 	return repo.GetAll()
 }
 
-func (s *Service) CreateTicket(user *model.Ticket) (fnd.ValErrorSet, error) {
+func (s *Service) CreateTicket(ticket *model.Ticket) (fnd.ValErrorSet, error) {
 	// Validation
-	v := NewTicketValidator(user)
+	v := NewTicketValidator(ticket)
 
 	err := v.ValidateForCreate()
 	if err != nil {
 		return v.Errors, err
 	}
 
-	user.SetCreateValues()
+	ticket.SetCreateValues()
 
 	// Get a new transaction
 	tx, err := s.getTx()
@@ -40,7 +40,7 @@ func (s *Service) CreateTicket(user *model.Ticket) (fnd.ValErrorSet, error) {
 		return nil, NoRepoErr
 	}
 
-	err = userRepo.Create(user, tx)
+	err = userRepo.Create(ticket, tx)
 	if err != nil {
 		tx.Rollback()
 		return nil, err
@@ -57,21 +57,21 @@ func (s *Service) CreateTicket(user *model.Ticket) (fnd.ValErrorSet, error) {
 	return nil, nil
 }
 
-func (s *Service) GetTicket(slug string) (user model.Ticket, err error) {
+func (s *Service) GetTicket(slug string) (ticket model.Ticket, err error) {
 	repo := s.TicketRepo
 	if err != nil {
-		return user, err
+		return ticket, err
 	}
 
-	user, err = repo.GetBySlug(slug)
+	ticket, err = repo.GetBySlug(slug)
 	if err != nil {
-		return user, err
+		return ticket, err
 	}
 
-	return user, nil
+	return ticket, nil
 }
 
-func (s *Service) UpdateTicket(slug string, user *model.Ticket) (fnd.ValErrorSet, error) {
+func (s *Service) UpdateTicket(slug string, ticket *model.Ticket) (fnd.ValErrorSet, error) {
 	// Get a new transaction
 	tx, err := s.getTx()
 	if err != nil {
@@ -84,7 +84,7 @@ func (s *Service) UpdateTicket(slug string, user *model.Ticket) (fnd.ValErrorSet
 	}
 
 	// Validation
-	v := NewTicketValidator(user)
+	v := NewTicketValidator(ticket)
 
 	err = v.ValidateForUpdate()
 	if err != nil {
@@ -92,7 +92,7 @@ func (s *Service) UpdateTicket(slug string, user *model.Ticket) (fnd.ValErrorSet
 	}
 
 	// Update user
-	err = userRepo.Update(user, tx)
+	err = userRepo.Update(ticket, tx)
 	if err != nil {
 		return v.Errors, err
 	}

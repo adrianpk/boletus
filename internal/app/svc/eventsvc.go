@@ -5,25 +5,25 @@ import (
 	fnd "github.com/adrianpk/foundation"
 )
 
-func (s *Service) IndexEvents() (users []model.Event, err error) {
+func (s *Service) IndexEvents() (events []model.Event, err error) {
 	repo := s.EventRepo
 	if repo == nil {
-		return users, NoRepoErr
+		return events, NoRepoErr
 	}
 
 	return repo.GetAll()
 }
 
-func (s *Service) CreateEvent(user *model.Event) (fnd.ValErrorSet, error) {
+func (s *Service) CreateEvent(event *model.Event) (fnd.ValErrorSet, error) {
 	// Validation
-	v := NewEventValidator(user)
+	v := NewEventValidator(event)
 
 	err := v.ValidateForCreate()
 	if err != nil {
 		return v.Errors, err
 	}
 
-	user.SetCreateValues()
+	event.SetCreateValues()
 
 	// Get a new transaction
 	tx, err := s.getTx()
@@ -37,7 +37,7 @@ func (s *Service) CreateEvent(user *model.Event) (fnd.ValErrorSet, error) {
 		return nil, NoRepoErr
 	}
 
-	err = userRepo.Create(user, tx)
+	err = userRepo.Create(event, tx)
 	if err != nil {
 		tx.Rollback()
 		return nil, err
@@ -54,48 +54,48 @@ func (s *Service) CreateEvent(user *model.Event) (fnd.ValErrorSet, error) {
 	return nil, nil
 }
 
-func (s *Service) GetEvent(slug string) (user model.Event, err error) {
+func (s *Service) GetEvent(slug string) (event model.Event, err error) {
 	repo := s.EventRepo
 	if err != nil {
-		return user, err
+		return event, err
 	}
 
-	user, err = repo.GetBySlug(slug)
+	event, err = repo.GetBySlug(slug)
 	if err != nil {
-		return user, err
+		return event, err
 	}
 
-	return user, nil
+	return event, nil
 }
 
-func (s *Service) GetEventByName(username string) (user model.Event, err error) {
+func (s *Service) GetEventByName(name string) (event model.Event, err error) {
 	repo := s.EventRepo
 	if err != nil {
-		return user, err
+		return event, err
 	}
 
-	user, err = repo.GetByName(username)
+	event, err = repo.GetByName(name)
 	if err != nil {
-		return user, err
+		return event, err
 	}
 
-	return user, nil
+	return event, nil
 }
 
-func (s *Service) UpdateEvent(slug string, user *model.Event) (fnd.ValErrorSet, error) {
+func (s *Service) UpdateEvent(slug string, event *model.Event) (fnd.ValErrorSet, error) {
 	// Get a new transaction
 	tx, err := s.getTx()
 	if err != nil {
 		return nil, err
 	}
 
-	userRepo := s.EventRepo
-	if userRepo == nil {
+	eventRepo := s.EventRepo
+	if eventRepo == nil {
 		return nil, NoRepoErr
 	}
 
 	// Validation
-	v := NewEventValidator(user)
+	v := NewEventValidator(event)
 
 	err = v.ValidateForUpdate()
 	if err != nil {
@@ -103,7 +103,7 @@ func (s *Service) UpdateEvent(slug string, user *model.Event) (fnd.ValErrorSet, 
 	}
 
 	// Update user
-	err = userRepo.Update(user, tx)
+	err = eventRepo.Update(event, tx)
 	if err != nil {
 		return v.Errors, err
 	}
