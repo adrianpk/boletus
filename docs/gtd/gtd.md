@@ -1,7 +1,9 @@
 # GTD
 
-## Inbox
+## In progress
 * Make service integration tests
+
+## Inbox
 
 ## Next
 * Complete Web SSR interface
