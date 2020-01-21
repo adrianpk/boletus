@@ -26,7 +26,7 @@ var (
 
 		newUserMap("00000000-0000-0000-0000-000000000002", "superadmin-000000000002", "superadmin", "superadmin", "greenhurley", "superadmin@boletus.club", "", "", ""),
 
-		newUserMap("00000000-0000-0000-0000-000000000003", "admin-000000000003", "admin", "admin", "tallkristine", "admin@bloetus.club", "", "", ""),
+		newUserMap("00000000-0000-0000-0000-000000000003", "admin-000000000003", "admin", "admin", "tallkristine", "admin@boletus.club", "", "", ""),
 
 		newUserMap("00000000-0000-0000-0000-000000000004", "lauriem-000000000004", "lauriem", "user", "openmontana", "lauriem@username.club", "Laurie", "Anne", "Miles"),
 	}
