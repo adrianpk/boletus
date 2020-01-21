@@ -156,8 +156,8 @@ Builds the application
 
 **make run**
 
-Run the application hrough a shell script that previously sets the environment variables with required values.
-The shell script can be found in `scripts/run.sh`.
+Run the application through a shell script that previously sets the environment variables with required values.
+In case you need to change some envar, you can edit this script: `scripts/run.sh`.
 
 **make test**
 
@@ -169,7 +169,7 @@ Run tests with coloured output. [grc](https://github.com/garabik/grc) needs to b
 
 **package-resources**
 
-It generates a binary representation for html templates, translations and other resources that allows it to embed them within the compiled file. `clean-and-run` runs this make task as subtask before starting the applicacion.
+It generates a binary representation for html templates, translations and other resources that allows compiler to embed them within the target file. `clean-and-run` runs this make task as subtask before starting the applicacion.
 
 **build-stg**
 
@@ -186,7 +186,7 @@ Build the gRPC client. Source files location is `cmd/client/client.go` and compi
 **install-stg**
 
 Deploys app to Googke GKE usando [HELM](https://helm.sh/).
-I haven't created helm .yaml files yet, so this command is not functional yet.
+I haven't created helm .yaml files so this command is not functional yet.
 
 **install-prod**
 
@@ -194,7 +194,7 @@ Same as `make install-stage` but for production images.
 
 **gen-proto**
 
-Updates go files with changes in API made in the pprotocol buffers definition file at `pkg/grpc/api/v1`.
+Updates go files with changes in API made in the protocol buffers definition file at `pkg/grpc/api/v1`.
 
 **make client**
 
@@ -223,7 +223,7 @@ const(
 )
 ```
 
-And also enable the comment / uncomment to enable the function you want to invoke.
+And also comment / uncomment to enable the function you want to invoke.
 
 ```go
 	// IndexEvents

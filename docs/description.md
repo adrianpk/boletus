@@ -6,7 +6,7 @@
 
 ## Migrator
 
-Manage creation and update of new tables, views and indexes.
+Manages creation and update of new tables, views and indexes.
 The formal way to create a new migration is to add a
 file under `internal/mig` directory.
 Currently there are three migrations files that you can use as a reference to create new ones.
@@ -23,7 +23,7 @@ Each of these files defines two functions with the following structure.
 
 **Sample 00004createxxxxxtable.go**
 
-```go`
+```go
 package mig
 
 func (s \*step) CreateXXXXXTable() error {
@@ -61,7 +61,7 @@ tx := s.GetTx()
 
 }
 
-````
+```
 
 Later you need to append these functions as migrations steps in `internal/mig/mig.go`
 
@@ -77,9 +77,9 @@ func (m *Migrator) addSteps() {
 	s.Config(s.CreateXXXXXTable, s.DropXXXXXTable)
 	m.AddMigration(s)
 }
-````
+```
 
-Next time you run the application it will be executed and register in migrations table.
+Next time you run the application it will be executed and registered in migrations table.
 
 ## Seeder
 
