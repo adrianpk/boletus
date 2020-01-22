@@ -1,7 +1,7 @@
 package app
 
 import (
-	"github.com/adrianpk/boletus/internal/app/svc"
+	"github.com/adrianpk/boletus/internal/svc"
 	fnd "github.com/adrianpk/foundation"
 	"github.com/robfig/cron/v3"
 )
