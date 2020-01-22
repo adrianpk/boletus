@@ -3,7 +3,7 @@ package v1
 import (
 	"context"
 
-	"github.com/adrianpk/boletus/internal/app/svc"
+	"github.com/adrianpk/boletus/internal/svc"
 	fnd "github.com/adrianpk/foundation"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"

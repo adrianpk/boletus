@@ -14,7 +14,7 @@ func toEventResList(events []model.Event) (ers []*EventRes) {
 
 func toEventRes(event model.Event) *EventRes {
 	return &EventRes{
-		Api: "v1"
+		Api:         "v1",
 		Slug:        event.Slug.String,
 		Name:        event.Name.String,
 		Description: event.Description.String,
@@ -32,7 +32,7 @@ func toTicketSummaryList(tss []model.TicketSummary) (tsr []*TicketSummaryRes) {
 
 func toTicketSummaryRes(ts model.TicketSummary) *TicketSummaryRes {
 	return &TicketSummaryRes{
-		Api: "v1"
+		Api:       "v1",
 		Qty:       ts.Qty.Int32,
 		Name:      ts.Name.String,
 		EventSlug: ts.EventSlug.String,

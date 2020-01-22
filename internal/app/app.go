@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"sync"
 
-	svc "github.com/adrianpk/boletus/internal/app/svc"
+	svc "github.com/adrianpk/boletus/internal/svc"
 	v1 "github.com/adrianpk/boletus/pkg/grpc/api/v1"
 	"github.com/adrianpk/boletus/pkg/web"
 	fnd "github.com/adrianpk/foundation"

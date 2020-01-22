@@ -8,7 +8,7 @@ import (
 	"syscall"
 
 	"github.com/adrianpk/boletus/internal/app"
-	"github.com/adrianpk/boletus/internal/app/svc"
+	"github.com/adrianpk/boletus/internal/svc"
 	"github.com/adrianpk/boletus/internal/mig"
 	repo "github.com/adrianpk/boletus/internal/repo/pg"
 
