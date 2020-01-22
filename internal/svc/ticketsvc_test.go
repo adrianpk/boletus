@@ -7,7 +7,7 @@ import (
 	"testing"
 	"time"
 
-	svc "github.com/adrianpk/boletus/internal/app/svc"
+	svc "github.com/adrianpk/boletus/internal/svc"
 	"github.com/adrianpk/boletus/internal/mig"
 	"github.com/adrianpk/boletus/internal/repo/pg"
 	"github.com/adrianpk/boletus/internal/seed"

@@ -8,7 +8,7 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/adrianpk/boletus/internal/app/svc"
+	"github.com/adrianpk/boletus/internal/svc"
 	fnd "github.com/adrianpk/foundation"
 )
 
