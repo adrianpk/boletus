@@ -284,7 +284,10 @@ func (tr *TicketRepo) DeleteByTicketname(ticketname string, tx ...*sqlx.Tx) erro
 func (tr *TicketRepo) GetBySlugAndToken(slug, token string) (model.Ticket, error) {
 	var ticket model.Ticket
 
-	st := `SELECT * FROM tickets WHERE slug = '%s' AND confirmation_token = '%s' AND (is_deleted IS NULL OR NOT is_deleted) LIMIT 1;`
+	st := `SELECT * FROM tickets
+						WHERE slug = '%s'
+						AND confirmation_token = '%s'
+						AND (is_deleted IS NULL OR NOT is_deleted) LIMIT 1;`
 	st = fmt.Sprintf(st, slug, token)
 
 	err := tr.DB.Get(&ticket, st)
@@ -296,7 +299,18 @@ func (tr *TicketRepo) GetBySlugAndToken(slug, token string) (model.Ticket, error
 
 // TicketSummary returns an availability of tickets report for all ticket types in an event.
 func (tr *TicketRepo) TicketSummary(eventSlug string) (ts []model.TicketSummary, err error) {
-	st := `SELECT count(tickets.id) as qty, event_id, events.slug as event_slug, type, (tickets.price/1000) as price, currency FROM tickets INNER JOIN events ON tickets.event_id = events.id WHERE events.slug = '%s' AND (tickets.is_deleted IS NULL OR NOT tickets.is_deleted) AND (events.is_deleted IS NULL OR NOT events.is_deleted) AND (reserved_by_id IS NULL OR reserved_by_id::text='00000000-0000-0000-0000-000000000000') AND (bought_by_id IS NULL OR NOT bought_by_id::text='00000000-0000-0000-0000-00000000') AND (status IS NULL OR status='') AND (gateway_op_id IS NULL or gateway_op_id='') GROUP BY event_id, event_slug, type, price, currency ORDER BY tickets.price ASC;`
+	st := `SELECT count(tickets.id) as qty,
+								event_id, events.slug as event_slug, type, (tickets.price/1000) as price, currency
+				 	FROM tickets INNER JOIN events ON tickets.event_id = events.id
+					WHERE events.slug = '%s'
+						AND (tickets.is_deleted IS NULL OR NOT tickets.is_deleted)
+						AND (events.is_deleted IS NULL OR NOT events.is_deleted)
+						AND (reserved_by_id IS NULL OR reserved_by_id::text='00000000-0000-0000-0000-000000000000')
+						AND (bought_by_id IS NULL OR NOT bought_by_id::text='00000000-0000-0000-0000-00000000')
+						AND (status IS NULL OR status='')
+						AND (gateway_op_id IS NULL or gateway_op_id='')
+					GROUP BY event_id, event_slug, type, price, currency
+					ORDER BY tickets.price ASC;`
 
 	st = fmt.Sprintf(st, eventSlug)
 
@@ -307,7 +321,19 @@ func (tr *TicketRepo) TicketSummary(eventSlug string) (ts []model.TicketSummary,
 
 // Available returns a report of number of available tickets for a specific ticket type in an event.
 func (tr *TicketRepo) Available(eventSlug, ticketType string) (ts model.TicketSummary, err error) {
-	st := `SELECT count(tickets.id) as qty, event_id, events.slug as event_slug, type, (tickets.price/1000) as price, currency FROM tickets INNER JOIN events ON tickets.event_id = events.id WHERE events.slug = '%s' AND tickets.type = '%s' AND (tickets.is_deleted IS NULL OR NOT tickets.is_deleted) AND (events.is_deleted IS NULL OR NOT events.is_deleted) AND (reserved_by_id IS NULL OR reserved_by_id::text='00000000-0000-0000-0000-000000000000') AND (bought_by_id IS NULL OR NOT bought_by_id::text='00000000-0000-0000-0000-00000000') AND (status IS NULL OR status='') AND (gateway_op_id IS NULL or gateway_op_id='') GROUP BY event_id, event_slug, type, price, currency LIMIT 1;`
+	st := `SELECT count(tickets.id) as qty,
+								event_id, events.slug as event_slug, type, (tickets.price/1000) as price, currency
+					FROM tickets INNER JOIN events ON tickets.event_id = events.id
+					WHERE events.slug = '%s'
+						AND tickets.type = '%s'
+						AND (tickets.is_deleted IS NULL OR NOT tickets.is_deleted)
+						AND (events.is_deleted IS NULL OR NOT events.is_deleted)
+						AND (reserved_by_id IS NULL OR reserved_by_id::text='00000000-0000-0000-0000-000000000000')
+						AND (bought_by_id IS NULL OR NOT bought_by_id::text='00000000-0000-0000-0000-00000000')
+						AND (status IS NULL OR status='')
+						AND (gateway_op_id IS NULL or gateway_op_id='')
+					GROUP BY event_id, event_slug, type, price, currency
+					LIMIT 1;`
 
 	st = fmt.Sprintf(st, eventSlug, ticketType)
 
@@ -318,7 +344,19 @@ func (tr *TicketRepo) Available(eventSlug, ticketType string) (ts model.TicketSu
 
 // Available returns a set of available tickets for a specific ticket type in an event.
 func (tr *TicketRepo) GetAvailable(eventSlug, ticketType string, qty int) (tickets []model.Ticket, err error) {
-	st := `SELECT tickets.* FROM tickets INNER JOIN events ON tickets.event_id = events.id WHERE events.slug = '%s' AND tickets.type = '%s' AND (tickets.is_deleted IS NULL OR NOT tickets.is_deleted) AND (events.is_deleted IS NULL OR NOT events.is_deleted) AND (reserved_by_id IS NULL OR reserved_by_id::text='00000000-0000-0000-0000-000000000000') AND (bought_by_id IS NULL OR NOT bought_by_id::text='00000000-0000-0000-0000-00000000') AND (status IS NULL OR status='') AND (gateway_op_id IS NULL or gateway_op_id='') GROUP BY event_id, event_slug, type, price, currency ORDER BY tickets.price ASC LIMIT %s;`
+	st := `SELECT tickets.* FROM tickets
+					INNER JOIN events ON tickets.event_id = events.id
+					WHERE events.slug = '%s'
+						AND tickets.type = '%s'
+						AND (tickets.is_deleted IS NULL OR NOT tickets.is_deleted)
+						AND (events.is_deleted IS NULL OR NOT events.is_deleted)
+						AND (reserved_by_id IS NULL OR reserved_by_id::text='00000000-0000-0000-0000-000000000000')
+						AND (bought_by_id IS NULL OR NOT bought_by_id::text='00000000-0000-0000-0000-00000000')
+						AND (status IS NULL OR status='')
+						AND (gateway_op_id IS NULL or gateway_op_id='')
+					GROUP BY event_id, event_slug, type, price, currency
+					ORDER BY tickets.price ASC
+					LIMIT %s;`
 
 	st = fmt.Sprintf(st, eventSlug, ticketType, qty)
 
@@ -357,7 +395,16 @@ func (tr *TicketRepo) PreBook(eventSlug, ticketType string, qty int, reservation
 						updated_by_id = '%s',
 						updated_at = now()
 					WHERE tickets.id IN (
-						SELECT tickets.id FROM tickets INNER JOIN events ON tickets.event_id = events.id WHERE events.slug = '%s' AND tickets.type = '%s' AND (tickets.is_deleted IS NULL OR NOT tickets.is_deleted) AND (events.is_deleted IS NULL OR NOT events.is_deleted) AND (reserved_by_id IS NULL OR reserved_by_id::text='00000000-0000-0000-0000-000000000000') AND (bought_by_id IS NULL OR NOT bought_by_id::text='00000000-0000-0000-0000-00000000') AND (status IS NULL OR status='') AND (gateway_op_id IS NULL or gateway_op_id='') ORDER BY tickets.price ASC LIMIT %d);`
+						SELECT tickets.id FROM tickets
+							INNER JOIN events ON tickets.event_id = events.id
+							WHERE events.slug = '%s' AND tickets.type = '%s'
+							AND (tickets.is_deleted IS NULL OR NOT tickets.is_deleted)
+							AND (events.is_deleted IS NULL OR NOT events.is_deleted)
+							AND (reserved_by_id IS NULL OR reserved_by_id::text='00000000-0000-0000-0000-000000000000')
+							AND (bought_by_id IS NULL OR NOT bought_by_id::text='00000000-0000-0000-0000-00000000')
+							AND (status IS NULL OR status='')
+							AND (gateway_op_id IS NULL or gateway_op_id='')
+						ORDER BY tickets.price ASC LIMIT %d);`
 
 	st = fmt.Sprintf(st, reservationID, userID, userID, eventSlug, ticketType, qty)
 
@@ -368,7 +415,17 @@ func (tr *TicketRepo) PreBook(eventSlug, ticketType string, qty int, reservation
 	}
 
 	// Select all updated
-	st = `SELECT tickets.* FROM tickets INNER JOIN events ON tickets.event_id = events.id WHERE events.slug = '%s' AND tickets.type = '%s' AND (tickets.is_deleted IS NULL OR NOT tickets.is_deleted) AND (events.is_deleted IS NULL OR NOT events.is_deleted) AND reservation_id = '%s' AND reserved_by_id::text='%s' AND (bought_by_id IS NULL OR bought_by_id::text='00000000-0000-0000-0000-000000000000') AND status='reserved' AND (gateway_op_id IS NULL or gateway_op_id='') ORDER BY tickets.updated_at ASC;`
+	st = `SELECT tickets.* FROM tickets
+					INNER JOIN events ON tickets.event_id = events.id
+					WHERE events.slug = '%s' AND tickets.type = '%s'
+					AND (tickets.is_deleted IS NULL OR NOT tickets.is_deleted)
+					AND (events.is_deleted IS NULL OR NOT events.is_deleted)
+					AND reservation_id = '%s'
+					AND reserved_by_id::text='%s'
+					AND (bought_by_id IS NULL OR bought_by_id::text='00000000-0000-0000-0000-000000000000')
+					AND status='reserved'
+					AND (gateway_op_id IS NULL or gateway_op_id='')
+				ORDER BY tickets.updated_at ASC;`
 
 	st = fmt.Sprintf(st, eventSlug, ticketType, reservationID, userID)
 
@@ -415,7 +472,16 @@ func (tr *TicketRepo) PreBookType(eventSlug, ticketType string, reservationID, u
 						updated_by_id = '%s',
 						updated_at = now()
 					WHERE tickets.id IN (
-						SELECT tickets.id FROM tickets INNER JOIN events ON tickets.event_id = events.id WHERE events.slug = '%s' AND tickets.type = '%s' AND (tickets.is_deleted IS NULL OR NOT tickets.is_deleted) AND (events.is_deleted IS NULL OR NOT events.is_deleted) AND (reserved_by_id IS NULL OR reserved_by_id::text='00000000-0000-0000-0000-000000000000') AND (bought_by_id IS NULL OR NOT bought_by_id::text='00000000-0000-0000-0000-00000000') AND (status IS NULL OR status='') AND (gateway_op_id IS NULL or gateway_op_id='') ORDER BY tickets.price ASC);`
+						SELECT tickets.id FROM tickets
+							INNER JOIN events ON tickets.event_id = events.id
+							WHERE events.slug = '%s' AND tickets.type = '%s'
+							AND (tickets.is_deleted IS NULL OR NOT tickets.is_deleted)
+							AND (events.is_deleted IS NULL OR NOT events.is_deleted)
+							AND (reserved_by_id IS NULL OR reserved_by_id::text='00000000-0000-0000-0000-000000000000')
+							AND (bought_by_id IS NULL OR NOT bought_by_id::text='00000000-0000-0000-0000-00000000')
+							AND (status IS NULL OR status='')
+							AND (gateway_op_id IS NULL or gateway_op_id='')
+						ORDER BY tickets.price ASC);`
 
 	st = fmt.Sprintf(st, reservationID, userID, userID, eventSlug, ticketType)
 
@@ -426,7 +492,17 @@ func (tr *TicketRepo) PreBookType(eventSlug, ticketType string, reservationID, u
 	}
 
 	// Select all updated
-	st = `SELECT tickets.* FROM tickets INNER JOIN events ON tickets.event_id = events.id WHERE events.slug = '%s' AND tickets.type = '%s' AND (tickets.is_deleted IS NULL OR NOT tickets.is_deleted) AND (events.is_deleted IS NULL OR NOT events.is_deleted) AND reservation_id = '%s' AND reserved_by_id::text='%s' AND (bought_by_id IS NULL OR bought_by_id::text='00000000-0000-0000-0000-000000000000') AND status='reserved' AND (gateway_op_id IS NULL or gateway_op_id='') ORDER BY tickets.updated_at ASC;`
+	st = `SELECT tickets.* FROM tickets
+					INNER JOIN events ON tickets.event_id = events.id
+					WHERE events.slug = '%s' AND tickets.type = '%s'
+						AND (tickets.is_deleted IS NULL OR NOT tickets.is_deleted)
+						AND (events.is_deleted IS NULL OR NOT events.is_deleted)
+						AND reservation_id = '%s'
+						AND reserved_by_id::text='%s'
+						AND (bought_by_id IS NULL OR bought_by_id::text='00000000-0000-0000-0000-000000000000')
+						AND status='reserved'
+						AND (gateway_op_id IS NULL or gateway_op_id='')
+					ORDER BY tickets.updated_at ASC;`
 
 	st = fmt.Sprintf(st, eventSlug, ticketType, reservationID, userID)
 
@@ -454,7 +530,14 @@ func (tr *TicketRepo) ExpireReservations(expMins int) (err error) {
 						updated_by_id = '00000000-0000-0000-0000-000000000001',
 						updated_at = now()
 					WHERE tickets.id IN (
-						SELECT tickets.id FROM tickets WHERE (tickets.is_deleted IS NULL OR NOT tickets.is_deleted) AND (reserved_by_id IS NOT NULL AND NOT reserved_by_id::text='00000000-0000-0000-0000-000000000000') AND (bought_by_id IS NULL OR bought_by_id::text='00000000-0000-0000-0000-000000000000') AND (status='reserved') AND (gateway_op_id IS NULL or gateway_op_id='') AND ((DATE_PART('hour', NOW() - tickets.reserved_at) * 60 + DATE_PART('minute', NOW() - reserved_at) > %d))) RETURNING tickets.id as expired;`
+						SELECT tickets.id FROM tickets
+							WHERE (tickets.is_deleted IS NULL OR NOT tickets.is_deleted)
+								AND (reserved_by_id IS NOT NULL AND NOT reserved_by_id::text='00000000-0000-0000-0000-000000000000')
+								AND (bought_by_id IS NULL OR bought_by_id::text='00000000-0000-0000-0000-000000000000')
+								AND (status='reserved')
+								AND (gateway_op_id IS NULL or gateway_op_id='')
+								AND ((DATE_PART('hour', NOW() - tickets.reserved_at) * 60 + DATE_PART('minute', NOW() - reserved_at) > %d)))
+							RETURNING tickets.id as expired;`
 
 	st = fmt.Sprintf(st, expMins)
 
